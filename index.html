@@ -2,12 +2,24 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Sugar Shapes</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@700;800;900&display=swap">
+<!-- app-meta -->
+<meta name="theme-color" content="#ff5c8d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sugar Shapes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>
+/* Fonts ship with the game so it works offline (SIL Open Font License, see fonts/). */
+@font-face{font-family:'Lilita One';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/LilitaOne-latin.woff2) format('woff2')}
+@font-face{font-family:'Nunito';font-style:normal;font-weight:200 1000;font-display:swap;src:url(fonts/Nunito-latin.woff2) format('woff2')}
+</style>
+<!-- /app-meta -->
 <style>
 /* Layout: one-screen arcade stage. HUD and goals over a chocolate board, strawberry-sunset sky behind. */
 :root{
@@ -22,7 +34,7 @@
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{height:100%;margin:0;overflow:hidden}
-body{background:var(--sky-mid);color:var(--cream);font-family:var(--body);-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;overscroll-behavior:none;touch-action:manipulation}
+body{background:var(--sky-mid);color:var(--cream);font-family:var(--body);-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user-select:none;-webkit-user-select:none;overscroll-behavior:none;touch-action:manipulation}
 #bg,#game{position:fixed;inset:0;display:block}
 #bg{z-index:0}
 #game{z-index:2;pointer-events:none}
@@ -61,7 +73,7 @@ body{background:var(--sky-mid);color:var(--cream);font-family:var(--body);-webki
 
 .board-wrap{flex:1;min-height:0;display:grid;place-items:center;position:relative}
 #board{outline:none;border-radius:14px;touch-action:none;cursor:pointer}
-#board:focus-visible{outline:3px solid var(--gold);outline-offset:18px}
+#board.kb:focus-visible{outline:3px solid var(--gold);outline-offset:18px}
 
 .controls{display:flex;justify-content:center;gap:12px}
 .icon-btn{width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,243,227,.18);background:linear-gradient(var(--choc-2),var(--choc));color:var(--cream);display:grid;place-items:center;box-shadow:0 4px 0 var(--choc-edge);cursor:pointer;padding:0;position:relative}
@@ -424,7 +436,13 @@ const SFX = (() => {
     whoosh() { noise({ dur: .5, vol: .12, type: 'bandpass', f: 300, f2: 3000, q: 1 }); },
   };
 })();
-function buzz(ms) { try { if (navigator.vibrate) navigator.vibrate(ms); } catch (e) {} }
+// haptics: the iPhone app exposes the Taptic Engine as a `haptic` message handler; browsers fall back to vibrate
+function buzz(ms) {
+  try {
+    const h = window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.haptic;
+    if (h) h.postMessage(ms); else if (navigator.vibrate) navigator.vibrate(ms);
+  } catch (e) {}
+}
 
 /* ---------- canvases & layout ---------- */
 const bgCv = $('#bg'), gameCv = $('#game'), bg = bgCv.getContext('2d'), gx = gameCv.getContext('2d');
@@ -826,6 +844,7 @@ function pickSpawn(g, swapCells) {
 }
 async function matchStep(groups, cascade, swapCells) {
   const B = new Blast(Math.min(cascade, 8)), creates = [];
+  buzz(Math.min(6 + cascade * 4, 30));
   for (const g of groups) {
     const spawn = g.special ? pickSpawn(g, swapCells) : -1;
     let cx = 0, cy = 0; g.cells.forEach(i => { cx += i % COLS; cy += (i / COLS) | 0; });
@@ -1490,7 +1509,7 @@ function cellAt(x, y) {
   return r >= 0 && r < ROWS && c >= 0 && c < COLS ? { r, c } : null;
 }
 boardEl.addEventListener('pointerdown', e => {
-  SFX.init(); kbOn = false;
+  SFX.init(); kbOn = false; boardEl.classList.remove('kb');
   if (!canPlay()) return;
   const cell = cellAt(e.clientX, e.clientY); if (!cell) return;
   drag = { ...cell, x: e.clientX, y: e.clientY, moved: false, id: e.pointerId };
@@ -1516,12 +1535,12 @@ function tap(cell) {
     if (sel.r === cell.r && sel.c === cell.c) { sel = null; return; }
     if (Math.abs(sel.r - cell.r) + Math.abs(sel.c - cell.c) === 1) { const a = sel; sel = null; attemptSwap(a, cell); return; }
   }
-  sel = { r: cell.r, c: cell.c }; const t = grid[cell.r][cell.c]; if (t) t.bsv += 4; SFX.select();
+  sel = { r: cell.r, c: cell.c }; const t = grid[cell.r][cell.c]; if (t) t.bsv += 4; SFX.select(); buzz(5);
 }
 boardEl.addEventListener('keydown', e => {
   const d = { ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1] }[e.key];
   if (!d && e.key !== 'Enter' && e.key !== ' ') return;
-  e.preventDefault(); SFX.init(); kbOn = true;
+  e.preventDefault(); SFX.init(); kbOn = true; boardEl.classList.add('kb');
   if (!canPlay()) return;
   if (d) {
     if (sel) { const a = sel; sel = null; const b = { r: a.r + d[0], c: a.c + d[1] }; cursor = { r: clamp(b.r, 0, ROWS - 1), c: clamp(b.c, 0, COLS - 1) }; attemptSwap(a, b); }
@@ -1573,9 +1592,11 @@ function boot(data) {
   showScreen('title');
 }
 window.claude?.hot?.ready ? window.claude.hot.ready(boot) : boot(window.claude?.hot?.data ?? {});
+// offline support when installed to the home screen from a website (not used inside the native app or an embed)
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol) && window.self === window.top) navigator.serviceWorker.register('sw.js').catch(() => {});
 
 // lightweight hooks for automated play-testing
-window.__sugar = { moves: () => allMoves(), swap: (a, b) => attemptSwap(a, b), state: () => ({ ...state, goals: state.goals.map(g => ({ kind: g.kind, left: g.left, need: g.need })) }), canPlay: () => canPlay(), start: n => startLevel(n), sprite: (t, s) => (s === BOMB ? makeBomb(160) : makeCandy(t, s, 160)).toDataURL(), begin: () => { closeModal(); beginLevel(); } };
+window.__sugar = { moves: () => allMoves(), swap: (a, b) => attemptSwap(a, b), state: () => ({ ...state, goals: state.goals.map(g => ({ kind: g.kind, left: g.left, need: g.need })) }), canPlay: () => canPlay(), start: n => startLevel(n), sprite: (t, s, S = 160) => (s === BOMB ? makeBomb(S) : makeCandy(t, s, S)).toDataURL(), begin: () => { closeModal(); beginLevel(); } };
 })();
 </script>
 </body>

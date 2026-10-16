@@ -1,0 +1,58 @@
+name: iPhone app
+
+on:
+  push:
+    paths: ["index.html", "fonts/**", "icons/**", "ios/**", ".github/workflows/ios.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate the Xcode project
+        working-directory: ios
+        run: xcodegen generate
+
+      - name: Build the app (unsigned)
+        run: |
+          xcodebuild build \
+            -project ios/SugarShapes.xcodeproj \
+            -scheme SugarShapes \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination "generic/platform=iOS" \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
+
+      - name: Package the .ipa
+        run: |
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/SugarShapes.app Payload/
+          zip -qry SugarShapes.ipa Payload
+          ls -la SugarShapes.ipa
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SugarShapes-ipa
+          path: SugarShapes.ipa
+
+      # Keep a "latest" download on the repo's Releases page for the default branch.
+      - name: Publish to the Releases page
+        if: github.ref_name == github.event.repository.default_branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest --yes --cleanup-tag || true
+          gh release create latest SugarShapes.ipa \
+            --target "${{ github.sha }}" \
+            --title "Sugar Shapes for iPhone (latest build)" \
+            --notes "Unsigned build of commit ${{ github.sha }}. Install it with AltStore or Sideloadly, which sign it with your Apple ID. See the README for steps." \
+            --prerelease

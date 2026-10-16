@@ -281,6 +281,522 @@ button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 </div>
 
 <script>
+/* @rules:begin */
+/* Sugar Shapes rules engine.
+   Every decision the game makes lives here, with no drawing, sound or real time of its own:
+   matching, specials, combos, gravity, refills, goals, keys, chests, boosters and the level table.
+   The game inlines this file (tools/build.js) and animates what it returns; the simulator (sim/)
+   runs it headless. All rule randomness comes from the world's seeded generator, so a seed plus a
+   list of moves replays a game exactly. Visual effects are reported through world.fx(name, data, t),
+   where t is seconds after the blast starts; the simulator leaves fx unset. */
+(function (root, factory) {
+  const R = factory();
+  if (typeof module === 'object' && module.exports) module.exports = R; else root.SugarRules = R;
+})(typeof self !== 'undefined' ? self : this, function () {
+'use strict';
+
+const COLS = 8, ROWS = 8;
+const NONE = 0, SH = 1, SV = 2, WRAP = 3, BOMB = 4, SEEK = 5;
+const CREATE_BONUS = [0, 120, 120, 200, 500, 150];
+const FIRE_BONUS = [0, 100, 100, 180, 300, 150];
+const POINTS_PER_CANDY = 20, MAX_MULT = 8, RUSH_POINTS = 150;
+const METER_MAX = 36;                      // candies cleared to earn a free rainbow
+const KEY_CHANCE = .07, KEY_MAX = 3, START_KEYS = 2;
+const CHEST_FIRST = 3, CHEST_MAX = 6;
+const UNICORNS = 3, PARADE = 7;
+
+// Booster strength and the in-game economy, in one place so the economy model and the game share them.
+const TUNE = {
+  stampede: 8,                              // unicorns launched by Unicorn Stampede
+  party: 'board',                           // 'board': hits every candy; 'specials': fires partySpecials random specials
+  partySpecials: 6,
+  econ: {
+    startGold: 50,
+    startBoosters: { hammer: 3, swap: 3, rainbow: 2, swarm: 2, moves: 2, party: 1 },
+    winGold: [5, 5, 10],                    // base, per star, first-clear bonus
+    chestGold: [5, 10],                     // inclusive range
+    reviveBase: 10,                         // nth revive in one attempt costs reviveBase * n
+    reviveMoves: 5,
+    price: { hammer: 15, swap: 15, rainbow: 25, swarm: 30, moves: 20, party: 60 },
+    boosterPool: ['hammer', 'hammer', 'swap', 'swap', 'rainbow', 'swarm', 'swarm', 'moves', 'party'],
+  },
+};
+const ECON = TUNE.econ;
+const winGold = (stars, firstClear) => ECON.winGold[0] + ECON.winGold[1] * stars + (firstClear ? ECON.winGold[2] : 0);
+const reviveCost = n => ECON.reviveBase * n;
+
+function mulberry(a) {
+  return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+}
+const idxOf = (r, c) => r * COLS + c, rOf = i => (i / COLS) | 0, cOf = i => i % COLS;
+const colorOf = t => t && t.special !== BOMB ? t.type : -1;
+const randi = (w, n) => Math.floor(w.rng() * n);
+const randType = w => randi(w, w.colors);
+const tileAt = (w, i) => w.grid[rOf(i)][cOf(i)];
+const fx = (w, name, data, t = 0) => { if (w.fx) w.fx(name, data, t); };
+function shuffleInPlace(w, a) { for (let i = a.length - 1; i > 0; i--) { const j = randi(w, i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+/* ------------------------------------------------------------------ levels */
+const LOGO_CIRCLES = [[340, 322, 301], [1523, 322, 301], [633, 835, 297]];
+const LOGO_TRIS = [[930, 41, 1210, 582, 648, 582], [946, 564, 1509, 564, 1228, 1105]];
+const LOGO_BOX = { x: 39, y: 21, w: 1785, h: 1111 };
+function inTri(px, py, ax, ay, bx, by, cx, cy) {
+  const d1 = (px - bx) * (ay - by) - (ax - bx) * (py - by), d2 = (px - cx) * (by - cy) - (bx - cx) * (py - cy), d3 = (px - ax) * (cy - ay) - (cx - ax) * (py - ay);
+  return !((d1 < 0 || d2 < 0 || d3 < 0) && (d1 > 0 || d2 > 0 || d3 > 0));
+}
+function inLogo(x, y) {
+  for (const [cx, cy, r] of LOGO_CIRCLES) if ((x - cx) ** 2 + (y - cy) ** 2 <= r * r) return true;
+  return LOGO_TRIS.some(t => inTri(x, y, ...t));
+}
+function logoCell(r, c) {
+  let n = 0;
+  for (const [fx_, fy] of [[.5, .5], [.25, .25], [.75, .25], [.25, .75], [.75, .75]])
+    if (inLogo(LOGO_BOX.x + (c + fx_) / COLS * LOGO_BOX.w, LOGO_BOX.y + (r + fy) / ROWS * LOGO_BOX.h)) n++;
+  return n >= 3;
+}
+// jelly (Candy) or dust (Furniture) layouts: layers per cell
+const PAT = {
+  center: (r, c) => r >= 2 && r <= 5 && c >= 2 && c <= 5 ? 1 : 0,
+  ring: (r, c) => r === 0 || r === 7 || c === 0 || c === 7 ? 1 : 0,
+  ring2: (r, c) => r === 0 || r === 7 || c === 0 || c === 7 ? 2 : 0,
+  cross: (r, c) => r === 3 || r === 4 || c === 3 || c === 4 ? 1 : 0,
+  x: (r, c) => (r === c || r + c === 7) ? 2 : 0,
+  full: () => 1,
+  core2: (r, c) => r >= 2 && r <= 5 && c >= 2 && c <= 5 ? 2 : 1,
+  logo: (r, c) => logoCell(r, c) ? 1 : 0,
+  logo2: (r, c) => logoCell(r, c) ? 2 : 0,
+  corners: (r, c) => (r < 3 || r > 4) && (c < 3 || c > 4) ? 2 : 0,
+  bottom: r => r >= 5 ? 2 : 0,
+  checker: (r, c) => (r + c) % 2 ? 1 : 0,
+  // Furniture Mode seeds: a little dust that spreads if you leave it alone
+  rug: (r, c) => r >= 3 && r <= 4 && c >= 3 && c <= 4 ? 1 : 0,
+  corner: (r, c) => r >= 6 && c <= 1 ? 1 : 0,
+  twoCorners: (r, c) => (r >= 6 && c <= 1) || (r <= 1 && c >= 6) ? 1 : 0,
+  hall: (r, c) => r === 7 ? 1 : 0,
+  underBed: (r, c) => r >= 5 && c >= 2 && c <= 5 ? 1 : 0,
+  fourCorners: (r, c) => (r <= 1 || r >= 6) && (c <= 1 || c >= 6) ? 1 : 0,
+  attic: (r, c) => r <= 2 ? 1 : 0,
+  stripes2: (r, c) => c % 3 === 1 ? 1 : 0,
+};
+let LEVELS = null;                       // filled by setLevels() from levels.json
+function setLevels(table) { LEVELS = table; }
+const LEVEL_COUNT = 30, HOME_FIRST = 101, HOME_LAST = 130;
+function levelDef(n) {
+  const d = LEVELS && LEVELS[n];
+  if (!d) throw new Error('No level ' + n);
+  return d;
+}
+function makeLevel(n) {
+  const d = levelDef(n);
+  const L = { n, moves: d.moves, colors: d.colors, jelly: d.jelly || null, spread: !!d.spread, goals: d.goals, home: n >= HOME_FIRST, stars: d.stars };
+  if (!L.stars) {
+    const r100 = v => Math.round(v / 100) * 100, sg = d.goals.find(g => g[0] === 'score');
+    L.stars = sg ? [sg[1], r100(sg[1] * 1.5), r100(sg[1] * 2.1)] : (() => { const b = d.moves * 130; return [r100(b * .5), r100(b), r100(b * 1.7)]; })();
+  }
+  return L;
+}
+
+/* ------------------------------------------------------------------ world */
+function defaultTile(type, special = NONE) { return { type, special, key: false, r: 0, c: 0, immune: false }; }
+function newWorld(level, seed, mkTile) {
+  const w = {
+    level, seed: seed >>> 0, rng: mulberry(seed >>> 0), colors: level.colors, mkTile: mkTile || defaultTile,
+    grid: [], jelly: [], score: 0, moves: level.moves, over: false, meter: 0, rainbows: 0,
+    chest: { need: CHEST_FIRST, have: 0, pending: 0 }, turnJelly: 0, fx: null,
+    stats: { specialsMade: [0, 0, 0, 0, 0, 0], specialsFired: [0, 0, 0, 0, 0, 0], cascades: 0, shuffles: 0, chests: 0, rainbowsDropped: 0, spreads: 0 },
+  };
+  const pat = level.jelly ? PAT[level.jelly] : null;
+  let jt = 0;
+  for (let r = 0; r < ROWS; r++) { w.jelly.push([]); for (let c = 0; c < COLS; c++) { const v = pat ? pat(r, c) : 0; w.jelly[r].push(v); jt += v; } }
+  w.goals = level.goals.map(g => g[0] === 'score' ? { kind: 'score', need: g[1] } : g[0] === 'collect' ? { kind: 'collect', type: g[1], need: g[2], left: g[2] } : { kind: 'jelly', need: jt, left: jt });
+  return w;
+}
+function goalsMet(w) { return w.goals.every(g => g.kind === 'score' ? w.score >= g.need : g.left <= 0); }
+const jellyGoal = w => w.goals.find(g => g.kind === 'jelly');
+function plainTiles(w) { const out = []; w.grid.forEach(row => row.forEach(t => t && !t.special && out.push(t))); return out; }
+const keysOnBoard = w => w.grid.reduce((n, row) => n + row.filter(t => t && t.key).length, 0);
+
+/* ------------------------------------------------------------------ matching */
+// Lines of 3+ and 2x2 boxes of one colour; overlapping shapes merge into one group.
+function findGroups(w) {
+  const g_ = w.grid, runs = [];
+  for (let r = 0; r < ROWS; r++) {
+    let c = 0;
+    while (c < COLS) {
+      const k = colorOf(g_[r][c]); let e = c + 1;
+      if (k >= 0) while (e < COLS && colorOf(g_[r][e]) === k) e++;
+      if (k >= 0 && e - c >= 3) { const cells = []; for (let x = c; x < e; x++) cells.push(idxOf(r, x)); runs.push({ h: true, cells, type: k }); }
+      c = e;
+    }
+  }
+  for (let c = 0; c < COLS; c++) {
+    let r = 0;
+    while (r < ROWS) {
+      const k = colorOf(g_[r][c]); let e = r + 1;
+      if (k >= 0) while (e < ROWS && colorOf(g_[e][c]) === k) e++;
+      if (k >= 0 && e - r >= 3) { const cells = []; for (let y = r; y < e; y++) cells.push(idxOf(y, c)); runs.push({ h: false, cells, type: k }); }
+      r = e;
+    }
+  }
+  for (let r = 0; r < ROWS - 1; r++) for (let c = 0; c < COLS - 1; c++) {
+    const k = colorOf(g_[r][c]);
+    if (k >= 0 && colorOf(g_[r][c + 1]) === k && colorOf(g_[r + 1][c]) === k && colorOf(g_[r + 1][c + 1]) === k)
+      runs.push({ box: true, cells: [idxOf(r, c), idxOf(r, c + 1), idxOf(r + 1, c), idxOf(r + 1, c + 1)], type: k });
+  }
+  if (!runs.length) return [];
+  const par = runs.map((_, i) => i), find = i => par[i] === i ? i : (par[i] = find(par[i]));
+  const owner = new Map();
+  runs.forEach((run, i) => run.cells.forEach(x => { if (owner.has(x)) par[find(i)] = find(owner.get(x)); else owner.set(x, i); }));
+  const map = new Map();
+  runs.forEach((run, i) => {
+    const root = find(i); if (!map.has(root)) map.set(root, { cells: new Set(), runs: [], type: run.type });
+    const g = map.get(root); g.runs.push(run); run.cells.forEach(x => g.cells.add(x));
+  });
+  const groups = [...map.values()];
+  for (const g of groups) {
+    const lines = g.runs.filter(r => !r.box), hasBox = lines.length < g.runs.length;
+    let longest = lines[0] || g.runs[0]; const seen = new Map();
+    for (const run of lines) { if (run.cells.length > longest.cells.length) longest = run; run.cells.forEach(x => seen.set(x, (seen.get(x) || 0) + 1)); }
+    g.longest = longest; g.inter = -1; for (const [x, n] of seen) if (n > 1) { g.inter = x; break; }
+    const hasH = lines.some(r => r.h), hasV = lines.some(r => !r.h), len = lines.length ? longest.cells.length : 0;
+    // priority: rainbow (5 in a line, or 6+ candies) > wrapped (L/T) > striped (4) > unicorn (2x2 box)
+    g.special = len >= 5 || g.cells.size >= 6 ? BOMB : hasH && hasV ? WRAP : len === 4 ? (longest.h ? SV : SH) : hasBox ? SEEK : NONE;
+  }
+  return groups;
+}
+function matchAt(w, r, c) {
+  const g = w.grid, k = colorOf(g[r][c]); if (k < 0) return false;
+  let n = 1; for (let x = c - 1; x >= 0 && colorOf(g[r][x]) === k; x--) n++; for (let x = c + 1; x < COLS && colorOf(g[r][x]) === k; x++) n++;
+  if (n >= 3) return true;
+  n = 1; for (let y = r - 1; y >= 0 && colorOf(g[y][c]) === k; y--) n++; for (let y = r + 1; y < ROWS && colorOf(g[y][c]) === k; y++) n++;
+  if (n >= 3) return true;
+  for (const [dr, dc] of [[0, 0], [0, -1], [-1, 0], [-1, -1]]) {
+    const r0 = r + dr, c0 = c + dc; if (r0 < 0 || c0 < 0 || r0 + 1 >= ROWS || c0 + 1 >= COLS) continue;
+    if (colorOf(g[r0][c0]) === k && colorOf(g[r0][c0 + 1]) === k && colorOf(g[r0 + 1][c0]) === k && colorOf(g[r0 + 1][c0 + 1]) === k) return true;
+  }
+  return false;
+}
+const isComboSwap = (a, b) => a.special === BOMB || b.special === BOMB || (a.special > 0 && b.special > 0);
+function allMoves(w) {
+  const out = [], g = w.grid;
+  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) for (const [dr, dc] of [[0, 1], [1, 0]]) {
+    const r2 = r + dr, c2 = c + dc; if (r2 >= ROWS || c2 >= COLS) continue;
+    const a = g[r][c], b = g[r2][c2]; if (!a || !b) continue;
+    let ok = isComboSwap(a, b);
+    if (!ok) { g[r][c] = b; g[r2][c2] = a; ok = matchAt(w, r, c) || matchAt(w, r2, c2); g[r][c] = a; g[r2][c2] = b; }
+    if (ok) out.push({ a: { r, c }, b: { r: r2, c: c2 } });
+  }
+  return out;
+}
+function swapGrid(w, a, b) {
+  const g = w.grid, ta = g[a.r][a.c], tb = g[b.r][b.c];
+  g[a.r][a.c] = tb; g[b.r][b.c] = ta;
+  ta.r = b.r; ta.c = b.c; tb.r = a.r; tb.c = a.c;
+}
+// A fresh board: no ready-made matches, at least 3 moves, and a couple of keys.
+function genBoard(w) {
+  for (let tries = 0; tries < 50; tries++) {
+    w.grid = [];
+    for (let r = 0; r < ROWS; r++) {
+      w.grid.push([]);
+      for (let c = 0; c < COLS; c++) {
+        const g = w.grid; let k;
+        do k = randType(w); while ((c >= 2 && g[r][c - 1].type === k && g[r][c - 2].type === k) || (r >= 2 && g[r - 1][c].type === k && g[r - 2][c].type === k) ||
+          (r >= 1 && c >= 1 && g[r - 1][c].type === k && g[r][c - 1].type === k && g[r - 1][c - 1].type === k));
+        const t = w.mkTile(k); t.r = r; t.c = c; g[r].push(t);
+      }
+    }
+    if (allMoves(w).length >= 3) break;
+  }
+  for (let placed = 0; placed < START_KEYS;) { const t = w.grid[1 + randi(w, ROWS - 2)][randi(w, COLS)]; if (!t.key) { t.key = true; placed++; } }
+}
+
+/* ------------------------------------------------------------------ blasts */
+// A blast is every cell cleared by one step, each with the time it pops; specials it reaches fire in turn.
+class Blast {
+  constructor(w, mult) { this.w = w; this.mult = mult; this.time = new Map(); this.src = new Map(); this.queue = []; this.activated = new Set(); this.sources = []; this.merge = new Map(); this.noActivate = new Set(); }
+  source(x, y, type, t = 0) { const s = { x, y, type, t, pts: 0 }; this.sources.push(s); return s; }
+  add(i, t, src) {
+    const r = rOf(i), c = cOf(i); if (r < 0 || r >= ROWS || c < 0 || c >= COLS) return;
+    const cur = this.time.get(i); if (cur !== undefined && cur <= t) return;
+    this.time.set(i, t); if (!this.src.has(i) || cur === undefined) this.src.set(i, src); this.queue.push(i);
+  }
+  addRC(r, c, t, src) { if (r >= 0 && r < ROWS && c >= 0 && c < COLS) this.add(idxOf(r, c), t, src); }
+  process() {
+    while (this.queue.length) {
+      const i = this.queue.shift(), t = tileAt(this.w, i);
+      if (!t || t.immune) continue;
+      if (t.special > 0 && !this.activated.has(i) && !this.noActivate.has(i)) { this.activated.add(i); activate(this, i, t, this.time.get(i)); }
+    }
+  }
+  // Removes every scheduled tile from the board; returns the clears in pop order.
+  plan() {
+    this.process();
+    const clears = []; let maxT = 0;
+    const order = [...this.time.entries()].sort((a, b) => a[1] - b[1]);
+    for (const [i, t] of order) {
+      const r = rOf(i), c = cOf(i), tile = this.w.grid[r][c];
+      if (!tile || tile.immune) continue;
+      this.w.grid[r][c] = null;
+      const src = this.src.get(i), pts = POINTS_PER_CANDY * this.mult; src.pts += pts;
+      const m = this.merge.get(i);
+      clears.push({ tile, r, c, t, pts, src, mergeTo: m !== undefined && !tile.special ? { r: rOf(m), c: cOf(m) } : null });
+      maxT = Math.max(maxT, t);
+    }
+    return { clears, sources: this.sources, maxT };
+  }
+}
+function mostCommon(B) {
+  const w = B.w, cnt = [0, 0, 0, 0, 0, 0];
+  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { const t = w.grid[r][c]; if (t && !t.immune && !B.time.has(idxOf(r, c))) { const k = colorOf(t); if (k >= 0) cnt[k]++; } }
+  let best = -1, bv = 0; cnt.forEach((v, i) => { if (v > bv) { bv = v; best = i; } }); return best;
+}
+function beamCells(B, r, c, horiz, t, src) {
+  fx(B.w, 'beam', { r, c, horiz, type: src && src.type >= 0 ? src.type : 0 }, t);
+  for (let k = 0; k < (horiz ? COLS : ROWS); k++) {
+    const rr = horiz ? r : k, cc = horiz ? k : c;
+    B.addRC(rr, cc, t + .04 + Math.abs(horiz ? cc - c : rr - r) * .03, src);
+  }
+}
+const DIAMOND2 = []; for (let dr = -2; dr <= 2; dr++) for (let dc = -2; dc <= 2; dc++) if (Math.abs(dr) + Math.abs(dc) <= 2) DIAMOND2.push([dr, dc]);
+function activate(B, i, tile, t) {
+  const w = B.w, r = rOf(i), c = cOf(i), type = tile.type;
+  w.stats.specialsFired[tile.special]++;
+  const src = B.source(c + .5, r + .5, tile.special === BOMB ? -1 : type, t); src.pts += FIRE_BONUS[tile.special];
+  if (tile.special === SH || tile.special === SV) {
+    fx(w, 'stripe', { r, c }, t);
+    beamCells(B, r, c, tile.special === SH, t, src);
+  } else if (tile.special === WRAP) {
+    fx(w, 'wrap', { r, c, type }, t);
+    for (const [dr, dc] of DIAMOND2) B.addRC(r + dr, c + dc, t + .05 + (Math.abs(dr) + Math.abs(dc)) * .04, src);
+  } else if (tile.special === SEEK) {
+    launchSeekers(B, r, c, type, t, UNICORNS, NONE, src);
+  } else if (tile.special === BOMB) {
+    const col = mostCommon(B);
+    fx(w, 'bomb', { r, c }, t);
+    if (col >= 0) {
+      let k = 0;
+      for (let rr = 0; rr < ROWS; rr++) for (let cc = 0; cc < COLS; cc++) {
+        const o = w.grid[rr][cc];
+        if (o && colorOf(o) === col && !B.time.has(idxOf(rr, cc))) {
+          const d = t + .14 + k++ * .03;
+          fx(w, 'bolt', { r1: r, c1: c, r2: rr, c2: cc, type: col }, d - .08);
+          B.add(idxOf(rr, cc), d, src);
+        }
+      }
+    }
+  }
+}
+// Unicorns home in on what the level needs most: jelly, then keys, then goal candies.
+function seekTargets(B, n) {
+  const w = B.w, need = new Set(w.goals.filter(g => g.kind === 'collect' && g.left > 0).map(g => g.type)), out = [];
+  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+    const t = w.grid[r][c], i = idxOf(r, c);
+    if (!t || t.immune || B.time.has(i)) continue;
+    out.push({ i, s: w.jelly[r][c] * 10 + (t.key ? 8 : 0) + (need.has(colorOf(t)) ? 6 : 0) - (t.special ? 4 : 0) + w.rng() * 3 });
+  }
+  return out.sort((a, b) => b.s - a.s).slice(0, n).map(o => o.i);
+}
+const UNICORN_FLIGHT = .95;              // seconds a unicorn spends looping around the screen
+function launchSeekers(B, r, c, type, t, n, carry, src) {
+  const w = B.w;
+  fx(w, 'unicornLaunch', { r, c }, t);
+  seekTargets(B, n).forEach((ti, k) => {
+    const tr = rOf(ti), tc = cOf(ti), dur = UNICORN_FLIGHT + k * .07, hit = t + dur, col = type >= 0 ? type : k % 6;
+    fx(w, 'unicorn', { r, c, tr, tc, dur, type: col }, t);
+    B.add(ti, hit, src);
+    fx(w, 'unicornHit', { r: tr, c: tc, type: col, carry }, hit);
+    if (carry === WRAP) { for (const [dr, dc] of DIAMOND2) B.addRC(tr + dr, tc + dc, hit + .04 + (Math.abs(dr) + Math.abs(dc)) * .04, src); }
+    else if (carry === SH || carry === SV) beamCells(B, tr, tc, carry === SH, hit, src);
+    else for (const [dr, dc] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) B.addRC(tr + dr, tc + dc, hit + .05, src);
+  });
+}
+
+/* ------------------------------------------------------------------ turn steps */
+function pickSpawn(w, g, swapCells) {
+  const ok = i => { const t = tileAt(w, i); return t && !t.special; };
+  if (swapCells) for (const s of swapCells) { const i = idxOf(s.r, s.c); if (g.cells.has(i) && ok(i)) return i; }
+  if (g.special === WRAP && g.inter >= 0 && ok(g.inter)) return g.inter;
+  const run = g.longest.cells, mid = run[Math.floor((run.length - 1) / 2)];
+  for (const i of [mid, ...run, ...g.cells]) if (ok(i)) return i;
+  return -1;
+}
+// One cascade step: every group clears, and groups with a special shape leave that special behind.
+function matchStep(w, groups, cascade, swapCells) {
+  const B = new Blast(w, Math.min(cascade, MAX_MULT)), creates = [];
+  for (const g of groups) {
+    const spawn = g.special ? pickSpawn(w, g, swapCells) : -1;
+    let cx = 0, cy = 0; g.cells.forEach(i => { cx += cOf(i); cy += rOf(i); });
+    const src = B.source(cx / g.cells.size + .5, cy / g.cells.size + .5, g.type, 0);
+    if (spawn >= 0) { creates.push({ i: spawn, special: g.special, tile: tileAt(w, spawn) }); src.pts += CREATE_BONUS[g.special]; }
+    for (const i of g.cells) { if (i === spawn) continue; B.add(i, 0, src); if (spawn >= 0) B.merge.set(i, spawn); }
+  }
+  for (const cr of creates) cr.tile.immune = true;
+  return { B, creates };
+}
+// The new special appears where its group was; the jelly under it counts as cleared.
+function applyCreate(w, cr) {
+  const t = cr.tile; t.special = cr.special; w.stats.specialsMade[cr.special]++;
+  const r = rOf(cr.i), c = cOf(cr.i), ev = { jelly: false };
+  if (w.jelly[r][c] > 0) { w.jelly[r][c]--; w.turnJelly++; ev.jelly = true; const g = jellyGoal(w); if (g) g.left--; }
+  return ev;
+}
+function endCreates(creates) { for (const cr of creates) cr.tile.immune = false; }
+// What one popped candy does to the level: score, meter, keys, jelly and collect goals.
+function applyClear(w, cl) {
+  const t = cl.tile, ev = { jelly: false, key: false, meterFull: false, collect: null };
+  w.score += cl.pts;
+  if (!w.over) {
+    if (++w.meter >= METER_MAX) { w.meter = 0; w.rainbows++; ev.meterFull = true; }
+    if (t.key) { const ch = w.chest; ch.have++; if (ch.have >= ch.need && ch.have - ch.need < 1) ch.pending++; ev.key = true; }
+  }
+  if (w.jelly[cl.r][cl.c] > 0) { w.jelly[cl.r][cl.c]--; w.turnJelly++; ev.jelly = true; const g = jellyGoal(w); if (g) g.left--; }
+  if (t.special !== BOMB) for (const g of w.goals) if (g.kind === 'collect' && g.type === t.type && g.left > 0) { g.left--; ev.collect = g; }
+  return ev;
+}
+// Swapping two specials (or a rainbow with anything) sets off a combo instead of a match.
+function comboPlan(w, ta, tb) {
+  const B = new Blast(w, 1), ia = idxOf(ta.r, ta.c), ib = idxOf(tb.r, tb.c), sa = ta.special, sb = tb.special;
+  B.noActivate.add(ia); B.noActivate.add(ib);
+  const src = B.source(ta.c + .5, ta.r + .5, sa === BOMB ? tb.type : ta.type, 0);
+  const out = { B, kind: '', conv: [], r: ta.r, c: ta.c, color: -1 };
+  if (sa === BOMB && sb === BOMB) {
+    out.kind = 'meltdown';
+    for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) B.addRC(r, c, .15 + Math.hypot(r - ta.r, c - ta.c) * .07, src);
+    src.pts += 2000;
+  } else if (sa === BOMB || sb === BOMB) {
+    const bomb = sa === BOMB ? ta : tb, other = sa === BOMB ? tb : ta, col = other.type, os = other.special;
+    const bi = idxOf(bomb.r, bomb.c), oi = idxOf(other.r, other.c), targets = [];
+    out.color = col; out.bomb = bomb; out.other = other;
+    for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { const t = w.grid[r][c]; if (t && t !== other && colorOf(t) === col) targets.push(t); }
+    if (os > 0) {
+      out.kind = os === WRAP ? 'wrapStorm' : os === SEEK ? 'unicornStorm' : 'stripeStorm';
+      targets.forEach(t => { const sp = os === WRAP || os === SEEK ? os : (w.rng() < .5 ? SH : SV); t.special = sp; out.conv.push({ tile: t, special: sp }); });
+      const d0 = targets.length * .04 + .5; out.delay = d0;
+      B.noActivate.delete(oi);
+      B.add(bi, d0, src); B.add(oi, d0 + .05, src);
+      targets.forEach((t, i) => B.add(idxOf(t.r, t.c), d0 + .1 + i * .08, src));
+    } else {
+      out.kind = 'colorClear'; out.targets = targets;
+      targets.forEach((t, i) => { const d = .12 + i * .035; fx(w, 'bolt', { r1: bomb.r, c1: bomb.c, r2: t.r, c2: t.c, type: col }, d - .08); B.add(idxOf(t.r, t.c), d, src); });
+      B.add(oi, .1, src); B.add(bi, .14 + targets.length * .035, src);
+    }
+  } else {
+    const isS = s => s === SH || s === SV, r0 = ta.r, c0 = ta.c;
+    B.add(ia, 0, src); B.add(ib, 0, src);
+    if (sa === SEEK && sb === SEEK) { out.kind = 'parade'; launchSeekers(B, r0, c0, ta.type, .05, PARADE, NONE, src); src.pts += 300; }
+    else if (sa === SEEK || sb === SEEK) { const carry = sa === SEEK ? sb : sa; out.kind = carry === WRAP ? 'bombDrop' : 'laserDrop'; launchSeekers(B, r0, c0, ta.type, .05, UNICORNS, carry, src); src.pts += 300; }
+    else if (sa === WRAP && sb === WRAP) { out.kind = 'kaboom'; for (let dr = -2; dr <= 2; dr++) for (let dc = -2; dc <= 2; dc++) B.addRC(r0 + dr, c0 + dc, .08 + Math.max(Math.abs(dr), Math.abs(dc)) * .07, src); src.pts += 400; }
+    else {
+      const wide = !(isS(sa) && isS(sb)); out.kind = wide ? 'megaCross' : 'cross';
+      for (const d of (wide ? [-1, 0, 1] : [0])) { beamCells(B, r0 + d, c0, true, 0, src); beamCells(B, r0, c0 + d, false, 0, src); }
+      src.pts += wide ? 300 : 150;
+    }
+  }
+  return out;
+}
+// Gravity and refill. New candies may carry a key while fewer than KEY_MAX are on the board.
+function collapse(w) {
+  const moved = [], spawned = [], g = w.grid;
+  for (let c = 0; c < COLS; c++) {
+    let wr = ROWS - 1;
+    for (let r = ROWS - 1; r >= 0; r--) { const t = g[r][c]; if (t) { if (r !== wr) { g[wr][c] = t; g[r][c] = null; t.r = wr; moved.push(t); } wr--; } }
+    for (let r = wr; r >= 0; r--) {
+      const t = w.mkTile(randType(w)); t.r = r; t.c = c; t.dropFrom = r - wr - 1.15;
+      if (!w.over && keysOnBoard(w) < KEY_MAX && w.rng() < KEY_CHANCE) t.key = true;
+      g[r][c] = t; spawned.push(t);
+    }
+  }
+  return { moved, spawned };
+}
+function shuffleBoard(w) {
+  const tiles = []; w.grid.forEach(row => row.forEach(t => t && tiles.push(t)));
+  for (let attempt = 0; attempt < 300; attempt++) {
+    shuffleInPlace(w, tiles);
+    if (attempt > 150) tiles.forEach(t => { if (!t.special) t.type = randType(w); });
+    tiles.forEach((t, i) => { const r = rOf(i), c = cOf(i); w.grid[r][c] = t; t.r = r; t.c = c; });
+    if (!findGroups(w).length && allMoves(w).length) break;
+  }
+  w.stats.shuffles++;
+  return tiles;
+}
+function startTurn(w) { w.turnJelly = 0; }
+// Chest: opens when enough keys arrive; drops a rainbow plus two specials, a booster and some gold.
+function openChest(w) {
+  const ch = w.chest; if (ch.pending <= 0) return null;
+  ch.pending--; ch.have -= ch.need; ch.need = Math.min(CHEST_MAX, ch.need + 1); w.stats.chests++;
+  const rewards = [BOMB, [SEEK, WRAP, SH][randi(w, 3)], [SEEK, WRAP, SV][randi(w, 3)]];
+  const pool = shuffleInPlace(w, plainTiles(w)), placed = [];
+  rewards.forEach((sp, i) => { if (pool[i]) { pool[i].special = sp; placed.push({ tile: pool[i], special: sp }); } });
+  const prize = ECON.boosterPool[randi(w, ECON.boosterPool.length)];
+  const gold = ECON.chestGold[0] + randi(w, ECON.chestGold[1] - ECON.chestGold[0] + 1);
+  return { placed, prize, gold };
+}
+function dropRainbow(w) {
+  if (w.rainbows <= 0) return null;
+  w.rainbows--;
+  const pool = plainTiles(w); if (!pool.length) return null;
+  const t = pool[randi(w, pool.length)]; t.special = BOMB; w.stats.rainbowsDropped++;
+  return t;
+}
+// Furniture Mode: if a turn cleans no dust, the dust creeps onto one clean neighbouring tile.
+function spreadDust(w) {
+  if (!w.level.spread || w.turnJelly > 0) return null;
+  const g = jellyGoal(w); if (!g || g.left <= 0) return null;
+  const cand = [];
+  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) if (w.jelly[r][c] === 0) {
+    for (const [dr, dc] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) { const rr = r + dr, cc = c + dc; if (rr >= 0 && rr < ROWS && cc >= 0 && cc < COLS && w.jelly[rr][cc] > 0) { cand.push([r, c, rr, cc]); break; } }
+  }
+  if (!cand.length) return null;
+  const [r, c, fr, fc] = cand[randi(w, cand.length)];
+  w.jelly[r][c] = 1; g.left++; g.need++; w.stats.spreads++;
+  return { r, c, fromR: fr, fromC: fc };
+}
+
+/* ------------------------------------------------------------------ end of level and boosters */
+function rushConvert(w) {
+  if (w.moves <= 0) return null;
+  const pool = plainTiles(w); if (!pool.length) return null;
+  const t = pool[randi(w, pool.length)]; w.moves--; w.score += RUSH_POINTS;
+  const special = w.rng() < .5 ? SH : SV; t.special = special;
+  return { tile: t, special };
+}
+function rushDetonate(w) {
+  const list = []; w.grid.forEach(row => row.forEach(t => t && t.special > 0 && list.push(idxOf(t.r, t.c))));
+  if (!list.length) return null;
+  const B = new Blast(w, 1);
+  shuffleInPlace(w, list).slice(0, 5).forEach((i, k) => { const t = tileAt(w, i); B.add(i, k * .14, B.source(t.c + .5, t.r + .5, t.type, k * .14)); });
+  return B;
+}
+function hammerPlan(w, r, c) { const t = w.grid[r][c], B = new Blast(w, 1); B.add(idxOf(r, c), 0, B.source(c + .5, r + .5, colorOf(t))); return B; }
+function swarmPlan(w) { const B = new Blast(w, 1), src = B.source(COLS / 2, ROWS - .5, -1); launchSeekers(B, ROWS + .4, (COLS - 1) / 2, -1, .1, TUNE.stampede, NONE, src); return B; }
+// Sugar Party. 'board': every candy is hit once. 'specials': a handful of candies become specials and all fire.
+function partyPlan(w) {
+  const B = new Blast(w, 2), src = B.source(COLS / 2, ROWS / 2, -1), placed = [];
+  if (TUNE.party === 'board') {
+    for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) B.addRC(r, c, .25 + Math.hypot(r - 3.5, c - 3.5) * .08, src);
+  } else {
+    const kinds = [SH, SV, WRAP, SEEK];
+    shuffleInPlace(w, plainTiles(w)).slice(0, TUNE.partySpecials).forEach((t, i) => { const sp = kinds[i % kinds.length]; t.special = sp; placed.push({ tile: t, special: sp }); });
+    placed.forEach((p, i) => B.add(idxOf(p.tile.r, p.tile.c), .35 + i * .12, src));
+  }
+  return { B, placed };
+}
+function rainbowDropAt(w, r, c) { const t = w.grid[r][c]; if (!t) return null; t.special = BOMB; return t; }
+
+return {
+  COLS, ROWS, NONE, SH, SV, WRAP, BOMB, SEEK, CREATE_BONUS, FIRE_BONUS, POINTS_PER_CANDY, MAX_MULT, METER_MAX, KEY_CHANCE, KEY_MAX,
+  CHEST_FIRST, CHEST_MAX, UNICORNS, PARADE, UNICORN_FLIGHT, TUNE, ECON, winGold, reviveCost, LEVEL_COUNT, HOME_FIRST, HOME_LAST, PAT,
+  mulberry, idxOf, rOf, cOf, colorOf, logoCell, setLevels, levelDef, makeLevel, newWorld, goalsMet, plainTiles, keysOnBoard,
+  findGroups, matchAt, isComboSwap, allMoves, swapGrid, genBoard, Blast, mostCommon, seekTargets, pickSpawn, matchStep, applyCreate,
+  endCreates, applyClear, comboPlan, collapse, shuffleBoard, startTurn, openChest, dropRainbow, spreadDust, rushConvert, rushDetonate,
+  hammerPlan, swarmPlan, partyPlan, rainbowDropAt,
+};
+});
+SugarRules.setLevels({"1":{"moves":20,"colors":5,"goals":[["score",2000]],"stars":[2000,3000,4200]},"2":{"moves":20,"colors":5,"goals":[["collect",0,16],["collect",4,16]],"stars":[1300,2600,4400]},"3":{"moves":22,"colors":5,"jelly":"center","goals":[["jelly"]],"stars":[1400,2900,4900]},"4":{"moves":18,"colors":5,"goals":[["score",3000]],"stars":[3000,4500,6300]},"5":{"moves":22,"colors":6,"goals":[["collect",1,16],["collect",2,16],["collect",3,16]],"stars":[1400,2900,4900]},"6":{"moves":24,"colors":5,"jelly":"ring","goals":[["jelly"]],"stars":[1600,3100,5300]},"7":{"moves":26,"colors":5,"jelly":"logo","goals":[["jelly"]],"stars":[1700,3400,5700]},"8":{"moves":20,"colors":6,"goals":[["score",2800]],"stars":[2800,4200,5900]},"9":{"moves":24,"colors":5,"jelly":"cross","goals":[["jelly"],["collect",3,20]],"stars":[1600,3100,5300]},"10":{"moves":24,"colors":6,"goals":[["collect",0,24],["collect",5,24]],"stars":[1600,3100,5300]},"11":{"moves":28,"colors":5,"jelly":"x","goals":[["jelly"]],"stars":[1800,3600,6200]},"12":{"moves":32,"colors":5,"jelly":"full","goals":[["jelly"]],"stars":[2100,4200,7100]},"13":{"moves":20,"colors":5,"goals":[["score",2550]],"stars":[2550,3800,5400]},"14":{"moves":22,"colors":5,"goals":[["collect",3,18],["collect",2,18]],"stars":[1400,2900,4900]},"15":{"moves":30,"colors":5,"jelly":"logo2","goals":[["jelly"]],"stars":[2000,3900,6600]},"16":{"moves":26,"colors":5,"jelly":"center","goals":[["jelly"],["collect",2,18]],"stars":[1700,3400,5700]},"17":{"moves":22,"colors":6,"goals":[["score",3150]],"stars":[3150,4700,6600]},"18":{"moves":22,"colors":6,"goals":[["collect",1,22],["collect",0,22]],"stars":[1400,2900,4900]},"19":{"moves":30,"colors":6,"jelly":"center","goals":[["jelly"]],"stars":[2000,3900,6600]},"20":{"moves":26,"colors":6,"jelly":"logo2","goals":[["jelly"],["collect",5,22]],"stars":[1700,3400,5700]},"21":{"moves":18,"colors":6,"goals":[["score",3750]],"stars":[3750,5600,7900]},"22":{"moves":22,"colors":6,"goals":[["collect",3,26],["collect",2,26]],"stars":[1400,2900,4900]},"23":{"moves":30,"colors":6,"jelly":"logo2","goals":[["jelly"]],"stars":[2000,3900,6600]},"24":{"moves":26,"colors":6,"jelly":"center","goals":[["jelly"],["collect",0,26]],"stars":[1700,3400,5700]},"25":{"moves":20,"colors":6,"goals":[["score",4350]],"stars":[4350,6500,9100]},"26":{"moves":22,"colors":6,"goals":[["collect",0,30],["collect",1,30]],"stars":[1400,2900,4900]},"27":{"moves":30,"colors":6,"jelly":"center","goals":[["jelly"]],"stars":[2000,3900,6600]},"28":{"moves":26,"colors":6,"jelly":"logo2","goals":[["jelly"],["collect",1,30]],"stars":[1700,3400,5700]},"29":{"moves":22,"colors":6,"goals":[["score",4950]],"stars":[4950,7400,10400]},"30":{"moves":22,"colors":6,"goals":[["collect",3,34],["collect",0,34]],"stars":[1400,2900,4900]},"101":{"moves":20,"colors":5,"goals":[["score",2000]],"stars":[2000,3000,4200]},"102":{"moves":20,"colors":5,"goals":[["collect",0,16],["collect",4,16]],"stars":[1300,2600,4400]},"103":{"moves":22,"colors":5,"jelly":"center","goals":[["jelly"]],"stars":[1400,2900,4900]},"104":{"moves":18,"colors":5,"goals":[["score",3000]],"stars":[3000,4500,6300]},"105":{"moves":22,"colors":6,"goals":[["collect",1,16],["collect",2,16],["collect",3,16]],"stars":[1400,2900,4900]},"106":{"moves":24,"colors":5,"jelly":"ring","goals":[["jelly"]],"stars":[1600,3100,5300]},"107":{"moves":26,"colors":5,"jelly":"logo","goals":[["jelly"]],"stars":[1700,3400,5700]},"108":{"moves":20,"colors":6,"goals":[["score",2800]],"stars":[2800,4200,5900]},"109":{"moves":24,"colors":5,"jelly":"cross","goals":[["jelly"],["collect",3,20]],"stars":[1600,3100,5300]},"110":{"moves":24,"colors":6,"goals":[["collect",0,24],["collect",5,24]],"stars":[1600,3100,5300]},"111":{"moves":28,"colors":5,"jelly":"x","goals":[["jelly"]],"stars":[1800,3600,6200]},"112":{"moves":32,"colors":5,"jelly":"full","goals":[["jelly"]],"stars":[2100,4200,7100]},"113":{"moves":20,"colors":5,"goals":[["score",2550]],"stars":[2550,3800,5400]},"114":{"moves":22,"colors":5,"goals":[["collect",3,18],["collect",2,18]],"stars":[1400,2900,4900]},"115":{"moves":30,"colors":5,"jelly":"logo2","goals":[["jelly"]],"stars":[2000,3900,6600]},"116":{"moves":26,"colors":5,"jelly":"center","goals":[["jelly"],["collect",2,18]],"stars":[1700,3400,5700]},"117":{"moves":22,"colors":6,"goals":[["score",3150]],"stars":[3150,4700,6600]},"118":{"moves":22,"colors":6,"goals":[["collect",1,22],["collect",0,22]],"stars":[1400,2900,4900]},"119":{"moves":30,"colors":6,"jelly":"center","goals":[["jelly"]],"stars":[2000,3900,6600]},"120":{"moves":26,"colors":6,"jelly":"logo2","goals":[["jelly"],["collect",5,22]],"stars":[1700,3400,5700]},"121":{"moves":18,"colors":6,"goals":[["score",3750]],"stars":[3750,5600,7900]},"122":{"moves":22,"colors":6,"goals":[["collect",3,26],["collect",2,26]],"stars":[1400,2900,4900]},"123":{"moves":30,"colors":6,"jelly":"logo2","goals":[["jelly"]],"stars":[2000,3900,6600]},"124":{"moves":26,"colors":6,"jelly":"center","goals":[["jelly"],["collect",0,26]],"stars":[1700,3400,5700]},"125":{"moves":20,"colors":6,"goals":[["score",4350]],"stars":[4350,6500,9100]},"126":{"moves":22,"colors":6,"goals":[["collect",0,30],["collect",1,30]],"stars":[1400,2900,4900]},"127":{"moves":30,"colors":6,"jelly":"center","goals":[["jelly"]],"stars":[2000,3900,6600]},"128":{"moves":26,"colors":6,"jelly":"logo2","goals":[["jelly"],["collect",1,30]],"stars":[1700,3400,5700]},"129":{"moves":22,"colors":6,"goals":[["score",4950]],"stars":[4950,7400,10400]},"130":{"moves":22,"colors":6,"goals":[["collect",3,34],["collect",0,34]],"stars":[1400,2900,4900]}});
+/* @rules:end */
+</script>
+<script>
 (() => {
 'use strict';
 
@@ -312,8 +828,8 @@ const STAR_D = 'M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5
 const starSvg = cls => `<svg viewBox="0 0 24 24" class="${cls || ''}" aria-hidden="true"><path d="${STAR_D}"/></svg>`;
 
 /* ---------- constants ---------- */
-const COLS = 8, ROWS = 8;
-const NONE = 0, SH = 1, SV = 2, WRAP = 3, BOMB = 4, SEEK = 5;
+const R = SugarRules;
+const { COLS, ROWS, NONE, SH, SV, WRAP, BOMB, SEEK, METER_MAX, HOME_FIRST, HOME_LAST, LEVEL_COUNT } = R;
 const CANDY = [
   { name: 'cherry candies',    base: '#ff3b5c', light: '#ffa3b1', dark: '#a10f2c' },
   { name: 'tangerine candies', base: '#ff9419', light: '#ffd497', dark: '#b05200' },
@@ -322,10 +838,6 @@ const CANDY = [
   { name: 'blueberry candies', base: '#2f9bff', light: '#b2dbff', dark: '#0a4ca6' },
   { name: 'grape candies',     base: '#a752f5', light: '#e0bcff', dark: '#5a199c' },
 ];
-const CREATE_BONUS = [0, 120, 120, 200, 500, 150];
-const FIRE_BONUS = [0, 100, 100, 180, 300, 150];
-const METER_MAX = 36;         // candies cleared to earn a free rainbow
-const KEY_CHANCE = .07;       // chance a new candy carries a key (while fewer than 3 are on the board)
 const BOOSTERS = [
   { id: 'hammer', name: 'Hammer', aim: true, tip: 'Tap a candy to smash it' },
   { id: 'swap', name: 'Free Swap', aim: true, tip: 'Swap any two neighbours' },
@@ -335,9 +847,8 @@ const BOOSTERS = [
   { id: 'party', name: 'Sugar Party', aim: false },
 ];
 const BOOST = Object.fromEntries(BOOSTERS.map(b => [b.id, b]));
-const PRICE = { hammer: 15, swap: 15, rainbow: 25, swarm: 30, moves: 20, party: 60 };
+const PRICE = R.ECON.price;
 // Furniture Mode: levels 101-130 swap the candies for furniture
-const HOME_FIRST = 101, HOME_LAST = 130;
 const FURN = ['sofas', 'armchairs', 'lamps', 'plants', 'beds', 'wardrobes'];
 let THEME = 'candy';
 const itemName = t => THEME === 'home' ? FURN[t] : CANDY[t].name;
@@ -352,78 +863,16 @@ const LOGO = new Path2D();
 LOGO_CIRCLES.forEach(([x, y, r]) => { LOGO.moveTo(x + r, y); LOGO.arc(x, y, r, 0, Math.PI * 2); LOGO.closePath(); });
 LOGO_TRIS.forEach(t => { LOGO.moveTo(t[0], t[1]); LOGO.lineTo(t[2], t[3]); LOGO.lineTo(t[4], t[5]); LOGO.closePath(); });
 const LOGO_BOX = { x: 39, y: 21, w: 1785, h: 1111 };
-function inTri(px, py, ax, ay, bx, by, cx, cy) {
-  const d1 = (px - bx) * (ay - by) - (ax - bx) * (py - by), d2 = (px - cx) * (by - cy) - (bx - cx) * (py - cy), d3 = (px - ax) * (cy - ay) - (cx - ax) * (py - ay);
-  return !((d1 < 0 || d2 < 0 || d3 < 0) && (d1 > 0 || d2 > 0 || d3 > 0));
-}
-function inLogo(x, y) {
-  for (const [cx, cy, r] of LOGO_CIRCLES) if ((x - cx) ** 2 + (y - cy) ** 2 <= r * r) return true;
-  return LOGO_TRIS.some(t => inTri(x, y, ...t));
-}
-function logoCell(r, c) {
-  let n = 0;
-  for (const [fx, fy] of [[.5, .5], [.25, .25], [.75, .25], [.25, .75], [.75, .75]])
-    if (inLogo(LOGO_BOX.x + (c + fx) / COLS * LOGO_BOX.w, LOGO_BOX.y + (r + fy) / ROWS * LOGO_BOX.h)) n++;
-  return n >= 3;
-}
 
 /* ---------- save data ---------- */
 const KEY = 'sugar-shapes-v1';
-let save = { unlocked: 1, unlockedHome: HOME_FIRST, gold: 50, stars: {}, best: {}, sfx: true, music: true, boosters: { hammer: 3, swap: 3, rainbow: 2, swarm: 2, moves: 2, party: 1 } };
+let save = { unlocked: 1, unlockedHome: HOME_FIRST, gold: R.ECON.startGold, stars: {}, best: {}, sfx: true, music: true, boosters: { ...R.ECON.startBoosters } };
 try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && typeof s === 'object') save = Object.assign(save, s); } catch (e) {}
 function persist() { try { localStorage.setItem(KEY, JSON.stringify(save)); } catch (e) {} }
 
 /* ---------- levels ---------- */
-const PAT = {
-  center: (r, c) => r >= 2 && r <= 5 && c >= 2 && c <= 5 ? 1 : 0,
-  ring: (r, c) => r === 0 || r === 7 || c === 0 || c === 7 ? 1 : 0,
-  ring2: (r, c) => r === 0 || r === 7 || c === 0 || c === 7 ? 2 : 0,
-  cross: (r, c) => r === 3 || r === 4 || c === 3 || c === 4 ? 1 : 0,
-  x: (r, c) => (r === c || r + c === 7) ? 2 : 0,
-  full: () => 1,
-  core2: (r, c) => r >= 2 && r <= 5 && c >= 2 && c <= 5 ? 2 : 1,
-  logo: (r, c) => logoCell(r, c) ? 1 : 0,
-  logo2: (r, c) => logoCell(r, c) ? 2 : 0,
-  corners: (r, c) => (r < 3 || r > 4) && (c < 3 || c > 4) ? 2 : 0,
-  bottom: (r) => r >= 5 ? 2 : 0,
-  checker: (r, c) => (r + c) % 2 ? 1 : 0,
-};
-const HAND = [
-  { moves: 20, colors: 5, goals: [['score', 2000]] },
-  { moves: 20, colors: 5, goals: [['collect', 0, 16], ['collect', 4, 16]] },
-  { moves: 22, colors: 5, jelly: 'center', goals: [['jelly']] },
-  { moves: 18, colors: 5, goals: [['score', 3000]] },
-  { moves: 22, colors: 6, goals: [['collect', 1, 16], ['collect', 2, 16], ['collect', 3, 16]] },
-  { moves: 24, colors: 5, jelly: 'ring', goals: [['jelly']] },
-  { moves: 26, colors: 5, jelly: 'logo', goals: [['jelly']] },
-  { moves: 20, colors: 6, goals: [['score', 2800]] },
-  { moves: 24, colors: 5, jelly: 'cross', goals: [['jelly'], ['collect', 3, 20]] },
-  { moves: 24, colors: 6, goals: [['collect', 0, 24], ['collect', 5, 24]] },
-  { moves: 28, colors: 5, jelly: 'x', goals: [['jelly']] },
-  { moves: 32, colors: 5, jelly: 'full', goals: [['jelly']] },
-];
-const LEVEL_COUNT = 30;
-function makeLevel(n) {
-  if (isHome(n)) { const L = makeLevel(n - HOME_FIRST + 1); L.n = n; L.home = true; return L; }
-  let d;
-  if (n <= HAND.length) d = HAND[n - 1];
-  else {
-    const k = n - HAND.length, rnd = mulberry(n * 7919), colors = k < 5 ? 5 : 6;
-    const pats = ['corners', 'bottom', 'checker', 'logo2', 'core2', 'ring2', 'x', 'center'];
-    const types = [0, 1, 2, 3, 4, 5].slice(0, colors).sort(() => rnd() - .5);
-    const kind = k % 4;
-    if (kind === 1) d = { moves: 18 + (k % 3) * 2, colors, goals: [['score', 2400 + k * 150]] };
-    else if (kind === 2) d = { moves: 22 + (k % 2) * 2, colors, goals: types.slice(0, 2 + (k % 2)).map(t => ['collect', t, 16 + k]) };
-    else if (kind === 3) d = { moves: 24 + (k % 4) * 2, colors, jelly: pats[k % pats.length], goals: [['jelly']] };
-    else d = { moves: 26, colors, jelly: pats[(k + 3) % pats.length], goals: [['jelly'], ['collect', types[0], 14 + k]] };
-  }
-  const L = { n, moves: d.moves, colors: d.colors, jelly: d.jelly || null, goals: d.goals, home: false };
-  const r100 = v => Math.round(v / 100) * 100;
-  const sg = d.goals.find(g => g[0] === 'score');
-  if (sg) L.stars = [sg[1], r100(sg[1] * 1.5), r100(sg[1] * 2.1)];
-  else { const b = d.moves * 130; L.stars = [r100(b * .5), r100(b), r100(b * 1.7)]; }
-  return L;
-}
+// level data lives in src/levels.json and is inlined with the rules
+const makeLevel = n => R.makeLevel(n);
 
 /* ---------- audio: everything synthesised ---------- */
 const SFX = (() => {
@@ -993,10 +1442,6 @@ let TID = 0;
 function mkTile(type, special = NONE) {
   return { id: ++TID, type, special, key: false, x: 0, y: 0, r: 0, c: 0, scale: 1, alpha: 1, bs: 0, bsv: 0, sq: 0, sqv: 0, vy: 0, falling: false, delay: 0, rot: 0, popT: -1, popDelay: 0, immune: false };
 }
-const colorOf = t => t && t.special !== BOMB ? t.type : -1;
-const idxOf = (r, c) => r * COLS + c;
-const tileAtIdx = i => grid[(i / COLS) | 0][i % COLS];
-const randType = () => randi(L.colors);
 const sx = c => BR.x + (c + .5) * BR.cs, sy = r => BR.y + (r + .5) * BR.cs;
 
 function after(s, fn) { timers.push({ t: s, fn }); }
@@ -1010,224 +1455,70 @@ function resetWorld() {
 }
 const anyFalling = () => grid.some(row => row.some(t => t && t.falling));
 
-/* ---------- matching ---------- */
-function findGroups() {
-  const runs = [];
-  for (let r = 0; r < ROWS; r++) {
-    let c = 0;
-    while (c < COLS) {
-      const k = colorOf(grid[r][c]); let e = c + 1;
-      if (k >= 0) while (e < COLS && colorOf(grid[r][e]) === k) e++;
-      if (k >= 0 && e - c >= 3) { const cells = []; for (let x = c; x < e; x++) cells.push(idxOf(r, x)); runs.push({ h: true, cells, type: k }); }
-      c = e;
-    }
-  }
-  for (let c = 0; c < COLS; c++) {
-    let r = 0;
-    while (r < ROWS) {
-      const k = colorOf(grid[r][c]); let e = r + 1;
-      if (k >= 0) while (e < ROWS && colorOf(grid[e][c]) === k) e++;
-      if (k >= 0 && e - r >= 3) { const cells = []; for (let y = r; y < e; y++) cells.push(idxOf(y, c)); runs.push({ h: false, cells, type: k }); }
-      r = e;
-    }
-  }
-  // 2x2 boxes count as matches too (they make seekers)
-  for (let r = 0; r < ROWS - 1; r++) for (let c = 0; c < COLS - 1; c++) {
-    const k = colorOf(grid[r][c]);
-    if (k >= 0 && colorOf(grid[r][c + 1]) === k && colorOf(grid[r + 1][c]) === k && colorOf(grid[r + 1][c + 1]) === k)
-      runs.push({ box: true, cells: [idxOf(r, c), idxOf(r, c + 1), idxOf(r + 1, c), idxOf(r + 1, c + 1)], type: k });
-  }
-  if (!runs.length) return [];
-  const par = runs.map((_, i) => i), find = i => par[i] === i ? i : (par[i] = find(par[i]));
-  const owner = new Map();
-  runs.forEach((run, i) => run.cells.forEach(x => { if (owner.has(x)) par[find(i)] = find(owner.get(x)); else owner.set(x, i); }));
-  const map = new Map();
-  runs.forEach((run, i) => {
-    const root = find(i); if (!map.has(root)) map.set(root, { cells: new Set(), runs: [], type: run.type });
-    const g = map.get(root); g.runs.push(run); run.cells.forEach(x => g.cells.add(x));
-  });
-  const groups = [...map.values()];
-  for (const g of groups) {
-    const lines = g.runs.filter(r => !r.box), hasBox = lines.length < g.runs.length;
-    let longest = lines[0] || g.runs[0]; const seen = new Map();
-    for (const run of lines) { if (run.cells.length > longest.cells.length) longest = run; run.cells.forEach(x => seen.set(x, (seen.get(x) || 0) + 1)); }
-    g.longest = longest; g.inter = -1; for (const [x, n] of seen) if (n > 1) { g.inter = x; break; }
-    const hasH = lines.some(r => r.h), hasV = lines.some(r => !r.h), len = lines.length ? longest.cells.length : 0;
-    // rainbows: five in a line, or any match of six or more candies
-    g.special = len >= 5 || g.cells.size >= 6 ? BOMB : hasH && hasV ? WRAP : len === 4 ? (longest.h ? SV : SH) : hasBox ? SEEK : NONE;
-  }
-  return groups;
-}
-function matchAt(r, c) {
-  const k = colorOf(grid[r][c]); if (k < 0) return false;
-  let n = 1; for (let x = c - 1; x >= 0 && colorOf(grid[r][x]) === k; x--) n++; for (let x = c + 1; x < COLS && colorOf(grid[r][x]) === k; x++) n++;
-  if (n >= 3) return true;
-  n = 1; for (let y = r - 1; y >= 0 && colorOf(grid[y][c]) === k; y--) n++; for (let y = r + 1; y < ROWS && colorOf(grid[y][c]) === k; y++) n++;
-  if (n >= 3) return true;
-  for (const [dr, dc] of [[0, 0], [0, -1], [-1, 0], [-1, -1]]) {
-    const r0 = r + dr, c0 = c + dc; if (r0 < 0 || c0 < 0 || r0 + 1 >= ROWS || c0 + 1 >= COLS) continue;
-    if (colorOf(grid[r0][c0]) === k && colorOf(grid[r0][c0 + 1]) === k && colorOf(grid[r0 + 1][c0]) === k && colorOf(grid[r0 + 1][c0 + 1]) === k) return true;
-  }
-  return false;
-}
-function allMoves() {
-  const out = [];
-  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) for (const [dr, dc] of [[0, 1], [1, 0]]) {
-    const r2 = r + dr, c2 = c + dc; if (r2 >= ROWS || c2 >= COLS) continue;
-    const a = grid[r][c], b = grid[r2][c2]; if (!a || !b) continue;
-    let ok = a.special === BOMB || b.special === BOMB || (a.special && b.special);
-    if (!ok) { grid[r][c] = b; grid[r2][c2] = a; ok = matchAt(r, c) || matchAt(r2, c2); grid[r][c] = a; grid[r2][c2] = b; }
-    if (ok) out.push({ a: { r, c }, b: { r: r2, c: c2 } });
-  }
-  return out;
-}
-function genBoard() {
-  for (let tries = 0; tries < 50; tries++) {
-    grid = [];
-    for (let r = 0; r < ROWS; r++) {
-      grid.push([]);
-      for (let c = 0; c < COLS; c++) {
-        let k;
-        do k = randType(); while ((c >= 2 && grid[r][c - 1].type === k && grid[r][c - 2].type === k) || (r >= 2 && grid[r - 1][c].type === k && grid[r - 2][c].type === k) ||
-          (r >= 1 && c >= 1 && grid[r - 1][c].type === k && grid[r][c - 1].type === k && grid[r - 1][c - 1].type === k));
-        const t = mkTile(k); t.r = r; t.c = c; t.x = c; t.y = r; grid[r].push(t);
-      }
-    }
-    if (allMoves().length >= 3) break;
-  }
-  // a couple of keys to start with
-  for (let i = 0; i < 2; i++) grid[1 + randi(ROWS - 2)][randi(COLS)].key = true;
-}
+/* ---------- timing (TIMING.md) and instrumentation ---------- */
+const TIMING = { swap: .16, bounce: .24, createAt: .15, afterBlast: .26, columnStagger: .012 };
+let hitStopT = 0;
+function hitStop(s) { if (!REDUCED) hitStopT = Math.max(hitStopT, s); }
+// timestamps of turn phases, read by the timing harness (tools/timing.js)
+const marks = [];
+function mark(name) { marks.push([name, performance.now()]); if (marks.length > 6000) marks.splice(0, 2000); }
+// tutorials hook in here (see the tutorial section)
+let tutorial = null;
+const tutorialBlocks = () => !!(tutorial && tutorial.blocking);
+const tutorialAllows = (a, b) => !tutorial || !tutorial.move || (same(a, tutorial.move.a) && same(b, tutorial.move.b)) || (same(a, tutorial.move.b) && same(b, tutorial.move.a));
+const same = (p, q) => p.r === q.r && p.c === q.c;
+function tutorialAfterMove() {}
 
-/* ---------- blasts: chains of clears with timing ---------- */
-class Blast {
-  constructor(mult) { this.mult = mult; this.time = new Map(); this.src = new Map(); this.queue = []; this.activated = new Set(); this.sources = []; this.merge = new Map(); this.noActivate = new Set(); this.seq = 0; }
-  source(x, y, type, t = 0) { const s = { x, y, type, t, pts: 0 }; this.sources.push(s); return s; }
-  add(i, t, src) {
-    const r = (i / COLS) | 0, c = i % COLS; if (r < 0 || r >= ROWS || c < 0 || c >= COLS) return;
-    const cur = this.time.get(i); if (cur !== undefined && cur <= t) return;
-    this.time.set(i, t); if (!this.src.has(i) || cur === undefined) this.src.set(i, src); this.queue.push(i);
-  }
-  addRC(r, c, t, src) { if (r >= 0 && r < ROWS && c >= 0 && c < COLS) this.add(idxOf(r, c), t, src); }
-  process() {
-    while (this.queue.length) {
-      const i = this.queue.shift(), t = tileAtIdx(i);
-      if (!t || t.immune) continue;
-      if (t.special && !this.activated.has(i) && !this.noActivate.has(i)) { this.activated.add(i); activate(this, i, t, this.time.get(i)); }
-    }
-  }
-  async run() {
-    this.process();
-    let maxT = 0;
-    const order = [...this.time.entries()].sort((a, b) => a[1] - b[1]);
-    for (const [i, t] of order) {
-      const r = (i / COLS) | 0, c = i % COLS, tile = grid[r][c];
-      if (!tile || tile.immune) continue;
-      grid[r][c] = null;
-      const src = this.src.get(i), pts = 20 * this.mult; src.pts += pts;
-      const m = this.merge.get(i);
-      tile.mergeTo = m !== undefined && !tile.special ? { r: (m / COLS) | 0, c: m % COLS } : null;
-      tile.popDelay = t; tile.dying = true; tile.popR = r; tile.popC = c; tile.pts = pts;
-      dying.push(tile);
-      maxT = Math.max(maxT, t);
-    }
-    for (const s of this.sources) if (s.pts > 0) after(s.t + .06, () => popup(s.x, s.y, '+' + fmt(s.pts), s.type));
-    await wait(maxT + .26);
-  }
-}
-function mostCommon(B) {
-  const cnt = [0, 0, 0, 0, 0, 0];
-  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { const t = grid[r][c]; if (t && !t.immune && !B.time.has(idxOf(r, c))) { const k = colorOf(t); if (k >= 0) cnt[k]++; } }
-  let best = -1, bv = 0; cnt.forEach((v, i) => { if (v > bv) { bv = v; best = i; } }); return best;
-}
-function beamCells(B, r, c, horiz, t, src) {
-  after(t, () => fxBeam(r, c, horiz, tileType(r, c, src)));
-  for (let k = 0; k < (horiz ? COLS : ROWS); k++) {
-    const rr = horiz ? r : k, cc = horiz ? k : c;
-    B.addRC(rr, cc, t + .04 + Math.abs(horiz ? cc - c : rr - r) * .03, src);
-  }
-}
-const tileType = (r, c, src) => src && src.type >= 0 ? src.type : 0;
-function activate(B, i, tile, t) {
-  const r = (i / COLS) | 0, c = i % COLS, type = tile.type;
-  const src = B.source(c + .5, r + .5, tile.special === BOMB ? -1 : type, t); src.pts += FIRE_BONUS[tile.special];
-  if (tile.special === SH || tile.special === SV) {
-    after(t, () => { SFX.zap(); shake(4); buzz(12); });
-    beamCells(B, r, c, tile.special === SH, t, src);
-  } else if (tile.special === WRAP) {
-    after(t, () => { fxExplosion(r, c, type, 2.6); SFX.boom(); shake(11); buzz(30); });
-    for (let dr = -2; dr <= 2; dr++) for (let dc = -2; dc <= 2; dc++) if (Math.abs(dr) + Math.abs(dc) <= 2) B.addRC(r + dr, c + dc, t + .05 + (Math.abs(dr) + Math.abs(dc)) * .04, src);
-  } else if (tile.special === SEEK) {
-    launchSeekers(B, r, c, type, t, 3, NONE, src);
-  } else if (tile.special === BOMB) {
-    const col = mostCommon(B);
-    after(t, () => { SFX.bomb(); shake(6); flash(.25); fxExplosion(r, c, -1, 1.4); });
-    if (col >= 0) {
-      let k = 0;
-      for (let rr = 0; rr < ROWS; rr++) for (let cc = 0; cc < COLS; cc++) {
-        const o = grid[rr][cc];
-        if (o && colorOf(o) === col && !B.time.has(idxOf(rr, cc))) {
-          const d = t + .14 + k++ * .03;
-          after(d - .08, () => fxBolt(c, r, cc, rr, col));
-          B.add(idxOf(rr, cc), d, src);
-        }
-      }
-    }
-  }
-}
-
-// Unicorns home in on what the level needs most: jelly, then keys, then goal candies.
-function seekTargets(B, n) {
-  const need = new Set(state.goals.filter(g => g.kind === 'collect' && g.left > 0).map(g => g.type)), out = [];
-  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
-    const t = grid[r][c], i = idxOf(r, c);
-    if (!t || t.immune || B.time.has(i)) continue;
-    out.push({ i, s: (jelly[r] ? jelly[r][c] : 0) * 10 + (t.key ? 8 : 0) + (need.has(colorOf(t)) ? 6 : 0) - (t.special ? 4 : 0) + Math.random() * 3 });
-  }
-  return out.sort((a, b) => b.s - a.s).slice(0, n).map(o => o.i);
-}
-// unicorns loop around the whole screen before diving onto their targets
-function launchSeekers(B, r, c, type, t, n, carry, src) {
-  after(t, () => { SFX.unicorn(); SFX.launch(); buzz(14); });
-  seekTargets(B, n).forEach((ti, k) => {
-    const tr = (ti / COLS) | 0, tc = ti % COLS, dur = (REDUCED ? .6 : rand(.95, 1.2)) + k * .07, hit = t + dur, col = type >= 0 ? type : k % 6;
-    after(t, () => missiles.push({ x0: sx(c), y0: sy(r), tr, tc, t: 0, dur, type: col,
-      c1: { x: rand(.08, .92) * W, y: rand(.06, .5) * H }, c2: { x: rand(.08, .92) * W, y: rand(.06, .45) * H } }));
-    B.add(ti, hit, src);
-    if (carry === WRAP) {
-      after(hit, () => { fxExplosion(tr, tc, col, 2.4); SFX.boom(); shake(9); });
-      for (let dr = -2; dr <= 2; dr++) for (let dc = -2; dc <= 2; dc++) if (Math.abs(dr) + Math.abs(dc) <= 2) B.addRC(tr + dr, tc + dc, hit + .04 + (Math.abs(dr) + Math.abs(dc)) * .04, src);
-    } else if (carry === SH || carry === SV) {
-      after(hit, () => { SFX.zap(); shake(4); });
-      beamCells(B, tr, tc, carry === SH, hit, src);
-    } else {
-      after(hit, () => { fxExplosion(tr, tc, col, 1.3); SFX.hit(); shake(3); });
-      for (const [dr, dc] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) B.addRC(tr + dr, tc + dc, hit + .05, src);
+/* ---------- turn flow: the rules decide, this code animates ---------- */
+// Visual effects the rules report while planning a blast, scheduled at their time offsets.
+function onRuleFx(name, d, t) {
+  after(t, () => {
+    switch (name) {
+      case 'beam': fxBeam(d.r, d.c, d.horiz, d.type); break;
+      case 'stripe': SFX.zap(); shake(4); buzz(12); break;
+      case 'wrap': fxExplosion(d.r, d.c, d.type, 2.6); SFX.boom(); shake(11); buzz(30); hitStop(.07); break;
+      case 'bomb': SFX.bomb(); shake(6); flash(.25); fxExplosion(d.r, d.c, -1, 1.4); hitStop(.06); break;
+      case 'bolt': fxBolt(d.c1, d.r1, d.c2, d.r2, d.type); break;
+      case 'unicornLaunch': SFX.unicorn(); SFX.launch(); buzz(14); break;
+      case 'unicorn': missiles.push({ x0: sx(d.c), y0: sy(d.r), tr: d.tr, tc: d.tc, t: 0, dur: d.dur, type: d.type,
+        c1: { x: rand(.08, .92) * W, y: rand(.06, .5) * H }, c2: { x: rand(.08, .92) * W, y: rand(.06, .45) * H } }); break;
+      case 'unicornHit':
+        if (d.carry === WRAP) { fxExplosion(d.r, d.c, d.type, 2.4); SFX.boom(); shake(9); }
+        else if (d.carry === SH || d.carry === SV) { SFX.zap(); shake(4); }
+        else { fxExplosion(d.r, d.c, d.type, 1.3); SFX.hit(); shake(3); }
+        break;
     }
   });
 }
-
-/* ---------- turn flow ---------- */
-const canPlay = () => screen === 'game' && !state.busy && !state.over && !paused && $('#modalBack').hidden;
-function swapGrid(a, b) {
-  const ta = grid[a.r][a.c], tb = grid[b.r][b.c];
-  grid[a.r][a.c] = tb; grid[b.r][b.c] = ta;
-  ta.r = b.r; ta.c = b.c; tb.r = a.r; tb.c = a.c;
+const canPlay = () => screen === 'game' && !state.busy && !state.over && !paused && $('#modalBack').hidden && !tutorialBlocks();
+// Plan a blast (the rules take the tiles off the board), then animate each pop at its time.
+async function runBlast(B, onPlanned) {
+  const p = B.plan();
+  if (onPlanned) onPlanned(p);
+  for (const cl of p.clears) {
+    const tile = cl.tile;
+    tile.mergeTo = cl.mergeTo; tile.popDelay = cl.t; tile.dying = true; tile.popR = cl.r; tile.popC = cl.c; tile.pts = cl.pts; tile.clear = cl;
+    dying.push(tile);
+  }
+  for (const s of p.sources) if (s.pts > 0) after(s.t + .06, () => popup(s.x, s.y, '+' + fmt(s.pts), s.type));
+  await wait(p.maxT + TIMING.afterBlast);
 }
 async function attemptSwap(a, b, free = false) {
   if (!canPlay()) return;
   if (b.r < 0 || b.r >= ROWS || b.c < 0 || b.c >= COLS) return;
   const ta = grid[a.r][a.c], tb = grid[b.r][b.c]; if (!ta || !tb) return;
+  if (!tutorialAllows(a, b)) { ta.bsv -= 3; SFX.bad(); return; }
   state.busy = true; hint = null; sel = null; idleT = 0;
   if (free) spendBooster('swap');
-  SFX.swap();
-  swapGrid(a, b);
-  await Promise.all([tween(ta, { x: b.c, y: b.r }, .16, Ease.inOutQuad), tween(tb, { x: a.c, y: a.r }, .16, Ease.inOutQuad)]);
-  const combo = ta.special === BOMB || tb.special === BOMB || (ta.special !== NONE && tb.special !== NONE);
-  if (free && !combo && !findGroups().length) { ta.bsv += 4; tb.bsv += 4; await afterTurn(); return; }
-  if (!combo && !findGroups().length) {
-    SFX.bad(); swapGrid(a, b);
-    await Promise.all([tween(ta, { x: a.c, y: a.r }, .24, Ease.outBack), tween(tb, { x: b.c, y: b.r }, .24, Ease.outBack)]);
+  R.startTurn(state);
+  SFX.swap(); mark('swap');
+  R.swapGrid(state, a, b);
+  await Promise.all([tween(ta, { x: b.c, y: b.r }, TIMING.swap, Ease.inOutQuad), tween(tb, { x: a.c, y: a.r }, TIMING.swap, Ease.inOutQuad)]);
+  const combo = R.isComboSwap(ta, tb);
+  if (free && !combo && !R.findGroups(state).length) { ta.bsv += 4; tb.bsv += 4; await afterTurn(); return; }
+  if (!combo && !R.findGroups(state).length) {
+    SFX.bad(); R.swapGrid(state, a, b);
+    await Promise.all([tween(ta, { x: a.c, y: a.r }, TIMING.bounce, Ease.outBack), tween(tb, { x: b.c, y: b.r }, TIMING.bounce, Ease.outBack)]);
     ta.bsv -= 3; tb.bsv -= 3; shake(2);
     state.busy = false; idleT = 0; return;
   }
@@ -1236,169 +1527,107 @@ async function attemptSwap(a, b, free = false) {
   if (combo) { await comboSwap(ta, tb); await collapse(); await resolveBoard(null, 1); }
   else await resolveBoard([a, b], 0);
   await afterTurn();
+  tutorialAfterMove();
 }
 async function resolveBoard(swapCells, cascade) {
   for (let guard = 0; guard < 60; guard++) {
-    const groups = findGroups(); if (!groups.length) break;
+    const groups = R.findGroups(state); if (!groups.length) break;
     cascade++;
-    if (cascade >= 2) comboText(cascade);
+    if (cascade >= 2) { comboText(cascade); state.stats.cascades++; }
     await matchStep(groups, cascade, swapCells); swapCells = null;
     await collapse();
   }
 }
-function pickSpawn(g, swapCells) {
-  const ok = i => { const t = tileAtIdx(i); return t && !t.special; };
-  if (swapCells) for (const s of swapCells) { const i = idxOf(s.r, s.c); if (g.cells.has(i) && ok(i)) return i; }
-  if (g.special === WRAP && g.inter >= 0 && ok(g.inter)) return g.inter;
-  const run = g.longest.cells, mid = run[Math.floor((run.length - 1) / 2)];
-  for (const i of [mid, ...run, ...g.cells]) if (ok(i)) return i;
-  return -1;
-}
 async function matchStep(groups, cascade, swapCells) {
-  const B = new Blast(Math.min(cascade, 8)), creates = [];
-  buzz(Math.min(6 + cascade * 4, 30));
-  for (const g of groups) {
-    const spawn = g.special ? pickSpawn(g, swapCells) : -1;
-    let cx = 0, cy = 0; g.cells.forEach(i => { cx += i % COLS; cy += (i / COLS) | 0; });
-    const src = B.source(cx / g.cells.size + .5, cy / g.cells.size + .5, g.type, 0);
-    if (spawn >= 0) { creates.push({ i: spawn, special: g.special }); src.pts += CREATE_BONUS[g.special]; }
-    for (const i of g.cells) { if (i === spawn) continue; B.add(i, 0, src); if (spawn >= 0) B.merge.set(i, spawn); }
-  }
-  for (const cr of creates) {
-    const t = tileAtIdx(cr.i); t.immune = true;
-    after(.15, () => {
-      t.special = cr.special; t.bsv += 7; fxCreate(t); SFX.create(cr.special); if (cr.special === BOMB) { shake(5); flash(.2); }
-      const r = (cr.i / COLS) | 0, c = cr.i % COLS;
-      if (jelly[r][c] > 0) { jelly[r][c]--; jwob[r][c] = 1; const g = state.goals.find(g => g.kind === 'jelly'); if (g) { g.left--; g.shown--; updateGoals(); } }
-    });
-  }
-  await B.run();
-  for (const cr of creates) { const t = tileAtIdx(cr.i); if (t) t.immune = false; }
+  buzz(Math.min(6 + cascade * 4, 30)); mark('match');
+  const { B, creates } = R.matchStep(state, groups, cascade, swapCells);
+  for (const cr of creates) after(TIMING.createAt, () => {
+    const ev = R.applyCreate(state, cr), t = cr.tile;
+    t.bsv += 7; fxCreate(t); SFX.create(cr.special); if (cr.special === BOMB) { shake(5); flash(.2); }
+    if (ev.jelly) { jwob[t.r][t.c] = 1; const g = state.goals.find(g => g.kind === 'jelly'); if (g) { g.shown--; updateGoals(); } }
+  });
+  await runBlast(B);
+  R.endCreates(creates);
 }
+const COMBO_TEXT = { meltdown: 'Total Meltdown!', wrapStorm: 'Wrapped Frenzy!', unicornStorm: 'Unicorn Storm!', stripeStorm: 'Stripe Storm!', parade: 'Unicorn Parade!', laserDrop: 'Laser Drop!', bombDrop: 'Bomb Drop!', kaboom: 'Kaboom!', megaCross: 'Mega Cross!' };
 async function comboSwap(ta, tb) {
-  const B = new Blast(1), ia = idxOf(ta.r, ta.c), ib = idxOf(tb.r, tb.c), sa = ta.special, sb = tb.special;
-  B.noActivate.add(ia); B.noActivate.add(ib);
-  const src = B.source(ta.c + .5, ta.r + .5, sa === BOMB ? tb.type : ta.type, 0);
-  if (sa === BOMB && sb === BOMB) {
-    SFX.mega(); flash(.7); shake(18); buzz(80);
-    fxExplosion(ta.r, ta.c, -1, 6); comboText(6, 'Total Meltdown!');
-    for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) B.addRC(r, c, .15 + Math.hypot(r - ta.r, c - ta.c) * .07, src);
-    src.pts += 2000;
-  } else if (sa === BOMB || sb === BOMB) {
-    const bomb = sa === BOMB ? ta : tb, other = sa === BOMB ? tb : ta, col = other.type, os = other.special;
-    const bi = idxOf(bomb.r, bomb.c), oi = idxOf(other.r, other.c);
-    const targets = [];
-    for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { const t = grid[r][c]; if (t && t !== other && colorOf(t) === col) targets.push(t); }
-    SFX.bomb(); flash(.3); shake(6);
-    if (os) {
-      comboText(5, os === WRAP ? 'Wrapped Frenzy!' : os === SEEK ? 'Unicorn Storm!' : 'Stripe Storm!');
-      targets.forEach((t, i) => after(i * .04, () => { fxBolt(bomb.c, bomb.r, t.c, t.r, col); t.special = os === WRAP || os === SEEK ? os : (Math.random() < .5 ? SH : SV); t.bsv += 6; SFX.ding(i); }));
-      await wait(targets.length * .04 + .5);
-      B.noActivate.delete(oi);
-      B.add(bi, 0, src); B.add(oi, .05, src);
-      targets.forEach((t, i) => { if (grid[t.r][t.c] === t) B.add(idxOf(t.r, t.c), .1 + i * .08, src); });
-    } else {
-      targets.forEach((t, i) => { const d = .12 + i * .035; after(d - .08, () => fxBolt(bomb.c, bomb.r, t.c, t.r, col)); B.add(idxOf(t.r, t.c), d, src); });
-      B.add(oi, .1, src); B.add(bi, .14 + targets.length * .035, src);
-    }
-  } else {
-    const isS = s => s === SH || s === SV, r0 = ta.r, c0 = ta.c;
-    B.add(ia, 0, src); B.add(ib, 0, src);
-    if (sa === SEEK && sb === SEEK) {
-      comboText(5, 'Unicorn Parade!'); shake(6); flash(.2);
-      launchSeekers(B, r0, c0, ta.type, .05, 7, NONE, src);
-      src.pts += 300;
-    } else if (sa === SEEK || sb === SEEK) {
-      const carry = sa === SEEK ? sb : sa;
-      comboText(5, carry === WRAP ? 'Bomb Drop!' : 'Laser Drop!'); shake(6);
-      launchSeekers(B, r0, c0, ta.type, .05, 3, carry, src);
-      src.pts += 300;
-    } else if (sa === WRAP && sb === WRAP) {
-      SFX.boom(); after(.15, () => SFX.boom()); shake(16); flash(.35); buzz(60);
-      fxExplosion(r0, c0, ta.type, 4.2); comboText(5, 'Kaboom!');
-      for (let dr = -2; dr <= 2; dr++) for (let dc = -2; dc <= 2; dc++) B.addRC(r0 + dr, c0 + dc, .08 + Math.max(Math.abs(dr), Math.abs(dc)) * .07, src);
-      src.pts += 400;
-    } else {
-      const wide = !(isS(sa) && isS(sb));
-      SFX.zap(); after(.06, () => SFX.zap()); shake(wide ? 12 : 7); buzz(30);
-      if (wide) { SFX.boom(); comboText(4, 'Mega Cross!'); }
-      const span = wide ? [-1, 0, 1] : [0];
-      for (const d of span) { beamCells(B, r0 + d, c0, true, 0, src); beamCells(B, r0, c0 + d, false, 0, src); }
-      src.pts += wide ? 300 : 150;
-    }
-  }
-  await B.run();
+  const cp = R.comboPlan(state, ta, tb), k = cp.kind, r0 = cp.r, c0 = cp.c;
+  if (k === 'meltdown') { SFX.mega(); flash(.7); shake(18); buzz(80); fxExplosion(r0, c0, -1, 6); hitStop(.12); }
+  else if (k === 'colorClear' || cp.conv.length || k.endsWith('Storm')) { SFX.bomb(); flash(.3); shake(6); hitStop(.08); }
+  else if (k === 'parade') { shake(6); flash(.2); }
+  else if (k === 'laserDrop' || k === 'bombDrop') shake(6);
+  else if (k === 'kaboom') { SFX.boom(); after(.15, () => SFX.boom()); shake(16); flash(.35); buzz(60); fxExplosion(r0, c0, ta.type, 4.2); hitStop(.1); }
+  else { const wide = k === 'megaCross'; SFX.zap(); after(.06, () => SFX.zap()); shake(wide ? 12 : 7); buzz(30); if (wide) SFX.boom(); hitStop(wide ? .08 : .05); }
+  if (COMBO_TEXT[k]) comboText(k === 'megaCross' ? 4 : k === 'meltdown' ? 6 : 5, COMBO_TEXT[k]);
+  // rainbow + special: show each candy turning into that special as the bolts reach it
+  await runBlast(cp.B, () => cp.conv.forEach((cv, i) => {
+    cv.tile.shownSpecial = 0;
+    after(i * .04, () => { fxBolt(cp.bomb.c, cp.bomb.r, cv.tile.c, cv.tile.r, cp.color); cv.tile.shownSpecial = undefined; cv.tile.bsv += 6; SFX.ding(i); });
+  }));
 }
 function collapse() {
-  let any = false;
-  for (let c = 0; c < COLS; c++) {
-    let w = ROWS - 1;
-    for (let r = ROWS - 1; r >= 0; r--) {
-      const t = grid[r][c];
-      if (t) { if (r !== w) { grid[w][c] = t; grid[r][c] = null; t.r = w; t.falling = true; t.delay = c * .012; any = true; } w--; }
-    }
-    for (let r = w; r >= 0; r--) {
-      const t = mkTile(randType()); t.r = r; t.c = c; t.x = c; t.y = r - w - 1.15; t.falling = true; t.delay = c * .012;
-      if (!state.over && keysOnBoard() < 3 && Math.random() < KEY_CHANCE) t.key = true;
-      grid[r][c] = t; any = true;
-    }
-  }
-  if (!any) return Promise.resolve();
+  const { moved, spawned } = R.collapse(state);
+  for (const t of moved) { t.falling = true; t.delay = t.c * TIMING.columnStagger; }
+  for (const t of spawned) { t.x = t.c; t.y = t.dropFrom; t.falling = true; t.delay = t.c * TIMING.columnStagger; }
+  if (!moved.length && !spawned.length) return Promise.resolve();
   return waitFor(() => !anyFalling());
 }
-const keysOnBoard = () => grid.reduce((n, row) => n + row.filter(t => t && t.key).length, 0);
-function goalsMet() { return state.goals.every(g => g.kind === 'score' ? state.score >= g.need : g.left <= 0); }
 async function afterTurn() {
-  if (!goalsMet() && state.moves > 0 && (state.chest.pending || state.rainbows)) {
+  if (!R.goalsMet(state) && state.moves > 0 && (state.chest.pending || state.rainbows)) {
     await waitFor(() => !flyers.length);
-    while (state.chest.pending > 0) { state.chest.pending--; await openChest(); }
-    while (state.rainbows > 0) { state.rainbows--; await dropRainbow(); }
+    while (state.chest.pending > 0) await openChest();
+    while (state.rainbows > 0) await dropRainbow();
   }
-  if (goalsMet()) { await levelWon(); return; }
+  const sp = R.spreadDust(state); if (sp) await showSpread(sp);
+  mark('settled');
+  if (R.goalsMet(state)) { await levelWon(); return; }
   if (state.moves <= 0) { state.over = true; await waitFor(() => !flyers.length); await wait(.5); levelLost(); return; }
-  if (allMoves().length === 0) await shuffle();
-  state.busy = false; idleT = 0;
+  if (!R.allMoves(state).length) await shuffle();
+  state.busy = false; idleT = 0; mark('ready');
 }
 async function shuffle() {
   bigText = { text: 'Shuffle!', t: 0, dur: 1.2, size: 1 };
   hint = null; sel = null;
   SFX.whoosh();
-  const tiles = []; grid.forEach(row => row.forEach(t => t && tiles.push(t)));
-  for (let attempt = 0; attempt < 300; attempt++) {
-    for (let i = tiles.length - 1; i > 0; i--) { const j = randi(i + 1); [tiles[i], tiles[j]] = [tiles[j], tiles[i]]; }
-    if (attempt > 150) tiles.forEach(t => { if (!t.special) t.type = randType(); });
-    tiles.forEach((t, i) => { const r = (i / COLS) | 0, c = i % COLS; grid[r][c] = t; t.r = r; t.c = c; });
-    if (!findGroups().length && allMoves().length) break;
-  }
+  const tiles = R.shuffleBoard(state);
   await Promise.all(tiles.map((t, i) => tween(t, { x: t.c, y: t.r }, .55, Ease.outBack, i * .006)));
 }
-function plainTiles() { const out = []; grid.forEach(row => row.forEach(t => t && !t.special && out.push(t))); return out; }
-// a spark flies from a HUD element to a candy and turns it into a special
+// a spark flies from a HUD element to a candy that the rules have already made special
 function sparkTo(el, t, special, delay = 0, onLand) {
   const from = elCenter(el);
-  t.special = -1;
+  t.shownSpecial = 0;
   flyers.push({ spark: true, x0: from.x, y0: from.y, tx: () => sx(t.x), ty: () => sy(t.y), t: -delay, dur: .55, type: t.type,
-    done: () => { t.special = special; t.bsv += 8; fxCreate(t); SFX.create(special); burst(sx(t.x), sy(t.y), special === BOMB ? -1 : t.type, .6); onLand && onLand(); } });
+    done: () => { t.shownSpecial = undefined; t.bsv += 8; fxCreate(t); SFX.create(special); burst(sx(t.x), sy(t.y), special === BOMB ? -1 : t.type, .6); onLand && onLand(); } });
 }
 async function dropRainbow() {
-  const pool = plainTiles(); if (!pool.length) return;
+  const t = R.dropRainbow(state); if (!t) return;
   bigText = { text: 'Free Rainbow!', t: 0, dur: 1.2, size: .95 };
   SFX.rainbow(); bumpEl($('#meter'));
-  sparkTo($('#meter'), pool[randi(pool.length)], BOMB, 0, () => { shake(5); flash(.2); });
+  sparkTo($('#meter'), t, BOMB, 0, () => { shake(5); flash(.2); });
   await waitFor(() => !flyers.length); updateMeter();
 }
 async function openChest() {
+  const res = R.openChest(state); if (!res) return;
   const ch = state.chest, el = $('#chest');
-  ch.have -= ch.need; ch.need = Math.min(6, ch.need + 1); ch.shownHave = ch.have; updateChest();
+  ch.shownHave = ch.have; updateChest();
   bumpEl(el); SFX.chest(); buzz(40);
   bigText = { text: 'Chest Opened!', t: 0, dur: 1.4, size: 1 };
   const c = elCenter(el); burst(c.x, c.y, 2, 1.8); burst(c.x, c.y, -1, 1.4);
-  const rewards = [BOMB, [SEEK, WRAP, SH][randi(3)], [SEEK, WRAP, SV][randi(3)]];
-  const pool = plainTiles().sort(() => Math.random() - .5);
-  rewards.forEach((sp, i) => { if (pool[i]) sparkTo(el, pool[i], sp, .25 + i * .15); });
-  const prize = randomBooster(); grantBooster(prize, el);
-  addGold(5 + randi(6), el);
+  res.placed.forEach((p, i) => sparkTo(el, p.tile, p.special, .25 + i * .15));
+  grantBooster(res.prize, el);
+  addGold(res.gold, el);
   await waitFor(() => !flyers.length); await wait(.2);
+}
+// Furniture Mode: dust creeps onto a clean tile when a turn cleans none
+let spreadToldOnce = false;
+async function showSpread(sp) {
+  jwob[sp.r][sp.c] = 1;
+  const g = state.goals.find(g => g.kind === 'jelly'); if (g) { g.shown++; updateGoals(); bumpEl(g.el); }
+  const x = sx(sp.c), y = sy(sp.r), cs = BR.cs;
+  for (let i = 0; i < (REDUCED ? 3 : 10); i++) { const a = rand(0, Math.PI * 2), v = rand(.5, 1.6) * cs; particles.push({ k: 'dot', x: sx(sp.fromC), y: sy(sp.fromR), vx: (x - sx(sp.fromC)) * 2.5 + Math.cos(a) * v, vy: (y - sy(sp.fromR)) * 2.5 + Math.sin(a) * v, g: 0, drag: 3, life: 0, max: rand(.4, .7), sz: rand(.08, .14) * cs, rot: 0, vr: 0, col: 'rgba(150,130,115,.8)' }); }
+  SFX.whoosh();
+  if (!spreadToldOnce) { spreadToldOnce = true; bigText = { text: 'The dust spreads!', t: 0, dur: 1.4, size: .85 }; }
+  await wait(.35);
 }
 async function levelWon() {
   state.over = true; state.busy = true;
@@ -1413,49 +1642,42 @@ async function sugarRush() {
   SFX.combo(6); await wait(1.1);
   const mv = $('#movesBadge').getBoundingClientRect();
   let i = 0;
-  while (state.moves > 0) {
-    const pool = []; grid.forEach(row => row.forEach(t => t && !t.special && pool.push(t)));
-    if (!pool.length) break;
-    const t = pool[randi(pool.length)], n = i++;
-    state.moves--; updateHUD(); state.score += 150;
-    t.special = -1; // reserved; becomes striped when the spark lands
+  for (let res; (res = R.rushConvert(state));) {
+    const t = res.tile, n = i++;
+    updateHUD();
+    t.shownSpecial = 0;
     flyers.push({ spark: true, x0: mv.left + mv.width / 2, y0: mv.top + mv.height / 2, tx: () => sx(t.x), ty: () => sy(t.y), t: 0, dur: .45, type: t.type,
-      done: () => { t.special = Math.random() < .5 ? SH : SV; t.bsv += 7; SFX.ding(n); burst(sx(t.x), sy(t.y), t.type, .5); } });
+      done: () => { t.shownSpecial = undefined; t.bsv += 7; SFX.ding(n); burst(sx(t.x), sy(t.y), t.type, .5); } });
     await wait(.11);
   }
   await waitFor(() => !flyers.length); await wait(.35);
   for (let guard = 0; guard < 40; guard++) {
-    const list = []; grid.forEach(row => row.forEach(t => t && t.special > 0 && list.push(idxOf(t.r, t.c))));
-    if (!list.length) break;
-    const B = new Blast(1);
-    list.sort(() => Math.random() - .5).slice(0, 5).forEach((i, k) => { const t = tileAtIdx(i); B.add(i, k * .14, B.source(t.c + .5, t.r + .5, t.type, k * .14)); });
+    const B = R.rushDetonate(state); if (!B) break;
     popSeq = 0;
-    await B.run(); await collapse(); await resolveBoard(null, 1);
+    await runBlast(B); await collapse(); await resolveBoard(null, 1);
   }
 }
 
 /* ---------- pops & goals ---------- */
 function onTilePop(t) {
-  state.score += t.pts;
+  const ev = R.applyClear(state, t.clear);
   if (!state.over) {
-    if (++state.meter >= METER_MAX) { state.meter = 0; state.rainbows++; }
     updateMeter();
-    if (t.key) {
-      const ch = state.chest; ch.have++; if (ch.have >= ch.need && ch.have - ch.need < 1) ch.pending++;
+    if (ev.key) {
+      const ch = state.chest;
       flyers.push({ key: true, x0: sx(t.x), y0: sy(t.y), tx: () => elCenter($('#chestImg')).x, ty: () => elCenter($('#chestImg')).y, t: 0, dur: .6, type: t.type,
         done: () => { ch.shownHave = Math.min(ch.shownHave + 1, ch.have); updateChest(); bumpEl($('#chest')); SFX.key(); } });
     }
   }
-  SFX.pop(popSeq++);
+  SFX.pop(popSeq++); mark('pop');
   const px = sx(t.x), py = sy(t.y);
   if (!t.mergeTo) { shatter(px, py, t.special === BOMB ? -1 : t.type, t.special ? 1.25 : 1); burst(px, py, t.special === BOMB ? -1 : t.type, t.special ? .9 : .45); }
-  const r = t.popR, c = t.popC;
-  if (jelly[r] && jelly[r][c] > 0) {
-    jelly[r][c]--; jwob[r][c] = 1; jellySplash(px, py);
-    const g = state.goals.find(g => g.kind === 'jelly'); if (g) { g.left--; g.shown--; updateGoals(); }
+  if (ev.jelly) {
+    jwob[t.popR][t.popC] = 1; jellySplash(px, py);
+    const g = state.goals.find(g => g.kind === 'jelly'); if (g) { g.shown--; updateGoals(); }
   }
-  if (t.special !== BOMB) for (const g of state.goals) if (g.kind === 'collect' && g.type === t.type && g.left > 0) {
-    g.left--;
+  if (ev.collect) {
+    const g = ev.collect;
     if (flyers.length > 36) { g.shown--; updateGoals(); }
     else flyers.push({ x0: px, y0: py, tx: () => elCenter(g.iconEl).x, ty: () => elCenter(g.iconEl).y, t: -rand(0, .06), dur: rand(.5, .65), type: t.type,
       done: () => { g.shown--; updateGoals(); bumpEl(g.el); SFX.collect(); } });
@@ -1621,7 +1843,7 @@ function update(dt) {
   // idle hint
   if (canPlay()) {
     idleT += dt;
-    if (idleT > 5 && !hint) { const m = allMoves(); if (m.length) { const mv = m[randi(m.length)]; hint = { a: grid[mv.a.r][mv.a.c], b: grid[mv.b.r][mv.b.c], dx: mv.b.c - mv.a.c, dy: mv.b.r - mv.a.r, t0: gameTime }; } }
+    if (idleT > 5 && !hint) { const m = R.allMoves(state); if (m.length) { const mv = m[randi(m.length)]; hint = { a: grid[mv.a.r][mv.a.c], b: grid[mv.b.r][mv.b.c], dx: mv.b.c - mv.a.c, dy: mv.b.r - mv.a.r, t0: gameTime }; } }
   }
   // HUD score roll
   if (state.shown !== state.score) {
@@ -1698,17 +1920,18 @@ function drawTile(t, now, selT) {
   const idle = REDUCED || t.falling || t.dying ? 0 : .022 * Math.sin(now * 2.6 + t.id * .9);
   const sq = clamp(t.sq + idle, -.35, .35), scx = s * (1 + sq * .6), scy = s * (1 - sq);
   gx.save(); gx.translate(px, py + cs * .4 * (s - scy)); gx.globalAlpha = t.alpha;
-  if (t.special > 0 || (hint && (t === hint.a || t === hint.b)) || t === selT) {
-    const g = t.special === BOMB || t.special <= 0 ? GLOW_W : GLOW[t.type];
+  const vis = t.shownSpecial === 0 ? 0 : t.special;
+  if (vis > 0 || (hint && (t === hint.a || t === hint.b)) || t === selT) {
+    const g = vis === BOMB || vis <= 0 ? GLOW_W : GLOW[t.type];
     gx.globalCompositeOperation = 'lighter';
-    gx.globalAlpha = t.alpha * (t.special > 0 ? .4 + .18 * Math.sin(now * 4 + t.id) : .35);
-    const gs = cs * (t.special === BOMB ? 1.9 : 1.55); gx.drawImage(g, -gs / 2, -gs / 2, gs, gs);
+    gx.globalAlpha = t.alpha * (vis > 0 ? .4 + .18 * Math.sin(now * 4 + t.id) : .35);
+    const gs = cs * (vis === BOMB ? 1.9 : 1.55); gx.drawImage(g, -gs / 2, -gs / 2, gs, gs);
     gx.globalCompositeOperation = 'source-over'; gx.globalAlpha = t.alpha;
   }
-  if (t.special === BOMB) gx.rotate(Math.sin(now * 2 + t.id) * .12);
+  if (vis === BOMB) gx.rotate(Math.sin(now * 2 + t.id) * .12);
   else if (t === selT) gx.rotate(Math.sin(now * 16) * .07);
   gx.scale(scx, scy);
-  const spr = t.special === -1 ? SPR[t.type * 4] : spriteOf(t);
+  const spr = t.shownSpecial === 0 ? SPR[t.type * 4] : spriteOf(t);
   gx.drawImage(spr, -cs / 2, -cs / 2, cs, cs);
   if (t.key) { const bob = Math.sin(now * 3 + t.id) * cs * .03; gx.drawImage(KEY_SPR, cs * .02, cs * .02 + bob, cs * .46, cs * .46); }
   if (t.dying && t.popT >= 0 && !t.mergeTo) {
@@ -1866,7 +2089,9 @@ let lastNow = performance.now();
 function frame(nowMs) {
   const dt = Math.min(.05, Math.max(0, (nowMs - lastNow) / 1000)); lastNow = nowMs;
   const now = nowMs / 1000;
-  if (!paused) update(dt);
+  // hit-stop: big impacts freeze the simulation for a few frames while the screen keeps drawing
+  let udt = dt; if (hitStopT > 0) { hitStopT -= dt; udt = 0; }
+  if (!paused) update(udt);
   drawBg(dt, now);
   gx.setTransform(DPR, 0, 0, DPR, 0, 0); gx.clearRect(0, 0, W, H);
   gx.save();
@@ -1970,14 +2195,14 @@ function addGold(n, fromEl) {
   }
 }
 function spendGold(n) { save.gold -= n; persist(); goldShown = save.gold; updateGold(); }
-const reviveCost = () => 10 * (state.revives + 1);
+const reviveCost = () => R.reviveCost(state.revives + 1);
 async function revive() {
   const cost = reviveCost(); if (save.gold < cost) return;
   spendGold(cost); state.revives++; closeModal();
   state.over = false; SFX.revive(); SFX.cash(); flash(.25); buzz(30);
   bigText = { text: 'Back in the game!', t: 0, dur: 1.4, size: .9 };
   const from = elCenter($('#goldChip')), mv = $('#movesBadge'), m = elCenter(mv);
-  for (let i = 0; i < 5; i++) flyers.push({ spark: true, x0: from.x, y0: from.y, tx: () => m.x, ty: () => m.y, t: -i * .1, dur: .55, type: 2,
+  for (let i = 0; i < R.ECON.reviveMoves; i++) flyers.push({ spark: true, x0: from.x, y0: from.y, tx: () => m.x, ty: () => m.y, t: -i * .1, dur: .55, type: 2,
     done: () => { state.moves++; updateHUD(); bumpEl(mv); SFX.ding(i + 3); } });
   await waitFor(() => !flyers.length);
   state.busy = false; idleT = 0;
@@ -2011,7 +2236,7 @@ function offerBooster(id) {
     <p>You have <b class="goldN">${fmt(save.gold)}</b> gold bars.</p>
     <div class="row"><button class="btn ghost" data-act="resume">Not now</button><button class="btn gold" data-act="buyuse" data-b="${id}" ${save.gold < PRICE[id] ? 'disabled' : ''}><img class="gi" alt="" src="${iconSrc('gold', '')}">Buy for ${PRICE[id]}</button></div>`);
 }
-function randomBooster() { const pool = ['hammer', 'hammer', 'swap', 'swap', 'rainbow', 'swarm', 'swarm', 'moves', 'party']; return pool[randi(pool.length)]; }
+function randomBooster() { const pool = R.ECON.boosterPool; return pool[randi(pool.length)]; }
 function grantBooster(id, fromEl) {
   save.boosters[id] = (save.boosters[id] || 0) + 1; persist();
   const btn = $('#b-' + id), a = elCenter(fromEl || btn);
@@ -2042,37 +2267,35 @@ function aimTap(cell) {
 async function settle() { popSeq = 0; await collapse(); await resolveBoard(null, 1); await afterTurn(); }
 async function useHammer(cell) {
   const t = grid[cell.r][cell.c]; if (!t) return;
-  spendBooster('hammer'); state.busy = true; sel = null;
+  spendBooster('hammer'); state.busy = true; sel = null; R.startTurn(state);
   swings.push({ r: cell.r, c: cell.c, t: 0, dur: .5 }); SFX.whoosh();
   await wait(.2);
-  SFX.hammer(); shake(10); buzz(35); fxExplosion(cell.r, cell.c, t.special === BOMB ? -1 : t.type, 1.4);
-  const B = new Blast(1); B.add(idxOf(cell.r, cell.c), 0, B.source(cell.c + .5, cell.r + .5, colorOf(t)));
-  await B.run(); await settle();
+  SFX.hammer(); shake(10); buzz(35); hitStop(.08); fxExplosion(cell.r, cell.c, t.special === BOMB ? -1 : t.type, 1.4);
+  await runBlast(R.hammerPlan(state, cell.r, cell.c)); await settle();
 }
 async function useRainbowDrop(cell) {
   const t = grid[cell.r][cell.c]; if (!t) return;
-  spendBooster('rainbow'); state.busy = true; sel = null; SFX.rainbow();
+  spendBooster('rainbow'); state.busy = true; sel = null; R.startTurn(state); SFX.rainbow();
+  R.rainbowDropAt(state, cell.r, cell.c);
   sparkTo($('#b-rainbow'), t, BOMB, 0, () => { shake(5); flash(.2); });
   await waitFor(() => !flyers.length); await afterTurn();
 }
 async function useSwarm() {
-  spendBooster('swarm'); state.busy = true;
+  spendBooster('swarm'); state.busy = true; R.startTurn(state);
   comboText(5, 'Unicorn Stampede!'); flash(.15);
-  const B = new Blast(1), src = B.source(COLS / 2, ROWS - .5, -1);
-  launchSeekers(B, ROWS + .4, (COLS - 1) / 2, -1, .1, 8, NONE, src);
-  B.process(); await B.run(); await settle();
+  await runBlast(R.swarmPlan(state)); await settle();
 }
 async function useParty() {
-  spendBooster('party'); state.busy = true;
+  spendBooster('party'); state.busy = true; R.startTurn(state);
   comboText(6, 'Sugar Party!'); SFX.mega(); confetti(REDUCED ? 30 : 120); shake(14); flash(.5); buzz(80);
-  const B = new Blast(2), src = B.source(COLS / 2, ROWS / 2, -1);
-  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) B.addRC(r, c, .25 + Math.hypot(r - 3.5, c - 3.5) * .08, src);
-  await B.run(); await settle();
+  const { B, placed } = R.partyPlan(state);
+  await runBlast(B, () => placed.forEach((p, i) => { p.tile.shownSpecial = 0; after(.05 + i * .05, () => { p.tile.shownSpecial = undefined; p.tile.bsv += 7; fxCreate(p.tile); SFX.ding(i); }); }));
+  await settle();
 }
 function useMoves() {
   spendBooster('moves');
   const mv = $('#movesBadge'), b = $('#b-moves'), a = elCenter(b), m = elCenter(mv);
-  for (let i = 0; i < 5; i++) flyers.push({ spark: true, x0: a.x, y0: a.y, tx: () => m.x, ty: () => m.y, t: -i * .08, dur: .5, type: 2,
+  for (let i = 0; i < R.ECON.reviveMoves; i++) flyers.push({ spark: true, x0: a.x, y0: a.y, tx: () => m.x, ty: () => m.y, t: -i * .08, dur: .5, type: 2,
     done: () => { state.moves++; updateHUD(); bumpEl(mv); SFX.ding(i + 3); } });
 }
 
@@ -2137,7 +2360,7 @@ function showWin() {
   SFX.win(); confetti(REDUCED ? 30 : 140); flash(.3);
   const bonus = stars === 3 ? randomBooster() : null;
   if (bonus) { save.boosters[bonus] = (save.boosters[bonus] || 0) + 1; persist(); updateBoosters(); }
-  const goldBefore = save.gold, reward = 5 + stars * 5 + (prevBest ? 0 : 10);
+  const goldBefore = save.gold, reward = R.winGold(stars, !prevBest);
   save.gold += reward; persist(); goldShown = save.gold; updateGold();
   openModal(`<div class="ribbon" id="modalTitle">Level ${n} clear</div>
     <div class="stars">${starSvg()}${starSvg()}${starSvg()}</div>
@@ -2202,21 +2425,23 @@ document.addEventListener('keydown', e => {
 });
 
 /* ---------- level lifecycle ---------- */
-function setupLevel(n) {
+function setupLevel(n, seed) {
   resetWorld();
   L = makeLevel(n);
-  THEME = L.home ? 'home' : 'candy'; mapWorld = THEME; spriteKey = '';
-  const pat = L.jelly ? PAT[L.jelly] : null;
-  jelly = []; jwob = []; let jt = 0;
-  for (let r = 0; r < ROWS; r++) { jelly.push([]); jwob.push([]); for (let c = 0; c < COLS; c++) { const v = pat ? pat(r, c) : 0; jelly[r].push(v); jwob[r].push(0); jt += v; } }
-  state = { score: 0, shown: 0, moves: L.moves, busy: true, over: false, starsLit: 0, revives: 0, meter: 0, rainbows: 0, chest: { need: 3, have: 0, shownHave: 0, pending: 0 },
-    goals: L.goals.map(g => g[0] === 'score' ? { kind: 'score', need: g[1] } : g[0] === 'collect' ? { kind: 'collect', type: g[1], need: g[2], left: g[2], shown: g[2] } : { kind: 'jelly', need: jt, left: jt, shown: jt }) };
+  THEME = L.home ? 'home' : 'candy'; mapWorld = THEME; spriteKey = ''; spreadToldOnce = false;
+  // one seeded generator per attempt drives every rule decision; the same seed and moves replay the game
+  const w = R.newWorld(L, seed === undefined ? (Math.random() * 2 ** 32) >>> 0 : seed, mkTile);
+  state = Object.assign(w, { shown: 0, busy: true, starsLit: 0, revives: 0 });
+  state.chest.shownHave = 0;
+  state.goals.forEach(g => { g.shown = g.left; });
+  state.fx = onRuleFx;
+  jelly = state.jelly; jwob = jelly.map(row => row.map(() => 0));
   shownScoreText = '';
 }
-function startLevel(n) {
-  setupLevel(n);
-  genBoard();
-  grid.forEach(row => row.forEach(t => { t.y = t.r - ROWS - .6; }));
+function startLevel(n, seed) {
+  setupLevel(n, seed);
+  R.genBoard(state); grid = state.grid;
+  grid.forEach(row => row.forEach(t => { t.x = t.c; t.y = t.r - ROWS - .6; }));
   showScreen('game');
   buildSprites(); buildStarbar(); buildGoals(); updateHUD(); updateMeter(); updateChest(); updateBoosters(); updateGold();
   openIntro();
@@ -2299,10 +2524,10 @@ if (window.ResizeObserver) new ResizeObserver(() => layoutBoard()).observe(wrapE
 $('#candyRow').innerHTML = CANDY.map((c, i) => `<img alt="" src="${iconSrc('c', i)}">`).join('');
 $('#chestImg').src = iconSrc('chest', ''); $('#meterImg').src = iconSrc('bomb', '');
 document.querySelectorAll('.goldImg').forEach(i => { i.src = iconSrc('gold', ''); });
-if (typeof save.gold !== 'number') save.gold = 50;
+if (typeof save.gold !== 'number') save.gold = R.ECON.startGold;
 if (!save.unlockedHome) save.unlockedHome = HOME_FIRST;
 updateGold();
-if (!save.boosters || typeof save.boosters !== 'object') save.boosters = { hammer: 3, swap: 3, rainbow: 2, swarm: 2, moves: 2, party: 1 };
+if (!save.boosters || typeof save.boosters !== 'object') save.boosters = { ...R.ECON.startBoosters };
 buildBoosters();
 syncToggles();
 resize();
@@ -2319,8 +2544,8 @@ function boot(data) {
     if (data && data.save) { save = Object.assign(save, data.save); syncToggles(); }
     if (data && data.screen === 'game' && data.level && data.board && !data.over) {
       setupLevel(data.level);
-      grid = data.board.map((row, r) => row.map((v, c) => { const t = mkTile(v ? v[0] : randType(), v ? v[1] : 0); t.key = !!(v && v[2]); t.r = r; t.c = c; t.x = c; t.y = r; return t; }));
-      if (data.jelly) jelly = data.jelly;
+      grid = state.grid = data.board.map((row, r) => row.map((v, c) => { const t = mkTile(v ? v[0] : randi(L.colors), v ? v[1] : 0); t.key = !!(v && v[2]); t.r = r; t.c = c; t.x = c; t.y = r; return t; }));
+      if (data.jelly) { jelly = state.jelly = data.jelly; jwob = jelly.map(row => row.map(() => 0)); }
       state.score = state.shown = data.score || 0; state.moves = data.moves || L.moves;
       (data.goals || []).forEach((v, i) => { const g = state.goals[i]; if (g && g.kind !== 'score') { g.left = g.shown = v; } });
       showScreen('game'); buildSprites(); buildStarbar(); buildGoals(); updateHUD(); updateMeter(); updateChest(); updateBoosters(); updateGold();
@@ -2336,7 +2561,7 @@ window.claude?.hot?.ready ? window.claude.hot.ready(boot) : boot(window.claude?.
 if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol) && window.self === window.top) navigator.serviceWorker.register('sw.js').catch(() => {});
 
 // lightweight hooks for automated play-testing
-window.__sugar = { moves: () => allMoves(), swap: (a, b) => attemptSwap(a, b), state: () => ({ ...state, goals: state.goals.map(g => ({ kind: g.kind, left: g.left, need: g.need })) }), canPlay: () => canPlay(), start: n => startLevel(n), boost: id => useBooster(id), setMoves: n => { state.moves = n; updateHUD(); }, setTile: (r, c, type, special = 0, key = false) => { const t = grid[r][c]; t.type = type; t.special = special; t.key = key; }, aimTap: (r, c) => tap({ r, c }), grid: () => grid.map(row => row.map(t => t ? [t.type, t.special, t.key ? 1 : 0] : null)), sprite: (t, s, S = 160) => (s === BOMB ? makeBomb(S) : makeCandy(t, s, S)).toDataURL(), icon: (k, t) => iconSrc(k, t), begin: () => { closeModal(); beginLevel(); } };
+window.__sugar = { moves: () => R.allMoves(state), swap: (a, b) => attemptSwap(a, b), state: () => ({ score: state.score, moves: state.moves, over: state.over, busy: state.busy, meter: state.meter, rainbows: state.rainbows, chest: { ...state.chest }, revives: state.revives, seed: state.seed, goals: state.goals.map(g => ({ kind: g.kind, left: g.left, need: g.need })) }), snapshot: () => ({ g: grid.map(r => r.map(t => t ? [t.type, t.special, t.key ? 1 : 0] : null)), j: jelly.map(r => r.slice()), score: state.score, moves: state.moves, chest: { need: state.chest.need, have: state.chest.have }, meter: state.meter, goals: state.goals.map(g => g.left) }), canPlay: () => canPlay(), start: (n, seed) => startLevel(n, seed), marks: () => marks, boost: id => useBooster(id), setMoves: n => { state.moves = n; updateHUD(); }, setTile: (r, c, type, special = 0, key = false) => { const t = grid[r][c]; t.type = type; t.special = special; t.key = key; }, aimTap: (r, c) => tap({ r, c }), grid: () => grid.map(row => row.map(t => t ? [t.type, t.special, t.key ? 1 : 0] : null)), sprite: (t, s, S = 160) => (s === BOMB ? makeBomb(S) : makeCandy(t, s, S)).toDataURL(), icon: (k, t) => iconSrc(k, t), begin: () => { closeModal(); beginLevel(); } };
 })();
 </script>
 </body>

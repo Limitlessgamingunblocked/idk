@@ -1,6 +1,17 @@
 # Sugar Shapes
 
-A match-3 candy game where every candy is the logo. Swap neighbouring candies to line up three or more. Match four for a striped candy, an L or T for a wrapped one, and five for the rainbow bomb. 30 levels.
+A match-3 candy game where every candy is the logo. Swap neighbouring candies to line up three or more. 30 levels.
+
+| Match | Makes |
+| --- | --- |
+| 4 in a row | Striped candy: clears its row or column |
+| 2×2 box | Seeker: launches 3 homing candies at jelly, keys and goal candies |
+| L or T | Wrapped candy: explodes around itself |
+| 5 in a row, or any match of 6+ | Rainbow: clears every candy of one colour |
+
+Swap two specials together for combos (for example seeker + striped fires lasers wherever the seekers land, rainbow + seeker turns a whole colour into seekers). The **rainbow meter** fills as you clear candies and drops a free rainbow when full. Candies with **gold keys** fill the **sugar chest**, which bursts into a rainbow, two more specials and a free booster.
+
+**Boosters** (bottom bar, saved between levels): Hammer, Free Swap, Rainbow Drop, Seeker Swarm, +5 Moves and Sugar Party, which hits every candy on the board at once. You earn more from chests and 3-star wins.
 
 The whole game is `index.html`, with its fonts in `fonts/`. The same file runs in a browser, as a home-screen app, and inside the native iPhone app in `ios/`.
 

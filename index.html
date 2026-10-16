@@ -75,7 +75,24 @@ body{background:var(--sky-mid);color:var(--cream);font-family:var(--body);-webki
 #board{outline:none;border-radius:14px;touch-action:none;cursor:pointer}
 #board.kb:focus-visible{outline:3px solid var(--gold);outline-offset:18px}
 
-.controls{display:flex;justify-content:center;gap:12px}
+.controls{display:flex;justify-content:center;gap:6px}
+.controls .icon-btn{width:auto;height:auto;aspect-ratio:1;flex:0 1 50px;min-width:0}
+.boost{position:relative;flex:0 1 50px;min-width:0;aspect-ratio:1;border-radius:16px;border:2px solid rgba(255,243,227,.18);background:linear-gradient(var(--choc-2),var(--choc));box-shadow:0 4px 0 var(--choc-edge);padding:3px;cursor:pointer;display:grid;place-items:center;color:var(--gold)}
+.boost img{width:100%;height:100%;object-fit:contain;display:block}
+.boost .cnt{position:absolute;top:-7px;right:-7px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:var(--berry);color:#fff;font:400 13px/20px var(--display);box-shadow:0 2px 0 var(--berry-deep)}
+.boost .plus5{font:400 21px/1 var(--display);color:var(--gold);text-shadow:0 2px 0 var(--choc-edge)}
+.boost.empty{opacity:.5}
+.boost.empty .cnt{background:#7a5a66;box-shadow:none}
+.boost.aim{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold),0 4px 0 var(--choc-edge);animation:throb .8s ease-in-out infinite}
+.boost:active{transform:translateY(3px);box-shadow:0 1px 0 var(--choc-edge)}
+.boost.bump,.xchip.bump{animation:bump .3s ease-out}
+.extras{display:flex;justify-content:center;gap:10px;min-height:38px}
+.xchip{display:flex;align-items:center;gap:6px;padding:3px 12px 3px 5px;border-radius:999px;background:rgba(59,24,36,.72);border:2px solid rgba(255,243,227,.12)}
+.xchip img{width:30px;height:30px;display:block}
+.xchip .n{font:400 18px/1 var(--display);font-variant-numeric:tabular-nums}
+.mbar{position:relative;width:74px;height:11px;border-radius:6px;background:rgba(0,0,0,.4);overflow:hidden}
+.mbar i{position:absolute;inset:0 auto 0 0;width:0;border-radius:6px;background:linear-gradient(90deg,#ff3b5c,#ff9419,#ffd92e,#35d05e,#2f9bff,#a752f5);transition:width .25s}
+.meter.full{box-shadow:0 0 0 3px var(--gold);animation:throb .6s ease-in-out infinite}
 .icon-btn{width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,243,227,.18);background:linear-gradient(var(--choc-2),var(--choc));color:var(--cream);display:grid;place-items:center;box-shadow:0 4px 0 var(--choc-edge);cursor:pointer;padding:0;position:relative}
 .icon-btn svg{width:24px;height:24px;fill:currentColor}
 .icon-btn .slash{display:none;position:absolute;width:30px;height:3px;border-radius:2px;background:var(--berry);transform:rotate(-45deg);box-shadow:0 0 0 2px var(--choc)}
@@ -146,7 +163,7 @@ button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 .stars svg:nth-child(2){width:80px;height:80px;transform:translateY(-10px)}
 .stars svg.on{fill:var(--gold);stroke:var(--gold-deep);animation:starIn .55s cubic-bezier(.3,1.7,.5,1) both}
 .stars svg:nth-child(2).on{animation-name:starIn2}
-.toggles{display:flex;gap:12px;justify-content:center;margin-top:14px}
+.toggles{display:flex;gap:12px;justify-content:center;margin-top:16px}
 
 @keyframes drop{0%{transform:translateY(-140%) scale(.6);opacity:0}60%{opacity:1}100%{transform:none}}
 @keyframes throb{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
@@ -184,13 +201,15 @@ button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
       </div>
     </header>
     <div class="goals" id="goals" aria-live="polite"></div>
+    <div class="extras">
+      <div class="xchip" id="chest" role="img" aria-label="Sugar chest"><img alt="" id="chestImg"><span class="n" id="chestN">0/3</span></div>
+      <div class="xchip meter" id="meter" role="img" aria-label="Rainbow meter"><img alt="" id="meterImg"><span class="mbar"><i id="meterFill"></i></span></div>
+    </div>
     <div class="board-wrap" id="boardWrap">
       <div id="board" tabindex="0" role="application" aria-label="Candy board. Drag a candy onto a neighbour, or use the arrow keys and Enter to pick and swap."></div>
     </div>
-    <footer class="controls">
+    <footer class="controls" id="controls">
       <button class="icon-btn" id="btnPause" aria-label="Pause"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="5" height="16" rx="2"/><rect x="14" y="4" width="5" height="16" rx="2"/></svg></button>
-      <button class="icon-btn" id="btnSfx" aria-label="Sound effects"><svg viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><i class="slash"></i></button>
-      <button class="icon-btn" id="btnMusic" aria-label="Music"><svg viewBox="0 0 24 24"><path d="M9 17.5V6l11-2.5v11.5"/><circle cx="6.5" cy="17.5" r="3"/><circle cx="17.5" cy="15" r="3"/><path d="M9 6l11-2.5V8L9 10.5z"/></svg><i class="slash"></i></button>
     </footer>
   </main>
 </div>
@@ -205,7 +224,7 @@ button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
   <h1 class="title-name">Sugar Shapes</h1>
   <div class="candy-row" id="candyRow"></div>
   <button class="btn big" id="btnPlay">Play</button>
-  <p class="how">Swap two neighbouring candies to line up three or more. Every candy is the logo. Match four for a striped one, an L or T for a wrapped one, and five for the rainbow bomb.</p>
+  <p class="how">Swap two neighbouring candies to line up three or more. Every candy is the logo. Four in a row makes a striped candy, a 2&times;2 box makes a seeker, an L or T makes a wrapped one, and five or six makes a rainbow. Gold keys open chests full of power-ups.</p>
 </section>
 
 <section class="screen" id="scrMap" aria-label="Levels">
@@ -254,7 +273,7 @@ const starSvg = cls => `<svg viewBox="0 0 24 24" class="${cls || ''}" aria-hidde
 
 /* ---------- constants ---------- */
 const COLS = 8, ROWS = 8;
-const NONE = 0, SH = 1, SV = 2, WRAP = 3, BOMB = 4;
+const NONE = 0, SH = 1, SV = 2, WRAP = 3, BOMB = 4, SEEK = 5;
 const CANDY = [
   { name: 'cherry candies',    base: '#ff3b5c', light: '#ffa3b1', dark: '#a10f2c' },
   { name: 'tangerine candies', base: '#ff9419', light: '#ffd497', dark: '#b05200' },
@@ -263,8 +282,19 @@ const CANDY = [
   { name: 'blueberry candies', base: '#2f9bff', light: '#b2dbff', dark: '#0a4ca6' },
   { name: 'grape candies',     base: '#a752f5', light: '#e0bcff', dark: '#5a199c' },
 ];
-const CREATE_BONUS = [0, 120, 120, 200, 500];
-const FIRE_BONUS = [0, 100, 100, 180, 300];
+const CREATE_BONUS = [0, 120, 120, 200, 500, 150];
+const FIRE_BONUS = [0, 100, 100, 180, 300, 150];
+const METER_MAX = 36;         // candies cleared to earn a free rainbow
+const KEY_CHANCE = .07;       // chance a new candy carries a key (while fewer than 3 are on the board)
+const BOOSTERS = [
+  { id: 'hammer', name: 'Hammer', aim: true, tip: 'Tap a candy to smash it' },
+  { id: 'swap', name: 'Free Swap', aim: true, tip: 'Swap any two neighbours' },
+  { id: 'rainbow', name: 'Rainbow Drop', aim: true, tip: 'Tap a candy to make it a rainbow' },
+  { id: 'swarm', name: 'Seeker Swarm', aim: false },
+  { id: 'moves', name: '+5 Moves', aim: false },
+  { id: 'party', name: 'Sugar Party', aim: false },
+];
+const BOOST = Object.fromEntries(BOOSTERS.map(b => [b.id, b]));
 const COMBO_WORDS = ['', '', 'Sweet!', 'Tasty!', 'Delicious!', 'Divine!', 'Sugar Storm!'];
 const GRAV = 70, VMAX = 22;
 
@@ -292,7 +322,7 @@ function logoCell(r, c) {
 
 /* ---------- save data ---------- */
 const KEY = 'sugar-shapes-v1';
-let save = { unlocked: 1, stars: {}, best: {}, sfx: true, music: true };
+let save = { unlocked: 1, stars: {}, best: {}, sfx: true, music: true, boosters: { hammer: 3, swap: 3, rainbow: 2, swarm: 2, moves: 2, party: 1 } };
 try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && typeof s === 'object') save = Object.assign(save, s); } catch (e) {}
 function persist() { try { localStorage.setItem(KEY, JSON.stringify(save)); } catch (e) {} }
 
@@ -434,6 +464,12 @@ const SFX = (() => {
     win() { [0, 2, 4, 5, 7, 10].forEach((k, i) => { osc({ type: 'triangle', f: hz(5 + k), t: i * .09, dur: .45, vol: .12 }); osc({ f: hz(10 + k), t: i * .09, dur: .3, vol: .04 }); }); [5, 7, 9].forEach(k => osc({ type: 'triangle', f: hz(k), t: .6, dur: 1.4, vol: .09, a: .02 })); },
     lose() { [7, 5, 3, 0].forEach((k, i) => osc({ type: 'triangle', f: hz(k, 262), t: i * .16, dur: .5, vol: .12 })); },
     whoosh() { noise({ dur: .5, vol: .12, type: 'bandpass', f: 300, f2: 3000, q: 1 }); },
+    launch() { noise({ dur: .4, vol: .12, type: 'bandpass', f: 400, f2: 3200, q: 2 }); osc({ type: 'triangle', f: 280, f2: 980, dur: .32, vol: .08 }); },
+    hit() { osc({ f: 230, f2: 60, dur: .3, vol: .3 }); noise({ dur: .25, vol: .18, type: 'lowpass', f: 2200, f2: 200 }); },
+    key() { [0, 4, 7, 12].forEach((k, i) => bell(hz(12 + k / 2.4 | 0), i * .06, .09, .5)); },
+    chest() { this.win(); noise({ t: .1, dur: .9, vol: .12, type: 'highpass', f: 3000, f2: 9000 }); osc({ f: 90, f2: 45, dur: .5, vol: .3 }); },
+    hammer() { osc({ f: 130, f2: 45, dur: .28, vol: .5 }); noise({ dur: .18, vol: .32, type: 'lowpass', f: 3000, f2: 250 }); osc({ type: 'square', f: 900, f2: 280, dur: .08, vol: .05 }); },
+    rainbow() { for (let i = 0; i < 12; i++) osc({ type: 'triangle', f: hz(6 + i), t: i * .04, dur: .3, vol: .07 }); noise({ dur: .8, vol: .08, type: 'highpass', f: 4000, f2: 10000 }); },
   };
 })();
 // haptics: the iPhone app exposes the Taptic Engine as a `haptic` message handler; browsers fall back to vibrate
@@ -468,7 +504,7 @@ function layoutBoard() {
 }
 
 /* ---------- sprites ---------- */
-let SPR = [], BOMB_SPR = null, GLOW = [], GLOW_W = null, JELLY = [], boardBG = null, spriteKey = '';
+let SPR = [], SEEK_SPR = [], BOMB_SPR = null, KEY_SPR = null, GLOW = [], GLOW_W = null, JELLY = [], boardBG = null, spriteKey = '';
 const LCX = LOGO_BOX.x + LOGO_BOX.w / 2, LCY = LOGO_BOX.y + LOGO_BOX.h / 2;
 // the five pieces of the mark, relative to its centre (used for sprites and for shattering)
 const PIECES = [
@@ -554,7 +590,78 @@ function makeCandy(type, special, S) {
     g.lineWidth = S * .025; g.strokeStyle = 'rgba(255,255,255,.6)'; g.stroke();
     paintLogo(g, S * .66, C, NONE, false);
     rrPath(g, -S * .31, -S * .24, S * .3, S * .07, S * .035); g.fillStyle = 'rgba(255,255,255,.4)'; g.fill();
+  } else if (special === SEEK) {
+    // targeting reticle behind the mark: this candy hunts things down
+    g.lineCap = 'round';
+    for (const [w, col] of [[S * .085, hexA(C.dark, .9)], [S * .045, 'rgba(255,255,255,.95)']]) {
+      g.lineWidth = w; g.strokeStyle = col; g.beginPath(); g.arc(0, -S * .02, S * .4, 0, Math.PI * 2); g.stroke();
+      for (let i = 0; i < 4; i++) { const a = i * Math.PI / 2; g.beginPath(); g.moveTo(Math.cos(a) * S * .3, Math.sin(a) * S * .3 - S * .02); g.lineTo(Math.cos(a) * S * .48, Math.sin(a) * S * .48 - S * .02); g.stroke(); }
+    }
+    paintLogo(g, S * .7, C, NONE, false);
   } else paintLogo(g, S * .92, C, special, false);
+  return cv;
+}
+function makeKey(S) {
+  const cv = document.createElement('canvas'); cv.width = cv.height = S;
+  const g = cv.getContext('2d'); g.translate(S / 2, S / 2); g.rotate(-.6);
+  const p = new Path2D();
+  p.arc(-S * .2, 0, S * .17, 0, Math.PI * 2); p.closePath();
+  p.rect(-S * .06, -S * .055, S * .5, S * .11);
+  p.rect(S * .26, 0, S * .07, S * .16); p.rect(S * .37, 0, S * .07, S * .12);
+  const gr = g.createLinearGradient(0, -S * .2, 0, S * .2); gr.addColorStop(0, '#fff2a0'); gr.addColorStop(.5, '#ffc61a'); gr.addColorStop(1, '#c47a00');
+  g.lineJoin = 'round'; g.lineWidth = S * .09; g.strokeStyle = '#4a2200'; g.stroke(p);
+  g.fillStyle = gr; g.fill(p);
+  g.fillStyle = '#4a2200'; g.beginPath(); g.arc(-S * .2, 0, S * .07, 0, Math.PI * 2); g.fill();
+  g.fillStyle = 'rgba(255,255,255,.8)'; g.beginPath(); g.arc(-S * .26, -S * .07, S * .035, 0, Math.PI * 2); g.fill();
+  return cv;
+}
+function makeChest(S) {
+  const cv = document.createElement('canvas'); cv.width = cv.height = S;
+  const g = cv.getContext('2d'), w = S * .84, x = (S - w) / 2;
+  const wood = g.createLinearGradient(0, S * .3, 0, S * .9); wood.addColorStop(0, '#b0603a'); wood.addColorStop(1, '#6e2f17');
+  rrPath(g, x, S * .42, w, S * .44, S * .08); g.fillStyle = wood; g.fill(); g.lineWidth = S * .04; g.strokeStyle = '#3b1408'; g.stroke();
+  const lid = g.createLinearGradient(0, S * .14, 0, S * .44); lid.addColorStop(0, '#d47a4a'); lid.addColorStop(1, '#8a3c1e');
+  g.beginPath(); g.moveTo(x, S * .44); g.lineTo(x, S * .3); g.quadraticCurveTo(S / 2, S * .02, x + w, S * .3); g.lineTo(x + w, S * .44); g.closePath();
+  g.fillStyle = lid; g.fill(); g.stroke();
+  g.fillStyle = '#ffc61a'; g.strokeStyle = '#4a2200'; g.lineWidth = S * .025;
+  for (const bx of [x + w * .16, x + w * .74]) { g.fillRect(bx, S * .2, w * .1, S * .66); g.strokeRect(bx, S * .2, w * .1, S * .66); }
+  rrPath(g, S * .4, S * .36, S * .2, S * .2, S * .04); g.fill(); g.stroke();
+  g.fillStyle = '#3b1408'; g.beginPath(); g.arc(S / 2, S * .44, S * .035, 0, Math.PI * 2); g.fill(); g.fillRect(S * .487, S * .44, S * .026, S * .07);
+  return cv;
+}
+function makeBoostIcon(id, S) {
+  const cv = document.createElement('canvas'); cv.width = cv.height = S;
+  const g = cv.getContext('2d');
+  if (id === 'hammer') {
+    g.save(); g.translate(S * .5, S * .55); g.rotate(-.75);
+    rrPath(g, -S * .05, -S * .05, S * .1, S * .52, S * .05); g.fillStyle = '#fff3e3'; g.fill(); g.lineWidth = S * .03; g.strokeStyle = '#3b1824'; g.stroke();
+    g.restore();
+    g.drawImage(makeCandy(0, NONE, S), -S * .02, -S * .14, S * .8, S * .8);
+  } else if (id === 'swap') {
+    g.drawImage(makeCandy(4, NONE, S), -S * .06, S * .02, S * .62, S * .62);
+    g.drawImage(makeCandy(2, NONE, S), S * .44, S * .36, S * .62, S * .62);
+    g.lineWidth = S * .07; g.strokeStyle = '#fff3e3'; g.lineCap = 'round'; g.lineJoin = 'round';
+    g.beginPath(); g.arc(S * .5, S * .5, S * .34, -Math.PI * .95, -Math.PI * .55); g.stroke();
+    g.beginPath(); g.moveTo(S * .37, S * .12); g.lineTo(S * .46, S * .19); g.lineTo(S * .35, S * .25); g.stroke();
+    g.beginPath(); g.arc(S * .5, S * .5, S * .34, Math.PI * .05, Math.PI * .45); g.stroke();
+    g.beginPath(); g.moveTo(S * .63, S * .88); g.lineTo(S * .54, S * .81); g.lineTo(S * .65, S * .75); g.stroke();
+  } else if (id === 'rainbow') g.drawImage(makeBomb(S), 0, 0, S, S);
+  else if (id === 'swarm') {
+    g.drawImage(makeCandy(3, SEEK, S), S * .06, S * .1, S * .9, S * .9);
+    g.strokeStyle = '#fff3e3'; g.lineWidth = S * .05; g.lineCap = 'round';
+    for (const [y, l] of [[.18, .2], [.3, .3], [.42, .16]]) { g.beginPath(); g.moveTo(S * .02, S * y); g.lineTo(S * (.02 + l), S * y); g.stroke(); }
+  } else if (id === 'moves') {
+    const gr = g.createRadialGradient(S * .38, S * .32, S * .05, S * .5, S * .5, S * .48); gr.addColorStop(0, '#ff9cc0'); gr.addColorStop(.6, '#e8336d'); gr.addColorStop(1, '#a5154a');
+    g.fillStyle = gr; g.beginPath(); g.arc(S / 2, S / 2, S * .44, 0, Math.PI * 2); g.fill(); g.lineWidth = S * .06; g.strokeStyle = '#fff3e3'; g.stroke();
+    g.font = `${Math.round(S * .42)}px "Lilita One","Arial Rounded MT Bold",sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#fff3e3'; g.fillText('+5', S / 2, S * .53);
+  } else if (id === 'party') {
+    g.save(); g.translate(S * .3, S * .78); g.rotate(-.7);
+    g.beginPath(); g.moveTo(-S * .13, 0); g.lineTo(S * .13, 0); g.lineTo(0, -S * .55); g.closePath();
+    const cg = g.createLinearGradient(-S * .13, 0, S * .13, 0); cg.addColorStop(0, '#ffd92e'); cg.addColorStop(1, '#ff9419');
+    g.fillStyle = cg; g.fill(); g.lineWidth = S * .03; g.strokeStyle = '#3b1824'; g.stroke(); g.restore();
+    const rnd = mulberry(7);
+    for (let i = 0; i < 14; i++) { const a = -Math.PI * .25 + (rnd() - .5) * 1.6, d = S * (.2 + rnd() * .45); g.fillStyle = CANDY[i % 6].base; g.beginPath(); g.arc(S * .32 + Math.cos(a) * d, S * .68 + Math.sin(a) * d - S * .2, S * (.035 + rnd() * .03), 0, Math.PI * 2); g.fill(); }
+  }
   return cv;
 }
 function makeBomb(S) {
@@ -607,16 +714,17 @@ function buildSprites() {
   const S = Math.max(16, Math.round(BR.cs * DPR)), key = S + ':' + BR.w;
   if (key === spriteKey) return; spriteKey = key;
   SPR = []; for (let t = 0; t < 6; t++) for (let s = 0; s < 4; s++) SPR[t * 4 + s] = makeCandy(t, s, S);
-  BOMB_SPR = makeBomb(S);
+  SEEK_SPR = CANDY.map((_, t) => makeCandy(t, SEEK, S));
+  BOMB_SPR = makeBomb(S); KEY_SPR = makeKey(S);
   GLOW = CANDY.map(c => makeGlow(S, c.base)); GLOW_W = makeGlow(S, '#ffffff');
   JELLY = [null, makeJelly(S, 1), makeJelly(S, 2)];
   buildBoardBG();
 }
-const spriteOf = t => t.special === BOMB ? BOMB_SPR : SPR[t.type * 4 + t.special];
+const spriteOf = t => t.special === BOMB ? BOMB_SPR : t.special === SEEK ? SEEK_SPR[t.type] : SPR[t.type * 4 + t.special];
 const iconCache = {};
 function iconSrc(kind, type) {
   const k = kind + type; if (iconCache[k]) return iconCache[k];
-  const cv = kind === 'jelly' ? makeJelly(96, 2) : kind === 'bomb' ? makeBomb(96) : makeCandy(type, NONE, 96);
+  const cv = kind === 'jelly' ? makeJelly(96, 2) : kind === 'bomb' ? makeBomb(96) : kind === 'chest' ? makeChest(96) : kind === 'key' ? makeKey(96) : kind === 'boost' ? makeBoostIcon(type, 96) : makeCandy(type, NONE, 96);
   return (iconCache[k] = cv.toDataURL());
 }
 
@@ -626,11 +734,11 @@ let L = null;
 let state = { score: 0, shown: 0, moves: 0, busy: true, over: false, goals: [], starsLit: 0 };
 let screen = 'title', paused = false;
 let tweens = [], timers = [], waiters = [], dying = [];
-let particles = [], rings = [], beams = [], bolts = [], popups = [], flyers = [], bigText = null;
+let particles = [], rings = [], beams = [], bolts = [], popups = [], flyers = [], missiles = [], swings = [], bigText = null, aim = null;
 let shakeAmt = 0, flashA = 0, gameTime = 0, idleT = 0, hint = null, sel = null, cursor = { r: 3, c: 3 }, kbOn = false, popSeq = 0;
 let TID = 0;
 function mkTile(type, special = NONE) {
-  return { id: ++TID, type, special, x: 0, y: 0, r: 0, c: 0, scale: 1, alpha: 1, bs: 0, bsv: 0, sq: 0, sqv: 0, vy: 0, falling: false, delay: 0, rot: 0, popT: -1, popDelay: 0, immune: false };
+  return { id: ++TID, type, special, key: false, x: 0, y: 0, r: 0, c: 0, scale: 1, alpha: 1, bs: 0, bsv: 0, sq: 0, sqv: 0, vy: 0, falling: false, delay: 0, rot: 0, popT: -1, popDelay: 0, immune: false };
 }
 const colorOf = t => t && t.special !== BOMB ? t.type : -1;
 const idxOf = (r, c) => r * COLS + c;
@@ -644,7 +752,7 @@ function waitFor(cond) { return new Promise(res => waiters.push({ cond, res }));
 function tween(obj, to, dur, ease = Ease.outQuad, delay = 0) { return new Promise(res => tweens.push({ obj, to, dur, ease, t: -delay, from: null, res })); }
 function resetWorld() {
   tweens = []; timers = []; waiters = []; dying = [];
-  particles = []; rings = []; beams = []; bolts = []; popups = []; flyers = []; bigText = null;
+  particles = []; rings = []; beams = []; bolts = []; popups = []; flyers = []; missiles = []; swings = []; bigText = null; aim = null;
   shakeAmt = 0; flashA = 0; hint = null; sel = null; idleT = 0; paused = false;
 }
 const anyFalling = () => grid.some(row => row.some(t => t && t.falling));
@@ -670,6 +778,12 @@ function findGroups() {
       r = e;
     }
   }
+  // 2x2 boxes count as matches too (they make seekers)
+  for (let r = 0; r < ROWS - 1; r++) for (let c = 0; c < COLS - 1; c++) {
+    const k = colorOf(grid[r][c]);
+    if (k >= 0 && colorOf(grid[r][c + 1]) === k && colorOf(grid[r + 1][c]) === k && colorOf(grid[r + 1][c + 1]) === k)
+      runs.push({ box: true, cells: [idxOf(r, c), idxOf(r, c + 1), idxOf(r + 1, c), idxOf(r + 1, c + 1)], type: k });
+  }
   if (!runs.length) return [];
   const par = runs.map((_, i) => i), find = i => par[i] === i ? i : (par[i] = find(par[i]));
   const owner = new Map();
@@ -681,11 +795,13 @@ function findGroups() {
   });
   const groups = [...map.values()];
   for (const g of groups) {
-    let longest = g.runs[0]; const seen = new Map();
-    for (const run of g.runs) { if (run.cells.length > longest.cells.length) longest = run; run.cells.forEach(x => seen.set(x, (seen.get(x) || 0) + 1)); }
+    const lines = g.runs.filter(r => !r.box), hasBox = lines.length < g.runs.length;
+    let longest = lines[0] || g.runs[0]; const seen = new Map();
+    for (const run of lines) { if (run.cells.length > longest.cells.length) longest = run; run.cells.forEach(x => seen.set(x, (seen.get(x) || 0) + 1)); }
     g.longest = longest; g.inter = -1; for (const [x, n] of seen) if (n > 1) { g.inter = x; break; }
-    const hasH = g.runs.some(r => r.h), hasV = g.runs.some(r => !r.h), len = longest.cells.length;
-    g.special = len >= 5 ? BOMB : hasH && hasV ? WRAP : len === 4 ? (longest.h ? SV : SH) : NONE;
+    const hasH = lines.some(r => r.h), hasV = lines.some(r => !r.h), len = lines.length ? longest.cells.length : 0;
+    // rainbows: five in a line, or any match of six or more candies
+    g.special = len >= 5 || g.cells.size >= 6 ? BOMB : hasH && hasV ? WRAP : len === 4 ? (longest.h ? SV : SH) : hasBox ? SEEK : NONE;
   }
   return groups;
 }
@@ -694,7 +810,12 @@ function matchAt(r, c) {
   let n = 1; for (let x = c - 1; x >= 0 && colorOf(grid[r][x]) === k; x--) n++; for (let x = c + 1; x < COLS && colorOf(grid[r][x]) === k; x++) n++;
   if (n >= 3) return true;
   n = 1; for (let y = r - 1; y >= 0 && colorOf(grid[y][c]) === k; y--) n++; for (let y = r + 1; y < ROWS && colorOf(grid[y][c]) === k; y++) n++;
-  return n >= 3;
+  if (n >= 3) return true;
+  for (const [dr, dc] of [[0, 0], [0, -1], [-1, 0], [-1, -1]]) {
+    const r0 = r + dr, c0 = c + dc; if (r0 < 0 || c0 < 0 || r0 + 1 >= ROWS || c0 + 1 >= COLS) continue;
+    if (colorOf(grid[r0][c0]) === k && colorOf(grid[r0][c0 + 1]) === k && colorOf(grid[r0 + 1][c0]) === k && colorOf(grid[r0 + 1][c0 + 1]) === k) return true;
+  }
+  return false;
 }
 function allMoves() {
   const out = [];
@@ -714,12 +835,15 @@ function genBoard() {
       grid.push([]);
       for (let c = 0; c < COLS; c++) {
         let k;
-        do k = randType(); while ((c >= 2 && grid[r][c - 1].type === k && grid[r][c - 2].type === k) || (r >= 2 && grid[r - 1][c].type === k && grid[r - 2][c].type === k));
+        do k = randType(); while ((c >= 2 && grid[r][c - 1].type === k && grid[r][c - 2].type === k) || (r >= 2 && grid[r - 1][c].type === k && grid[r - 2][c].type === k) ||
+          (r >= 1 && c >= 1 && grid[r - 1][c].type === k && grid[r][c - 1].type === k && grid[r - 1][c - 1].type === k));
         const t = mkTile(k); t.r = r; t.c = c; t.x = c; t.y = r; grid[r].push(t);
       }
     }
-    if (allMoves().length >= 3) return;
+    if (allMoves().length >= 3) break;
   }
+  // a couple of keys to start with
+  for (let i = 0; i < 2; i++) grid[1 + randi(ROWS - 2)][randi(COLS)].key = true;
 }
 
 /* ---------- blasts: chains of clears with timing ---------- */
@@ -780,6 +904,8 @@ function activate(B, i, tile, t) {
   } else if (tile.special === WRAP) {
     after(t, () => { fxExplosion(r, c, type, 2.6); SFX.boom(); shake(11); buzz(30); });
     for (let dr = -2; dr <= 2; dr++) for (let dc = -2; dc <= 2; dc++) if (Math.abs(dr) + Math.abs(dc) <= 2) B.addRC(r + dr, c + dc, t + .05 + (Math.abs(dr) + Math.abs(dc)) * .04, src);
+  } else if (tile.special === SEEK) {
+    launchSeekers(B, r, c, type, t, 3, NONE, src);
   } else if (tile.special === BOMB) {
     const col = mostCommon(B);
     after(t, () => { SFX.bomb(); shake(6); flash(.25); fxExplosion(r, c, -1, 1.4); });
@@ -797,6 +923,35 @@ function activate(B, i, tile, t) {
   }
 }
 
+// Seekers home in on what the level needs most: jelly, then keys, then goal candies.
+function seekTargets(B, n) {
+  const need = new Set(state.goals.filter(g => g.kind === 'collect' && g.left > 0).map(g => g.type)), out = [];
+  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+    const t = grid[r][c], i = idxOf(r, c);
+    if (!t || t.immune || B.time.has(i)) continue;
+    out.push({ i, s: (jelly[r] ? jelly[r][c] : 0) * 10 + (t.key ? 8 : 0) + (need.has(colorOf(t)) ? 6 : 0) - (t.special ? 4 : 0) + Math.random() * 3 });
+  }
+  return out.sort((a, b) => b.s - a.s).slice(0, n).map(o => o.i);
+}
+function launchSeekers(B, r, c, type, t, n, carry, src) {
+  after(t, () => { SFX.launch(); buzz(14); });
+  seekTargets(B, n).forEach((ti, k) => {
+    const tr = (ti / COLS) | 0, tc = ti % COLS, dur = .5 + k * .05, hit = t + dur, col = type >= 0 ? type : k % 6;
+    after(t, () => missiles.push({ x0: sx(c), y0: sy(r), tr, tc, t: 0, dur, type: col, wob: rand(-1, 1) }));
+    B.add(ti, hit, src);
+    if (carry === WRAP) {
+      after(hit, () => { fxExplosion(tr, tc, col, 2.4); SFX.boom(); shake(9); });
+      for (let dr = -2; dr <= 2; dr++) for (let dc = -2; dc <= 2; dc++) if (Math.abs(dr) + Math.abs(dc) <= 2) B.addRC(tr + dr, tc + dc, hit + .04 + (Math.abs(dr) + Math.abs(dc)) * .04, src);
+    } else if (carry === SH || carry === SV) {
+      after(hit, () => { SFX.zap(); shake(4); });
+      beamCells(B, tr, tc, carry === SH, hit, src);
+    } else {
+      after(hit, () => { fxExplosion(tr, tc, col, 1.3); SFX.hit(); shake(3); });
+      for (const [dr, dc] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) B.addRC(tr + dr, tc + dc, hit + .05, src);
+    }
+  });
+}
+
 /* ---------- turn flow ---------- */
 const canPlay = () => screen === 'game' && !state.busy && !state.over && !paused && $('#modalBack').hidden;
 function swapGrid(a, b) {
@@ -804,22 +959,24 @@ function swapGrid(a, b) {
   grid[a.r][a.c] = tb; grid[b.r][b.c] = ta;
   ta.r = b.r; ta.c = b.c; tb.r = a.r; tb.c = a.c;
 }
-async function attemptSwap(a, b) {
+async function attemptSwap(a, b, free = false) {
   if (!canPlay()) return;
   if (b.r < 0 || b.r >= ROWS || b.c < 0 || b.c >= COLS) return;
   const ta = grid[a.r][a.c], tb = grid[b.r][b.c]; if (!ta || !tb) return;
   state.busy = true; hint = null; sel = null; idleT = 0;
+  if (free) spendBooster('swap');
   SFX.swap();
   swapGrid(a, b);
   await Promise.all([tween(ta, { x: b.c, y: b.r }, .16, Ease.inOutQuad), tween(tb, { x: a.c, y: a.r }, .16, Ease.inOutQuad)]);
   const combo = ta.special === BOMB || tb.special === BOMB || (ta.special !== NONE && tb.special !== NONE);
+  if (free && !combo && !findGroups().length) { ta.bsv += 4; tb.bsv += 4; await afterTurn(); return; }
   if (!combo && !findGroups().length) {
     SFX.bad(); swapGrid(a, b);
     await Promise.all([tween(ta, { x: a.c, y: a.r }, .24, Ease.outBack), tween(tb, { x: b.c, y: b.r }, .24, Ease.outBack)]);
     ta.bsv -= 3; tb.bsv -= 3; shake(2);
     state.busy = false; idleT = 0; return;
   }
-  state.moves--; updateHUD();
+  if (!free) { state.moves--; updateHUD(); }
   popSeq = 0;
   if (combo) { await comboSwap(ta, tb); await collapse(); await resolveBoard(null, 1); }
   else await resolveBoard([a, b], 0);
@@ -879,8 +1036,8 @@ async function comboSwap(ta, tb) {
     for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { const t = grid[r][c]; if (t && t !== other && colorOf(t) === col) targets.push(t); }
     SFX.bomb(); flash(.3); shake(6);
     if (os) {
-      comboText(5, os === WRAP ? 'Wrapped Frenzy!' : 'Stripe Storm!');
-      targets.forEach((t, i) => after(i * .04, () => { fxBolt(bomb.c, bomb.r, t.c, t.r, col); t.special = os === WRAP ? WRAP : (Math.random() < .5 ? SH : SV); t.bsv += 6; SFX.ding(i); }));
+      comboText(5, os === WRAP ? 'Wrapped Frenzy!' : os === SEEK ? 'Seeker Storm!' : 'Stripe Storm!');
+      targets.forEach((t, i) => after(i * .04, () => { fxBolt(bomb.c, bomb.r, t.c, t.r, col); t.special = os === WRAP || os === SEEK ? os : (Math.random() < .5 ? SH : SV); t.bsv += 6; SFX.ding(i); }));
       await wait(targets.length * .04 + .5);
       B.noActivate.delete(oi);
       B.add(bi, 0, src); B.add(oi, .05, src);
@@ -892,7 +1049,16 @@ async function comboSwap(ta, tb) {
   } else {
     const isS = s => s === SH || s === SV, r0 = ta.r, c0 = ta.c;
     B.add(ia, 0, src); B.add(ib, 0, src);
-    if (sa === WRAP && sb === WRAP) {
+    if (sa === SEEK && sb === SEEK) {
+      comboText(5, 'Seeker Squadron!'); shake(6); flash(.2);
+      launchSeekers(B, r0, c0, ta.type, .05, 7, NONE, src);
+      src.pts += 300;
+    } else if (sa === SEEK || sb === SEEK) {
+      const carry = sa === SEEK ? sb : sa;
+      comboText(5, carry === WRAP ? 'Bomb Drop!' : 'Laser Drop!'); shake(6);
+      launchSeekers(B, r0, c0, ta.type, .05, 3, carry, src);
+      src.pts += 300;
+    } else if (sa === WRAP && sb === WRAP) {
       SFX.boom(); after(.15, () => SFX.boom()); shake(16); flash(.35); buzz(60);
       fxExplosion(r0, c0, ta.type, 4.2); comboText(5, 'Kaboom!');
       for (let dr = -2; dr <= 2; dr++) for (let dc = -2; dc <= 2; dc++) B.addRC(r0 + dr, c0 + dc, .08 + Math.max(Math.abs(dr), Math.abs(dc)) * .07, src);
@@ -918,14 +1084,21 @@ function collapse() {
     }
     for (let r = w; r >= 0; r--) {
       const t = mkTile(randType()); t.r = r; t.c = c; t.x = c; t.y = r - w - 1.15; t.falling = true; t.delay = c * .012;
+      if (!state.over && keysOnBoard() < 3 && Math.random() < KEY_CHANCE) t.key = true;
       grid[r][c] = t; any = true;
     }
   }
   if (!any) return Promise.resolve();
   return waitFor(() => !anyFalling());
 }
+const keysOnBoard = () => grid.reduce((n, row) => n + row.filter(t => t && t.key).length, 0);
 function goalsMet() { return state.goals.every(g => g.kind === 'score' ? state.score >= g.need : g.left <= 0); }
 async function afterTurn() {
+  if (!goalsMet() && state.moves > 0 && (state.chest.pending || state.rainbows)) {
+    await waitFor(() => !flyers.length);
+    while (state.chest.pending > 0) { state.chest.pending--; await openChest(); }
+    while (state.rainbows > 0) { state.rainbows--; await dropRainbow(); }
+  }
   if (goalsMet()) { await levelWon(); return; }
   if (state.moves <= 0) { state.over = true; await waitFor(() => !flyers.length); await wait(.5); levelLost(); return; }
   if (allMoves().length === 0) await shuffle();
@@ -943,6 +1116,33 @@ async function shuffle() {
     if (!findGroups().length && allMoves().length) break;
   }
   await Promise.all(tiles.map((t, i) => tween(t, { x: t.c, y: t.r }, .55, Ease.outBack, i * .006)));
+}
+function plainTiles() { const out = []; grid.forEach(row => row.forEach(t => t && !t.special && out.push(t))); return out; }
+// a spark flies from a HUD element to a candy and turns it into a special
+function sparkTo(el, t, special, delay = 0, onLand) {
+  const from = elCenter(el);
+  t.special = -1;
+  flyers.push({ spark: true, x0: from.x, y0: from.y, tx: () => sx(t.x), ty: () => sy(t.y), t: -delay, dur: .55, type: t.type,
+    done: () => { t.special = special; t.bsv += 8; fxCreate(t); SFX.create(special); burst(sx(t.x), sy(t.y), special === BOMB ? -1 : t.type, .6); onLand && onLand(); } });
+}
+async function dropRainbow() {
+  const pool = plainTiles(); if (!pool.length) return;
+  bigText = { text: 'Free Rainbow!', t: 0, dur: 1.2, size: .95 };
+  SFX.rainbow(); bumpEl($('#meter'));
+  sparkTo($('#meter'), pool[randi(pool.length)], BOMB, 0, () => { shake(5); flash(.2); });
+  await waitFor(() => !flyers.length); updateMeter();
+}
+async function openChest() {
+  const ch = state.chest, el = $('#chest');
+  ch.have -= ch.need; ch.need = Math.min(6, ch.need + 1); ch.shownHave = ch.have; updateChest();
+  bumpEl(el); SFX.chest(); buzz(40);
+  bigText = { text: 'Chest Opened!', t: 0, dur: 1.4, size: 1 };
+  const c = elCenter(el); burst(c.x, c.y, 2, 1.8); burst(c.x, c.y, -1, 1.4);
+  const rewards = [BOMB, [SEEK, WRAP, SH][randi(3)], [SEEK, WRAP, SV][randi(3)]];
+  const pool = plainTiles().sort(() => Math.random() - .5);
+  rewards.forEach((sp, i) => { if (pool[i]) sparkTo(el, pool[i], sp, .25 + i * .15); });
+  const prize = randomBooster(); grantBooster(prize, el);
+  await waitFor(() => !flyers.length); await wait(.2);
 }
 async function levelWon() {
   state.over = true; state.busy = true;
@@ -981,6 +1181,15 @@ async function sugarRush() {
 /* ---------- pops & goals ---------- */
 function onTilePop(t) {
   state.score += t.pts;
+  if (!state.over) {
+    if (++state.meter >= METER_MAX) { state.meter = 0; state.rainbows++; }
+    updateMeter();
+    if (t.key) {
+      const ch = state.chest; ch.have++; if (ch.have >= ch.need && ch.have - ch.need < 1) ch.pending++;
+      flyers.push({ key: true, x0: sx(t.x), y0: sy(t.y), tx: () => elCenter($('#chestImg')).x, ty: () => elCenter($('#chestImg')).y, t: 0, dur: .6, type: t.type,
+        done: () => { ch.shownHave = Math.min(ch.shownHave + 1, ch.have); updateChest(); bumpEl($('#chest')); SFX.key(); } });
+    }
+  }
   SFX.pop(popSeq++);
   const px = sx(t.x), py = sy(t.y);
   if (!t.mergeTo) { shatter(px, py, t.special === BOMB ? -1 : t.type, t.special ? 1.25 : 1); burst(px, py, t.special === BOMB ? -1 : t.type, t.special ? .9 : .45); }
@@ -1123,6 +1332,12 @@ function update(dt) {
   rings = rings.filter(r => (r.t += dt) < r.dur);
   beams = beams.filter(b => (b.t += dt) < b.dur);
   bolts = bolts.filter(b => (b.t += dt) < b.dur);
+  swings = swings.filter(w => (w.t += dt) < w.dur);
+  missiles = missiles.filter(m => {
+    m.t += dt; if (m.t >= m.dur) return false;
+    if (!REDUCED) { const p = missilePos(m); particles.push({ k: 'spark', x: p.x, y: p.y, vx: rand(-.5, .5) * BR.cs, vy: rand(-.5, .5) * BR.cs, g: 0, drag: 2, life: 0, max: .35, sz: BR.cs * rand(.12, .22), rot: 0, vr: 3, col: Math.random() < .5 ? '#ffffff' : CANDY[m.type].light }); }
+    return true;
+  });
   popups = popups.filter(p => (p.t += dt) < p.dur);
   if (bigText && (bigText.t += dt) > bigText.dur) bigText = null;
   flyers = flyers.filter(f => {
@@ -1145,6 +1360,12 @@ function update(dt) {
     if (Math.abs(state.score - state.shown) < 1) state.shown = state.score;
     updateScore();
   }
+}
+function missilePos(m) {
+  const k = clamp(m.t / m.dur, 0, 1), e = k * k * (3 - 2 * k), x1 = sx(m.tc), y1 = sy(m.tr), cs = BR.cs;
+  const cx = (m.x0 + x1) / 2 + m.wob * cs * 2, cy = Math.min(m.y0, y1) - cs * 2.4;
+  const a = (1 - e) * (1 - e), b = 2 * (1 - e) * e, c = e * e;
+  return { x: a * m.x0 + b * cx + c * x1, y: a * m.y0 + b * cy + c * y1, k };
 }
 function flyPos(f) {
   const k = Ease.inOutQuad(clamp(f.t / f.dur, 0, 1)), tx = f.tx(), ty = f.ty();
@@ -1202,6 +1423,7 @@ function drawTile(t, now, selT) {
   gx.scale(scx, scy);
   const spr = t.special === -1 ? SPR[t.type * 4] : spriteOf(t);
   gx.drawImage(spr, -cs / 2, -cs / 2, cs, cs);
+  if (t.key) { const bob = Math.sin(now * 3 + t.id) * cs * .03; gx.drawImage(KEY_SPR, cs * .02, cs * .02 + bob, cs * .46, cs * .46); }
   if (t.dying && t.popT >= 0 && !t.mergeTo) {
     gx.globalCompositeOperation = 'lighter'; gx.globalAlpha = Math.max(0, 1 - t.popT / .16) * .9;
     gx.drawImage(GLOW_W, -cs * .6, -cs * .6, cs * 1.2, cs * 1.2); gx.globalCompositeOperation = 'source-over';
@@ -1224,6 +1446,16 @@ function drawBoard(now) {
   for (const row of grid) for (const t of row) if (t) drawTile(t, now, selT);
   for (const t of dying) drawTile(t, now, null);
   gx.restore();
+  if (aim) {
+    const pulse = .55 + .45 * Math.sin(now * 6);
+    gx.save(); rrPath(gx, BR.x - cs * .12, BR.y - cs * .12, BR.w + cs * .24, BR.w + cs * .24, cs * .4);
+    gx.lineWidth = 4; gx.strokeStyle = `rgba(255,210,63,${pulse})`; gx.stroke(); gx.restore();
+    const tip = BOOST[aim.id].tip, size = Math.round(cs * .36);
+    gx.save(); gx.font = `${size}px "Lilita One","Arial Rounded MT Bold",sans-serif`;
+    const tw = gx.measureText(tip).width + size * 1.4, tx = BR.x + BR.w / 2, ty = BR.y + BR.w + cs * .55;
+    rrPath(gx, tx - tw / 2, ty - size * .85, tw, size * 1.7, size * .85); gx.fillStyle = 'rgba(59,24,36,.92)'; gx.fill();
+    gx.lineWidth = 2; gx.strokeStyle = '#ffd23f'; gx.stroke(); textFx(tip, tx, ty, size, '#fff3e3', '#3b1824'); gx.restore();
+  }
   if (kbOn && document.activeElement === boardEl) {
     gx.save(); gx.setLineDash([6, 5]); gx.lineDashOffset = -now * 30; gx.lineWidth = 3; gx.strokeStyle = '#fff3e3';
     rrPath(gx, BR.x + cursor.c * cs + 2, BR.y + cursor.r * cs + 2, cs - 4, cs - 4, cs * .22); gx.stroke(); gx.restore();
@@ -1303,7 +1535,22 @@ function drawFx(now) {
     if (f.t < 0) continue;
     const p = flyPos(f), s = cs * (f.spark ? .5 : lerp(.85, .5, p.k));
     if (f.spark) { gx.globalCompositeOperation = 'lighter'; gx.drawImage(GLOW_W, p.x - s, p.y - s, s * 2, s * 2); gx.globalCompositeOperation = 'source-over'; }
+    else if (f.key) gx.drawImage(KEY_SPR, p.x - s * .6, p.y - s * .6, s * 1.2, s * 1.2);
     else gx.drawImage(SPR[f.type * 4], p.x - s / 2, p.y - s / 2, s, s);
+  }
+  // seekers in flight
+  for (const m of missiles) {
+    const p = missilePos(m), q = missilePos({ ...m, t: m.t + .02 }), ang = Math.atan2(q.y - p.y, q.x - p.x), s = cs * .62;
+    gx.save(); gx.translate(p.x, p.y);
+    gx.globalCompositeOperation = 'lighter'; gx.drawImage(GLOW[m.type], -s, -s, s * 2, s * 2); gx.globalCompositeOperation = 'source-over';
+    gx.rotate(ang + Math.PI / 2); gx.drawImage(SPR[m.type * 4], -s / 2, -s / 2, s, s); gx.restore();
+  }
+  // lollipop hammer: a stick with a logo candy for a head, swinging down onto the cell
+  for (const w of swings) {
+    const k = clamp(w.t / .2, 0, 1), ang = lerp(-1.5, .15, Ease.inQuad(k)), a = w.t > .3 ? Math.max(0, 1 - (w.t - .3) / .2) : 1;
+    gx.save(); gx.globalAlpha = a; gx.translate(sx(w.c) + cs * .9, sy(w.r) + cs * .9); gx.rotate(ang - Math.PI / 4);
+    rrPath(gx, -cs * .07, -cs * 1.3, cs * .14, cs * 1.3, cs * .07); gx.fillStyle = '#fff3e3'; gx.fill(); gx.lineWidth = 2; gx.strokeStyle = '#3b1824'; gx.stroke();
+    gx.drawImage(SPR[0], -cs * .6, -cs * 1.85, cs * 1.2, cs * 1.2); gx.restore();
   }
   // popups
   for (const p of popups) {
@@ -1387,6 +1634,96 @@ function updateGoals() {
   }
 }
 
+function updateMeter() {
+  const f = $('#meterFill'); if (f) f.style.width = (state.meter / METER_MAX * 100) + '%';
+  const m = $('#meter'); if (m) { m.classList.toggle('full', state.rainbows > 0); m.setAttribute('aria-label', `Rainbow meter, ${Math.round(state.meter / METER_MAX * 100)}% full`); }
+}
+function updateChest() {
+  const ch = state.chest; $('#chestN').textContent = `${Math.min(ch.shownHave, ch.need)}/${ch.need}`;
+  $('#chest').setAttribute('aria-label', `Sugar chest, ${Math.min(ch.shownHave, ch.need)} of ${ch.need} keys`);
+}
+function buildBoosters() {
+  const bar = $('#controls'); bar.querySelectorAll('.boost').forEach(b => b.remove());
+  for (const b of BOOSTERS) {
+    const el = document.createElement('button'); el.className = 'boost'; el.id = 'b-' + b.id; el.dataset.b = b.id;
+    el.innerHTML = (b.id === 'moves' ? '<span class="plus5" aria-hidden="true">+5</span>' : `<img alt="" src="${iconSrc('boost', b.id)}">`) + '<span class="cnt"></span>';
+    el.addEventListener('click', () => useBooster(b.id));
+    bar.append(el);
+  }
+  updateBoosters();
+}
+function updateBoosters() {
+  for (const b of BOOSTERS) {
+    const el = $('#b-' + b.id); if (!el) continue; const n = save.boosters[b.id] || 0;
+    el.querySelector('.cnt').textContent = n; el.classList.toggle('empty', n <= 0); el.classList.toggle('aim', !!aim && aim.id === b.id);
+    el.setAttribute('aria-label', `${b.name}, ${n} left`); el.setAttribute('aria-pressed', String(!!aim && aim.id === b.id));
+  }
+}
+function randomBooster() { const pool = ['hammer', 'hammer', 'swap', 'swap', 'rainbow', 'swarm', 'swarm', 'moves', 'party']; return pool[randi(pool.length)]; }
+function grantBooster(id, fromEl) {
+  save.boosters[id] = (save.boosters[id] || 0) + 1; persist();
+  const btn = $('#b-' + id), a = elCenter(fromEl || btn);
+  flyers.push({ spark: true, x0: a.x, y0: a.y, tx: () => elCenter(btn).x, ty: () => elCenter(btn).y, t: -.3, dur: .6, type: 2,
+    done: () => { updateBoosters(); bumpEl(btn); SFX.collect(); const b = elCenter(btn); popups.push({ x: b.x, y: b.y - 30, text: '+1 ' + BOOST[id].name, col: '#ffe680', t: 0, dur: 1.2 }); } });
+}
+function spendBooster(id) { save.boosters[id] = Math.max(0, (save.boosters[id] || 0) - 1); persist(); updateBoosters(); }
+function useBooster(id) {
+  SFX.init();
+  if (aim && aim.id === id) { aim = null; sel = null; updateBoosters(); SFX.click(); return; }
+  if (!canPlay()) return;
+  if ((save.boosters[id] || 0) <= 0) { SFX.bad(); bumpEl($('#b-' + id)); return; }
+  hint = null; idleT = 0;
+  if (BOOST[id].aim) { aim = { id, first: null }; sel = null; SFX.select(); updateBoosters(); return; }
+  aim = null;
+  if (id === 'moves') useMoves(); else if (id === 'swarm') useSwarm(); else if (id === 'party') useParty();
+}
+function aimTap(cell) {
+  const id = aim.id, t = grid[cell.r][cell.c]; if (!t) return;
+  if (id === 'swap') {
+    if (aim.first && Math.abs(aim.first.r - cell.r) + Math.abs(aim.first.c - cell.c) === 1) { const a = aim.first; aim = null; updateBoosters(); attemptSwap(a, cell, true); }
+    else { aim.first = cell; sel = cell; t.bsv += 4; SFX.select(); }
+    return;
+  }
+  aim = null; updateBoosters();
+  if (id === 'hammer') useHammer(cell); else if (id === 'rainbow') useRainbowDrop(cell);
+}
+async function settle() { popSeq = 0; await collapse(); await resolveBoard(null, 1); await afterTurn(); }
+async function useHammer(cell) {
+  const t = grid[cell.r][cell.c]; if (!t) return;
+  spendBooster('hammer'); state.busy = true; sel = null;
+  swings.push({ r: cell.r, c: cell.c, t: 0, dur: .5 }); SFX.whoosh();
+  await wait(.2);
+  SFX.hammer(); shake(10); buzz(35); fxExplosion(cell.r, cell.c, t.special === BOMB ? -1 : t.type, 1.4);
+  const B = new Blast(1); B.add(idxOf(cell.r, cell.c), 0, B.source(cell.c + .5, cell.r + .5, colorOf(t)));
+  await B.run(); await settle();
+}
+async function useRainbowDrop(cell) {
+  const t = grid[cell.r][cell.c]; if (!t) return;
+  spendBooster('rainbow'); state.busy = true; sel = null; SFX.rainbow();
+  sparkTo($('#b-rainbow'), t, BOMB, 0, () => { shake(5); flash(.2); });
+  await waitFor(() => !flyers.length); await afterTurn();
+}
+async function useSwarm() {
+  spendBooster('swarm'); state.busy = true;
+  comboText(5, 'Seeker Swarm!'); flash(.15);
+  const B = new Blast(1), src = B.source(COLS / 2, ROWS - .5, -1);
+  launchSeekers(B, ROWS + .4, (COLS - 1) / 2, -1, .1, 8, NONE, src);
+  B.process(); await B.run(); await settle();
+}
+async function useParty() {
+  spendBooster('party'); state.busy = true;
+  comboText(6, 'Sugar Party!'); SFX.mega(); confetti(REDUCED ? 30 : 120); shake(14); flash(.5); buzz(80);
+  const B = new Blast(2), src = B.source(COLS / 2, ROWS / 2, -1);
+  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) B.addRC(r, c, .25 + Math.hypot(r - 3.5, c - 3.5) * .08, src);
+  await B.run(); await settle();
+}
+function useMoves() {
+  spendBooster('moves');
+  const mv = $('#movesBadge'), b = $('#b-moves'), a = elCenter(b), m = elCenter(mv);
+  for (let i = 0; i < 5; i++) flyers.push({ spark: true, x0: a.x, y0: a.y, tx: () => m.x, ty: () => m.y, t: -i * .08, dur: .5, type: 2,
+    done: () => { state.moves++; updateHUD(); bumpEl(mv); SFX.ding(i + 3); } });
+}
+
 /* ---------- screens & modals ---------- */
 function showScreen(name) {
   screen = name;
@@ -1437,10 +1774,13 @@ function showWin() {
   save.stars[n] = Math.max(save.stars[n] || 0, stars); save.best[n] = Math.max(prevBest, state.score);
   save.unlocked = Math.max(save.unlocked, Math.min(LEVEL_COUNT, n + 1)); persist();
   SFX.win(); confetti(REDUCED ? 30 : 140); flash(.3);
+  const bonus = stars === 3 ? randomBooster() : null;
+  if (bonus) { save.boosters[bonus] = (save.boosters[bonus] || 0) + 1; persist(); updateBoosters(); }
   openModal(`<div class="ribbon" id="modalTitle">Level ${n} clear</div>
     <div class="stars">${starSvg()}${starSvg()}${starSvg()}</div>
     <div class="score-big">${fmt(state.score)}</div>
     <p>${state.score > prevBest && prevBest ? 'New best score' : prevBest ? `Best ${fmt(Math.max(prevBest, state.score))}` : 'First clear'}</p>
+    ${bonus ? `<div class="goal-row"><div class="goal"><img alt="" src="${iconSrc('boost', bonus)}"><span class="n">+1 ${BOOST[bonus].name}</span></div></div>` : ''}
     <div class="row"><button class="btn ghost" data-act="map">Levels</button><button class="btn ghost" data-act="retry">Replay</button>${n < LEVEL_COUNT ? '<button class="btn gold" data-act="next">Next level</button>' : ''}</div>`);
   const els = modal.querySelectorAll('.stars svg');
   for (let i = 0; i < stars; i++) after(.45 + i * .38, () => { els[i] && els[i].classList.add('on'); SFX.star(i); const r = els[i] && els[i].getBoundingClientRect(); if (r) burst(r.left + r.width / 2, r.top + r.height / 2, 2, 1.6); });
@@ -1459,7 +1799,9 @@ function openPause() {
   paused = true; SFX.click();
   openModal(`<div class="ribbon" id="modalTitle">Paused</div>
     <h3>Level ${L.n}</h3><p>${goalSentence().replace(/in <b>\d+<\/b> moves\./, `with <b>${state.moves}</b> moves left.`)}</p>
+    <div class="toggles"><button class="icon-btn" id="btnSfx" data-act="sfx" aria-label="Sound effects"><svg viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><i class="slash"></i></button><button class="icon-btn" id="btnMusic" data-act="music" aria-label="Music"><svg viewBox="0 0 24 24"><path d="M9 17.5V6l11-2.5v11.5"/><circle cx="6.5" cy="17.5" r="3"/><circle cx="17.5" cy="15" r="3"/><path d="M9 6l11-2.5V8L9 10.5z"/></svg><i class="slash"></i></button></div>
     <div class="row"><button class="btn ghost" data-act="map">Levels</button><button class="btn ghost" data-act="retry">Restart</button><button class="btn gold" data-act="resume">Resume</button></div>`);
+  syncToggles();
 }
 modal.addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b) return;
@@ -1470,9 +1812,11 @@ modal.addEventListener('click', e => {
   else if (a === 'retry') startLevel(L.n);
   else if (a === 'next') startLevel(Math.min(LEVEL_COUNT, L.n + 1));
   else if (a === 'map') { resetWorld(); showScreen('map'); }
+  else if (a === 'sfx') { save.sfx = !save.sfx; SFX.setSfx(save.sfx); persist(); syncToggles(); }
+  else if (a === 'music') { save.music = !save.music; SFX.setMusic(save.music); persist(); syncToggles(); }
 });
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { if (!modalBack.hidden && paused) { closeModal(); paused = false; } else if (screen === 'game') openPause(); }
+  if (e.key === 'Escape') { if (aim) { aim = null; sel = null; updateBoosters(); } else if (!modalBack.hidden && paused) { closeModal(); paused = false; } else if (screen === 'game') openPause(); }
 });
 
 /* ---------- level lifecycle ---------- */
@@ -1482,7 +1826,7 @@ function setupLevel(n) {
   const pat = L.jelly ? PAT[L.jelly] : null;
   jelly = []; jwob = []; let jt = 0;
   for (let r = 0; r < ROWS; r++) { jelly.push([]); jwob.push([]); for (let c = 0; c < COLS; c++) { const v = pat ? pat(r, c) : 0; jelly[r].push(v); jwob[r].push(0); jt += v; } }
-  state = { score: 0, shown: 0, moves: L.moves, busy: true, over: false, starsLit: 0,
+  state = { score: 0, shown: 0, moves: L.moves, busy: true, over: false, starsLit: 0, meter: 0, rainbows: 0, chest: { need: 3, have: 0, shownHave: 0, pending: 0 },
     goals: L.goals.map(g => g[0] === 'score' ? { kind: 'score', need: g[1] } : g[0] === 'collect' ? { kind: 'collect', type: g[1], need: g[2], left: g[2], shown: g[2] } : { kind: 'jelly', need: jt, left: jt, shown: jt }) };
   shownScoreText = '';
 }
@@ -1491,7 +1835,7 @@ function startLevel(n) {
   genBoard();
   grid.forEach(row => row.forEach(t => { t.y = t.r - ROWS - .6; }));
   showScreen('game');
-  buildStarbar(); buildGoals(); updateHUD();
+  buildStarbar(); buildGoals(); updateHUD(); updateMeter(); updateChest(); updateBoosters();
   openIntro();
 }
 async function beginLevel() {
@@ -1521,7 +1865,9 @@ boardEl.addEventListener('pointermove', e => {
   if (Math.abs(dx) < th && Math.abs(dy) < th) return;
   drag.moved = true;
   const b = Math.abs(dx) > Math.abs(dy) ? { r: drag.r, c: drag.c + Math.sign(dx) } : { r: drag.r + Math.sign(dy), c: drag.c };
-  sel = null; attemptSwap({ r: drag.r, c: drag.c }, b);
+  if (aim && aim.id !== 'swap') { drag.moved = false; return; }
+  const free = !!aim; if (free) { aim = null; updateBoosters(); }
+  sel = null; attemptSwap({ r: drag.r, c: drag.c }, b, free);
 });
 boardEl.addEventListener('pointerup', e => {
   if (!drag || e.pointerId !== drag.id) return;
@@ -1531,6 +1877,7 @@ boardEl.addEventListener('pointerup', e => {
 boardEl.addEventListener('pointercancel', () => { drag = null; });
 function tap(cell) {
   idleT = 0; hint = null;
+  if (aim) { aimTap(cell); return; }
   if (sel) {
     if (sel.r === cell.r && sel.c === cell.c) { sel = null; return; }
     if (Math.abs(sel.r - cell.r) + Math.abs(sel.c - cell.c) === 1) { const a = sel; sel = null; attemptSwap(a, cell); return; }
@@ -1550,11 +1897,10 @@ boardEl.addEventListener('keydown', e => {
 
 /* ---------- buttons ---------- */
 function syncToggles() {
-  $('#btnSfx').classList.toggle('off', !save.sfx); $('#btnSfx').setAttribute('aria-pressed', String(save.sfx));
-  $('#btnMusic').classList.toggle('off', !save.music); $('#btnMusic').setAttribute('aria-pressed', String(save.music));
+  const sfx = $('#btnSfx'), mus = $('#btnMusic');
+  if (sfx) { sfx.classList.toggle('off', !save.sfx); sfx.setAttribute('aria-pressed', String(save.sfx)); }
+  if (mus) { mus.classList.toggle('off', !save.music); mus.setAttribute('aria-pressed', String(save.music)); }
 }
-$('#btnSfx').addEventListener('click', () => { SFX.init(); save.sfx = !save.sfx; SFX.setSfx(save.sfx); persist(); syncToggles(); SFX.click(); });
-$('#btnMusic').addEventListener('click', () => { SFX.init(); save.music = !save.music; SFX.setMusic(save.music); persist(); syncToggles(); });
 $('#btnPause').addEventListener('click', () => { SFX.init(); openPause(); });
 $('#btnPlay').addEventListener('click', () => { SFX.init(); SFX.click(); showScreen('map'); });
 $('#btnBack').addEventListener('click', () => { SFX.click(); showScreen('title'); });
@@ -1564,6 +1910,9 @@ if (window.ResizeObserver) new ResizeObserver(() => layoutBoard()).observe(wrapE
 
 /* ---------- boot ---------- */
 $('#candyRow').innerHTML = CANDY.map((c, i) => `<img alt="" src="${iconSrc('c', i)}">`).join('');
+$('#chestImg').src = iconSrc('chest', ''); $('#meterImg').src = iconSrc('bomb', '');
+if (!save.boosters || typeof save.boosters !== 'object') save.boosters = { hammer: 3, swap: 3, rainbow: 2, swarm: 2, moves: 2, party: 1 };
+buildBoosters();
 syncToggles();
 resize();
 if (document.fonts && document.fonts.load) document.fonts.load('40px "Lilita One"').catch(() => {});
@@ -1571,7 +1920,7 @@ requestAnimationFrame(frame);
 
 window.claude?.hot?.snapshot?.(() => ({
   save, screen, level: L && L.n, score: state.score, moves: state.moves,
-  board: screen === 'game' && L ? grid.map(row => row.map(t => t ? [t.type, t.special > 0 ? t.special : 0] : null)) : null,
+  board: screen === 'game' && L ? grid.map(row => row.map(t => t ? [t.type, t.special > 0 ? t.special : 0, t.key ? 1 : 0] : null)) : null,
   jelly, goals: state.goals.map(g => g.left),
 }));
 function boot(data) {
@@ -1579,11 +1928,11 @@ function boot(data) {
     if (data && data.save) { save = Object.assign(save, data.save); syncToggles(); }
     if (data && data.screen === 'game' && data.level && data.board && !data.over) {
       setupLevel(data.level);
-      grid = data.board.map((row, r) => row.map((v, c) => { const t = mkTile(v ? v[0] : randType(), v ? v[1] : 0); t.r = r; t.c = c; t.x = c; t.y = r; return t; }));
+      grid = data.board.map((row, r) => row.map((v, c) => { const t = mkTile(v ? v[0] : randType(), v ? v[1] : 0); t.key = !!(v && v[2]); t.r = r; t.c = c; t.x = c; t.y = r; return t; }));
       if (data.jelly) jelly = data.jelly;
       state.score = state.shown = data.score || 0; state.moves = data.moves || L.moves;
       (data.goals || []).forEach((v, i) => { const g = state.goals[i]; if (g && g.kind !== 'score') { g.left = g.shown = v; } });
-      showScreen('game'); buildStarbar(); buildGoals(); updateHUD();
+      showScreen('game'); buildStarbar(); buildGoals(); updateHUD(); updateMeter(); updateChest(); updateBoosters();
       state.busy = false;
       return;
     }
@@ -1596,7 +1945,7 @@ window.claude?.hot?.ready ? window.claude.hot.ready(boot) : boot(window.claude?.
 if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol) && window.self === window.top) navigator.serviceWorker.register('sw.js').catch(() => {});
 
 // lightweight hooks for automated play-testing
-window.__sugar = { moves: () => allMoves(), swap: (a, b) => attemptSwap(a, b), state: () => ({ ...state, goals: state.goals.map(g => ({ kind: g.kind, left: g.left, need: g.need })) }), canPlay: () => canPlay(), start: n => startLevel(n), sprite: (t, s, S = 160) => (s === BOMB ? makeBomb(S) : makeCandy(t, s, S)).toDataURL(), begin: () => { closeModal(); beginLevel(); } };
+window.__sugar = { moves: () => allMoves(), swap: (a, b) => attemptSwap(a, b), state: () => ({ ...state, goals: state.goals.map(g => ({ kind: g.kind, left: g.left, need: g.need })) }), canPlay: () => canPlay(), start: n => startLevel(n), boost: id => useBooster(id), setTile: (r, c, type, special = 0, key = false) => { const t = grid[r][c]; t.type = type; t.special = special; t.key = key; }, aimTap: (r, c) => tap({ r, c }), grid: () => grid.map(row => row.map(t => t ? [t.type, t.special, t.key ? 1 : 0] : null)), sprite: (t, s, S = 160) => (s === BOMB ? makeBomb(S) : makeCandy(t, s, S)).toDataURL(), icon: (k, t) => iconSrc(k, t), begin: () => { closeModal(); beginLevel(); } };
 })();
 </script>
 </body>

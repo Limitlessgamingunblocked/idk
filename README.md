@@ -5,13 +5,17 @@ A match-3 candy game where every candy is the logo. Swap neighbouring candies to
 | Match | Makes |
 | --- | --- |
 | 4 in a row | Striped candy: clears its row or column |
-| 2×2 box | Seeker: launches 3 homing candies at jelly, keys and goal candies |
+| 2×2 box | Unicorn candy: releases 3 flying unicorns that loop around the screen, then dive onto jelly, keys and goal candies |
 | L or T | Wrapped candy: explodes around itself |
 | 5 in a row, or any match of 6+ | Rainbow: clears every candy of one colour |
 
-Swap two specials together for combos (for example seeker + striped fires lasers wherever the seekers land, rainbow + seeker turns a whole colour into seekers). The **rainbow meter** fills as you clear candies and drops a free rainbow when full. Candies with **gold keys** fill the **sugar chest**, which bursts into a rainbow, two more specials and a free booster.
+Swap two specials together for combos (for example unicorn + striped fires lasers wherever the unicorns land, rainbow + unicorn turns a whole colour into unicorns). The **rainbow meter** fills as you clear candies and drops a free rainbow when full. Candies with **gold keys** fill the **sugar chest**, which bursts into a rainbow, two more specials and a free booster.
 
-**Boosters** (bottom bar, saved between levels): Hammer, Free Swap, Rainbow Drop, Seeker Swarm, +5 Moves and Sugar Party, which hits every candy on the board at once. You earn more from chests and 3-star wins.
+**Boosters** (bottom bar, saved between levels): Hammer, Free Swap, Rainbow Drop, Unicorn Stampede, +5 Moves and Sugar Party, which hits every candy on the board at once. You earn more from chests and 3-star wins.
+
+**Gold bars** are the in-game currency (there are no real-money purchases). Win levels (more stars, more gold) and open chests to earn them. Spend them in the **Shop** on boosters, or to **revive** with +5 moves when you run out (10, then 20, then 30 gold within one level).
+
+**Furniture Mode** (levels 101–130, from the title screen or the Furniture tab on the level map) swaps the candies for sofas, armchairs, lamps, plants, beds and wardrobes, set in a cosy room on a parquet floor. Jelly becomes dust to clean, the rainbow becomes a disco ball, and specials become striped, gift-wrapped and unicorn-horned furniture.
 
 The whole game is `index.html`, with its fonts in `fonts/`. The same file runs in a browser, as a home-screen app, and inside the native iPhone app in `ios/`.
 

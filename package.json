@@ -4,7 +4,7 @@
   "description": "Sugar Shapes: a match-3 game, its shared rules engine, and the simulator used to balance it",
   "scripts": {
     "build": "node tools/build.js",
-    "test": "node tools/build.js --check && node --test test/",
+    "test": "node tools/build.js --check && node --test test/*.test.js",
     "parity": "node tools/parity.js",
     "sim": "node sim/run.js"
   }

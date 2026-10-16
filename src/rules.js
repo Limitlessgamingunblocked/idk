@@ -16,13 +16,19 @@ const NONE = 0, SH = 1, SV = 2, WRAP = 3, BOMB = 4, SEEK = 5;
 const CREATE_BONUS = [0, 120, 120, 200, 500, 150];
 const FIRE_BONUS = [0, 100, 100, 180, 300, 150];
 const POINTS_PER_CANDY = 20, MAX_MULT = 8, RUSH_POINTS = 150;
-const METER_MAX = 36;                      // candies cleared to earn a free rainbow
-const KEY_CHANCE = .07, KEY_MAX = 3, START_KEYS = 2;
+const KEY_MAX = 3, START_KEYS = 2;
 const CHEST_FIRST = 3, CHEST_MAX = 6;
 const UNICORNS = 3, PARADE = 7;
 
 // Booster strength and the in-game economy, in one place so the economy model and the game share them.
 const TUNE = {
+  // generosity of the core rules (the balance study switches these to measure each feature)
+  boxMatches: true,                         // 2x2 boxes match and make unicorns
+  bigRainbow: 6,                            // a group this big makes a rainbow (Infinity: only 5 in a line)
+  meterMax: 150,                            // candies cleared per free rainbow (Infinity: meter off)
+  keyChance: .04,                           // chance a new candy carries a key (0: no keys)
+  chestRewards: 'one',                      // 'rainbow+2' or 'one' (a single random special)
+  unicornSplash: 'plus',                    // 'plus': target and 4 neighbours; 'single': just the target
   stampede: 8,                              // unicorns launched by Unicorn Stampede
   party: 'board',                           // 'board': hits every candy; 'specials': fires partySpecials random specials
   partySpecials: 6,
@@ -37,9 +43,8 @@ const TUNE = {
     boosterPool: ['hammer', 'hammer', 'swap', 'swap', 'rainbow', 'swarm', 'swarm', 'moves', 'party'],
   },
 };
-const ECON = TUNE.econ;
-const winGold = (stars, firstClear) => ECON.winGold[0] + ECON.winGold[1] * stars + (firstClear ? ECON.winGold[2] : 0);
-const reviveCost = n => ECON.reviveBase * n;
+const winGold = (stars, firstClear) => TUNE.econ.winGold[0] + TUNE.econ.winGold[1] * stars + (firstClear ? TUNE.econ.winGold[2] : 0);
+const reviveCost = n => TUNE.econ.reviveBase * n;
 
 function mulberry(a) {
   return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
@@ -102,9 +107,9 @@ function levelDef(n) {
   if (!d) throw new Error('No level ' + n);
   return d;
 }
-function makeLevel(n) {
-  const d = levelDef(n);
-  const L = { n, moves: d.moves, colors: d.colors, jelly: d.jelly || null, spread: !!d.spread, goals: d.goals, home: n >= HOME_FIRST, stars: d.stars };
+function makeLevel(n) { return levelFromDef(n, levelDef(n)); }
+function levelFromDef(n, d) {
+  const L = { n, moves: d.moves, colors: d.colors, jelly: d.jelly || null, layers: d.layers || 0, spread: !!d.spread, goals: d.goals, home: n >= HOME_FIRST, stars: d.stars };
   if (!L.stars) {
     const r100 = v => Math.round(v / 100) * 100, sg = d.goals.find(g => g[0] === 'score');
     L.stars = sg ? [sg[1], r100(sg[1] * 1.5), r100(sg[1] * 2.1)] : (() => { const b = d.moves * 130; return [r100(b * .5), r100(b), r100(b * 1.7)]; })();
@@ -123,7 +128,8 @@ function newWorld(level, seed, mkTile) {
   };
   const pat = level.jelly ? PAT[level.jelly] : null;
   let jt = 0;
-  for (let r = 0; r < ROWS; r++) { w.jelly.push([]); for (let c = 0; c < COLS; c++) { const v = pat ? pat(r, c) : 0; w.jelly[r].push(v); jt += v; } }
+  // `layers` (if set) gives every jelly cell that many layers instead of the pattern's own count
+  for (let r = 0; r < ROWS; r++) { w.jelly.push([]); for (let c = 0; c < COLS; c++) { let v = pat ? pat(r, c) : 0; if (v && level.layers) v = level.layers; w.jelly[r].push(v); jt += v; } }
   w.goals = level.goals.map(g => g[0] === 'score' ? { kind: 'score', need: g[1] } : g[0] === 'collect' ? { kind: 'collect', type: g[1], need: g[2], left: g[2] } : { kind: 'jelly', need: jt, left: jt });
   return w;
 }
@@ -154,7 +160,7 @@ function findGroups(w) {
       r = e;
     }
   }
-  for (let r = 0; r < ROWS - 1; r++) for (let c = 0; c < COLS - 1; c++) {
+  if (TUNE.boxMatches) for (let r = 0; r < ROWS - 1; r++) for (let c = 0; c < COLS - 1; c++) {
     const k = colorOf(g_[r][c]);
     if (k >= 0 && colorOf(g_[r][c + 1]) === k && colorOf(g_[r + 1][c]) === k && colorOf(g_[r + 1][c + 1]) === k)
       runs.push({ box: true, cells: [idxOf(r, c), idxOf(r, c + 1), idxOf(r + 1, c), idxOf(r + 1, c + 1)], type: k });
@@ -176,7 +182,7 @@ function findGroups(w) {
     g.longest = longest; g.inter = -1; for (const [x, n] of seen) if (n > 1) { g.inter = x; break; }
     const hasH = lines.some(r => r.h), hasV = lines.some(r => !r.h), len = lines.length ? longest.cells.length : 0;
     // priority: rainbow (5 in a line, or 6+ candies) > wrapped (L/T) > striped (4) > unicorn (2x2 box)
-    g.special = len >= 5 || g.cells.size >= 6 ? BOMB : hasH && hasV ? WRAP : len === 4 ? (longest.h ? SV : SH) : hasBox ? SEEK : NONE;
+    g.special = len >= 5 || g.cells.size >= TUNE.bigRainbow ? BOMB : hasH && hasV ? WRAP : len === 4 ? (longest.h ? SV : SH) : hasBox ? SEEK : NONE;
   }
   return groups;
 }
@@ -186,7 +192,7 @@ function matchAt(w, r, c) {
   if (n >= 3) return true;
   n = 1; for (let y = r - 1; y >= 0 && colorOf(g[y][c]) === k; y--) n++; for (let y = r + 1; y < ROWS && colorOf(g[y][c]) === k; y++) n++;
   if (n >= 3) return true;
-  for (const [dr, dc] of [[0, 0], [0, -1], [-1, 0], [-1, -1]]) {
+  if (TUNE.boxMatches) for (const [dr, dc] of [[0, 0], [0, -1], [-1, 0], [-1, -1]]) {
     const r0 = r + dr, c0 = c + dc; if (r0 < 0 || c0 < 0 || r0 + 1 >= ROWS || c0 + 1 >= COLS) continue;
     if (colorOf(g[r0][c0]) === k && colorOf(g[r0][c0 + 1]) === k && colorOf(g[r0 + 1][c0]) === k && colorOf(g[r0 + 1][c0 + 1]) === k) return true;
   }
@@ -224,7 +230,7 @@ function genBoard(w) {
     }
     if (allMoves(w).length >= 3) break;
   }
-  for (let placed = 0; placed < START_KEYS;) { const t = w.grid[1 + randi(w, ROWS - 2)][randi(w, COLS)]; if (!t.key) { t.key = true; placed++; } }
+  for (let placed = 0; placed < (TUNE.keyChance > 0 ? START_KEYS : 0);) { const t = w.grid[1 + randi(w, ROWS - 2)][randi(w, COLS)]; if (!t.key) { t.key = true; placed++; } }
 }
 
 /* ------------------------------------------------------------------ blasts */
@@ -324,7 +330,7 @@ function launchSeekers(B, r, c, type, t, n, carry, src) {
     fx(w, 'unicornHit', { r: tr, c: tc, type: col, carry }, hit);
     if (carry === WRAP) { for (const [dr, dc] of DIAMOND2) B.addRC(tr + dr, tc + dc, hit + .04 + (Math.abs(dr) + Math.abs(dc)) * .04, src); }
     else if (carry === SH || carry === SV) beamCells(B, tr, tc, carry === SH, hit, src);
-    else for (const [dr, dc] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) B.addRC(tr + dr, tc + dc, hit + .05, src);
+    else if (TUNE.unicornSplash === 'plus') for (const [dr, dc] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) B.addRC(tr + dr, tc + dc, hit + .05, src);
   });
 }
 
@@ -363,7 +369,7 @@ function applyClear(w, cl) {
   const t = cl.tile, ev = { jelly: false, key: false, meterFull: false, collect: null };
   w.score += cl.pts;
   if (!w.over) {
-    if (++w.meter >= METER_MAX) { w.meter = 0; w.rainbows++; ev.meterFull = true; }
+    if (++w.meter >= TUNE.meterMax) { w.meter = 0; w.rainbows++; ev.meterFull = true; }
     if (t.key) { const ch = w.chest; ch.have++; if (ch.have >= ch.need && ch.have - ch.need < 1) ch.pending++; ev.key = true; }
   }
   if (w.jelly[cl.r][cl.c] > 0) { w.jelly[cl.r][cl.c]--; w.turnJelly++; ev.jelly = true; const g = jellyGoal(w); if (g) g.left--; }
@@ -419,7 +425,7 @@ function collapse(w) {
     for (let r = ROWS - 1; r >= 0; r--) { const t = g[r][c]; if (t) { if (r !== wr) { g[wr][c] = t; g[r][c] = null; t.r = wr; moved.push(t); } wr--; } }
     for (let r = wr; r >= 0; r--) {
       const t = w.mkTile(randType(w)); t.r = r; t.c = c; t.dropFrom = r - wr - 1.15;
-      if (!w.over && keysOnBoard(w) < KEY_MAX && w.rng() < KEY_CHANCE) t.key = true;
+      if (!w.over && keysOnBoard(w) < KEY_MAX && w.rng() < TUNE.keyChance) t.key = true;
       g[r][c] = t; spawned.push(t);
     }
   }
@@ -441,11 +447,11 @@ function startTurn(w) { w.turnJelly = 0; }
 function openChest(w) {
   const ch = w.chest; if (ch.pending <= 0) return null;
   ch.pending--; ch.have -= ch.need; ch.need = Math.min(CHEST_MAX, ch.need + 1); w.stats.chests++;
-  const rewards = [BOMB, [SEEK, WRAP, SH][randi(w, 3)], [SEEK, WRAP, SV][randi(w, 3)]];
+  const rewards = TUNE.chestRewards === 'one' ? [[BOMB, SEEK, WRAP, SH, SV][randi(w, 5)]] : [BOMB, [SEEK, WRAP, SH][randi(w, 3)], [SEEK, WRAP, SV][randi(w, 3)]];
   const pool = shuffleInPlace(w, plainTiles(w)), placed = [];
   rewards.forEach((sp, i) => { if (pool[i]) { pool[i].special = sp; placed.push({ tile: pool[i], special: sp }); } });
-  const prize = ECON.boosterPool[randi(w, ECON.boosterPool.length)];
-  const gold = ECON.chestGold[0] + randi(w, ECON.chestGold[1] - ECON.chestGold[0] + 1);
+  const prize = TUNE.econ.boosterPool[randi(w, TUNE.econ.boosterPool.length)];
+  const gold = TUNE.econ.chestGold[0] + randi(w, TUNE.econ.chestGold[1] - TUNE.econ.chestGold[0] + 1);
   return { placed, prize, gold };
 }
 function dropRainbow(w) {
@@ -501,9 +507,9 @@ function partyPlan(w) {
 function rainbowDropAt(w, r, c) { const t = w.grid[r][c]; if (!t) return null; t.special = BOMB; return t; }
 
 return {
-  COLS, ROWS, NONE, SH, SV, WRAP, BOMB, SEEK, CREATE_BONUS, FIRE_BONUS, POINTS_PER_CANDY, MAX_MULT, METER_MAX, KEY_CHANCE, KEY_MAX,
-  CHEST_FIRST, CHEST_MAX, UNICORNS, PARADE, UNICORN_FLIGHT, TUNE, ECON, winGold, reviveCost, LEVEL_COUNT, HOME_FIRST, HOME_LAST, PAT,
-  mulberry, idxOf, rOf, cOf, colorOf, logoCell, setLevels, levelDef, makeLevel, newWorld, goalsMet, plainTiles, keysOnBoard,
+  COLS, ROWS, NONE, SH, SV, WRAP, BOMB, SEEK, CREATE_BONUS, FIRE_BONUS, POINTS_PER_CANDY, MAX_MULT, KEY_MAX,
+  CHEST_FIRST, CHEST_MAX, UNICORNS, PARADE, UNICORN_FLIGHT, TUNE, get ECON() { return TUNE.econ; }, winGold, reviveCost, LEVEL_COUNT, HOME_FIRST, HOME_LAST, PAT,
+  mulberry, idxOf, rOf, cOf, colorOf, logoCell, setLevels, levelDef, makeLevel, levelFromDef, newWorld, goalsMet, plainTiles, keysOnBoard,
   findGroups, matchAt, isComboSwap, allMoves, swapGrid, genBoard, Blast, mostCommon, seekTargets, pickSpawn, matchStep, applyCreate,
   endCreates, applyClear, comboPlan, collapse, shuffleBoard, startTurn, openChest, dropRainbow, spreadDust, rushConvert, rushDetonate,
   hammerPlan, swarmPlan, partyPlan, rainbowDropAt,

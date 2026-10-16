@@ -1,0 +1,1368 @@
+{
+ "1": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 6,
+   "winAtMoves": 0.95,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 9,
+   "winAtMoves": 0.933,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 2.56,
+   "moves": 9,
+   "winAtMoves": 0.9,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 4.096,
+   "moves": 14,
+   "winAtMoves": 0.95,
+   "wonEver": 1
+  }
+ ],
+ "2": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 9,
+   "winAtMoves": 0.967,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 12,
+   "winAtMoves": 0.95,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 2.4,
+   "moves": 13,
+   "winAtMoves": 0.933,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 3.323,
+   "moves": 18,
+   "winAtMoves": 0.967,
+   "wonEver": 1
+  }
+ ],
+ "3": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 7,
+   "winAtMoves": 0.967,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 9,
+   "winAtMoves": 0.95,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 2.56,
+   "moves": 10,
+   "winAtMoves": 0.95,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 4.096,
+   "moves": 9,
+   "winAtMoves": 0.983,
+   "wonEver": 1
+  }
+ ],
+ "4": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 13,
+   "winAtMoves": 0.95,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.385,
+   "moves": 20,
+   "winAtMoves": 0.95,
+   "wonEver": 1
+  }
+ ],
+ "5": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 13,
+   "winAtMoves": 0.8,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.385,
+   "moves": 16,
+   "winAtMoves": 0.8,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.592,
+   "moves": 18,
+   "winAtMoves": 0.833,
+   "wonEver": 1
+  }
+ ],
+ "6": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 22,
+   "winAtMoves": 0.867,
+   "wonEver": 1
+  }
+ ],
+ "7": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 18,
+   "winAtMoves": 0.833,
+   "wonEver": 1
+  }
+ ],
+ "8": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 12,
+   "winAtMoves": 0.833,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.5,
+   "moves": 16,
+   "winAtMoves": 0.833,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.725,
+   "moves": 16,
+   "winAtMoves": 0.85,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 1.984,
+   "moves": 18,
+   "winAtMoves": 0.85,
+   "wonEver": 1
+  }
+ ],
+ "9": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 16,
+   "winAtMoves": 0.833,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.15,
+   "moves": 15,
+   "winAtMoves": 0.8,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.38,
+   "moves": 18,
+   "winAtMoves": 0.817,
+   "wonEver": 1
+  }
+ ],
+ "10": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 13,
+   "winAtMoves": 0.483,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.385,
+   "moves": 16,
+   "winAtMoves": 0.55,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.592,
+   "moves": 18,
+   "winAtMoves": 0.5,
+   "wonEver": 1
+  }
+ ],
+ "11": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 23,
+   "winAtMoves": 0.883,
+   "wonEver": 1
+  }
+ ],
+ "12": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 20,
+   "winAtMoves": 0.8,
+   "wonEver": 1
+  }
+ ],
+ "13": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 10,
+   "winAtMoves": 0.833,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 14,
+   "winAtMoves": 0.817,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 2.057,
+   "moves": 16,
+   "winAtMoves": 0.8,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 2.366,
+   "moves": 17,
+   "winAtMoves": 0.8,
+   "wonEver": 1
+  },
+  {
+   "round": 4,
+   "scale": 2.721,
+   "moves": 19,
+   "winAtMoves": 0.783,
+   "wonEver": 1
+  }
+ ],
+ "14": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 14,
+   "winAtMoves": 0.8,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.286,
+   "moves": 15,
+   "winAtMoves": 0.767,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.543,
+   "moves": 19,
+   "winAtMoves": 0.8,
+   "wonEver": 1
+  }
+ ],
+ "15": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 17,
+   "winAtMoves": 0.5,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.15,
+   "moves": 16,
+   "winAtMoves": 0.517,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.322,
+   "moves": 16,
+   "winAtMoves": 0.533,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 1.521,
+   "moves": 16,
+   "winAtMoves": 0.533,
+   "wonEver": 1
+  },
+  {
+   "round": 4,
+   "scale": 1.749,
+   "moves": 17,
+   "winAtMoves": 0.467,
+   "wonEver": 1
+  },
+  {
+   "round": 5,
+   "scale": 2.011,
+   "moves": 17,
+   "winAtMoves": 0.467,
+   "wonEver": 1
+  },
+  {
+   "round": 6,
+   "scale": 2.313,
+   "moves": 17,
+   "winAtMoves": 0.533,
+   "wonEver": 1
+  },
+  {
+   "round": 7,
+   "scale": 2.66,
+   "moves": 18,
+   "winAtMoves": 0.5,
+   "wonEver": 1
+  }
+ ],
+ "16": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 11,
+   "winAtMoves": 0.833,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 19,
+   "winAtMoves": 0.817,
+   "wonEver": 1
+  }
+ ],
+ "17": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 10,
+   "winAtMoves": 0.767,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 14,
+   "winAtMoves": 0.75,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 2.057,
+   "moves": 17,
+   "winAtMoves": 0.8,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 2.366,
+   "moves": 21,
+   "winAtMoves": 0.8,
+   "wonEver": 1
+  }
+ ],
+ "18": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 16,
+   "winAtMoves": 0.767,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.15,
+   "moves": 16,
+   "winAtMoves": 0.767,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.322,
+   "moves": 18,
+   "winAtMoves": 0.783,
+   "wonEver": 1
+  }
+ ],
+ "19": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 8,
+   "winAtMoves": 0.717,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 11,
+   "winAtMoves": 0.683,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 2.56,
+   "moves": 12,
+   "winAtMoves": 0.7,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 3.84,
+   "moves": 11,
+   "winAtMoves": 0.733,
+   "wonEver": 1
+  },
+  {
+   "round": 4,
+   "scale": 6.144,
+   "moves": 13,
+   "winAtMoves": 0.75,
+   "wonEver": 1
+  }
+ ],
+ "20": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 17,
+   "winAtMoves": 0.433,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.15,
+   "moves": 16,
+   "winAtMoves": 0.417,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.322,
+   "moves": 18,
+   "winAtMoves": 0.467,
+   "wonEver": 1
+  }
+ ],
+ "21": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 14,
+   "winAtMoves": 0.783,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.286,
+   "moves": 15,
+   "winAtMoves": 0.783,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.543,
+   "moves": 17,
+   "winAtMoves": 0.767,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 1.774,
+   "moves": 18,
+   "winAtMoves": 0.767,
+   "wonEver": 1
+  }
+ ],
+ "22": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 17,
+   "winAtMoves": 0.717,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.15,
+   "moves": 18,
+   "winAtMoves": 0.7,
+   "wonEver": 1
+  }
+ ],
+ "23": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 19,
+   "winAtMoves": 0.683,
+   "wonEver": 1
+  }
+ ],
+ "24": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 13,
+   "winAtMoves": 0.667,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.385,
+   "moves": 18,
+   "winAtMoves": 0.683,
+   "wonEver": 1
+  }
+ ],
+ "25": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 9,
+   "winAtMoves": 0.433,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 14,
+   "winAtMoves": 0.367,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 2.057,
+   "moves": 15,
+   "winAtMoves": 0.4,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 2.469,
+   "moves": 18,
+   "winAtMoves": 0.383,
+   "wonEver": 1
+  }
+ ],
+ "26": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 18,
+   "winAtMoves": 0.717,
+   "wonEver": 1
+  }
+ ],
+ "27": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 6,
+   "winAtMoves": 0.617,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 10,
+   "winAtMoves": 0.667,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 2.56,
+   "moves": 11,
+   "winAtMoves": 0.683,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 4.096,
+   "moves": 10,
+   "winAtMoves": 0.683,
+   "wonEver": 1
+  }
+ ],
+ "28": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 20,
+   "winAtMoves": 0.633,
+   "wonEver": 1
+  }
+ ],
+ "29": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 14,
+   "winAtMoves": 0.633,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.286,
+   "moves": 17,
+   "winAtMoves": 0.667,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.479,
+   "moves": 17,
+   "winAtMoves": 0.633,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 1.7,
+   "moves": 18,
+   "winAtMoves": 0.6,
+   "wonEver": 1
+  }
+ ],
+ "30": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 14,
+   "winAtMoves": 0.35,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.286,
+   "moves": 17,
+   "winAtMoves": 0.333,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.479,
+   "moves": 21,
+   "winAtMoves": 0.35,
+   "wonEver": 1
+  }
+ ],
+ "101": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 5,
+   "winAtMoves": 0.933,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 7,
+   "winAtMoves": 0.95,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 2.56,
+   "moves": 8,
+   "winAtMoves": 0.95,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 4.096,
+   "moves": 6,
+   "winAtMoves": 0.95,
+   "wonEver": 1
+  }
+ ],
+ "102": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 9,
+   "winAtMoves": 0.967,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 10,
+   "winAtMoves": 0.95,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 2.56,
+   "moves": 13,
+   "winAtMoves": 0.933,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 3.545,
+   "moves": 17,
+   "winAtMoves": 0.967,
+   "wonEver": 1
+  },
+  {
+   "round": 4,
+   "scale": 4.076,
+   "moves": 17,
+   "winAtMoves": 0.967,
+   "wonEver": 1
+  }
+ ],
+ "103": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 18,
+   "winAtMoves": 0.95,
+   "wonEver": 1
+  }
+ ],
+ "104": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 15,
+   "winAtMoves": 0.95,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.2,
+   "moves": 18,
+   "winAtMoves": 0.95,
+   "wonEver": 1
+  }
+ ],
+ "105": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 11,
+   "winAtMoves": 0.8,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 14,
+   "winAtMoves": 0.817,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 2.057,
+   "moves": 13,
+   "winAtMoves": 0.833,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 2.848,
+   "moves": 14,
+   "winAtMoves": 0.833,
+   "wonEver": 1
+  },
+  {
+   "round": 4,
+   "scale": 3.662,
+   "moves": 13,
+   "winAtMoves": 0.783,
+   "wonEver": 1
+  },
+  {
+   "round": 5,
+   "scale": 5.071,
+   "moves": 13,
+   "winAtMoves": 0.817,
+   "wonEver": 1
+  }
+ ],
+ "106": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 17,
+   "winAtMoves": 0.883,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.15,
+   "moves": 16,
+   "winAtMoves": 0.85,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.322,
+   "moves": 18,
+   "winAtMoves": 0.883,
+   "wonEver": 1
+  }
+ ],
+ "107": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 20,
+   "winAtMoves": 0.85,
+   "wonEver": 1
+  }
+ ],
+ "108": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 8,
+   "winAtMoves": 0.883,
+   "wonEver": 1
+  }
+ ],
+ "109": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 16,
+   "winAtMoves": 0.867,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.15,
+   "moves": 13,
+   "winAtMoves": 0.833,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.592,
+   "moves": 18,
+   "winAtMoves": 0.85,
+   "wonEver": 1
+  }
+ ],
+ "110": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 12,
+   "winAtMoves": 0.55,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.5,
+   "moves": 17,
+   "winAtMoves": 0.55,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.725,
+   "moves": 17,
+   "winAtMoves": 0.517,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 1.984,
+   "moves": 18,
+   "winAtMoves": 0.55,
+   "wonEver": 1
+  }
+ ],
+ "111": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 12,
+   "winAtMoves": 0.883,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.5,
+   "moves": 18,
+   "winAtMoves": 0.867,
+   "wonEver": 1
+  }
+ ],
+ "112": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 12,
+   "winAtMoves": 0.817,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.5,
+   "moves": 16,
+   "winAtMoves": 0.817,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.725,
+   "moves": 20,
+   "winAtMoves": 0.817,
+   "wonEver": 1
+  }
+ ],
+ "113": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 22,
+   "winAtMoves": 0.8,
+   "wonEver": 1
+  }
+ ],
+ "114": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 14,
+   "winAtMoves": 0.783,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.286,
+   "moves": 16,
+   "winAtMoves": 0.783,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.479,
+   "moves": 17,
+   "winAtMoves": 0.817,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 1.7,
+   "moves": 18,
+   "winAtMoves": 0.8,
+   "wonEver": 1
+  }
+ ],
+ "115": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 11,
+   "winAtMoves": 0.533,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 18,
+   "winAtMoves": 0.483,
+   "wonEver": 1
+  }
+ ],
+ "116": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 6,
+   "winAtMoves": 0.817,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 7,
+   "winAtMoves": 0.817,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 2.56,
+   "moves": 9,
+   "winAtMoves": 0.833,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 4.096,
+   "moves": 8,
+   "winAtMoves": 0.833,
+   "wonEver": 1
+  }
+ ],
+ "117": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 17,
+   "winAtMoves": 0.75,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.15,
+   "moves": 14,
+   "winAtMoves": 0.733,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.479,
+   "moves": 19,
+   "winAtMoves": 0.733,
+   "wonEver": 1
+  }
+ ],
+ "118": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 21,
+   "winAtMoves": 0.783,
+   "wonEver": 1
+  }
+ ],
+ "119": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 13,
+   "winAtMoves": 0.75,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.385,
+   "moves": 15,
+   "winAtMoves": 0.7,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.662,
+   "moves": 16,
+   "winAtMoves": 0.717,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 1.911,
+   "moves": 18,
+   "winAtMoves": 0.683,
+   "wonEver": 1
+  }
+ ],
+ "120": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 11,
+   "winAtMoves": 0.45,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 17,
+   "winAtMoves": 0.45,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.84,
+   "moves": 18,
+   "winAtMoves": 0.45,
+   "wonEver": 1
+  }
+ ],
+ "121": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 16,
+   "winAtMoves": 0.767,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.15,
+   "moves": 17,
+   "winAtMoves": 0.783,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.322,
+   "moves": 18,
+   "winAtMoves": 0.767,
+   "wonEver": 1
+  }
+ ],
+ "122": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 15,
+   "winAtMoves": 0.733,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.2,
+   "moves": 15,
+   "winAtMoves": 0.717,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.44,
+   "moves": 18,
+   "winAtMoves": 0.7,
+   "wonEver": 1
+  }
+ ],
+ "123": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 22,
+   "winAtMoves": 0.7,
+   "wonEver": 1
+  }
+ ],
+ "124": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 11,
+   "winAtMoves": 0.667,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 16,
+   "winAtMoves": 0.667,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.84,
+   "moves": 18,
+   "winAtMoves": 0.7,
+   "wonEver": 1
+  }
+ ],
+ "125": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 6,
+   "winAtMoves": 0.433,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 8,
+   "winAtMoves": 0.367,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 2.56,
+   "moves": 9,
+   "winAtMoves": 0.45,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 4.096,
+   "moves": 10,
+   "winAtMoves": 0.45,
+   "wonEver": 1
+  }
+ ],
+ "126": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 17,
+   "winAtMoves": 0.717,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.15,
+   "moves": 14,
+   "winAtMoves": 0.717,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.479,
+   "moves": 22,
+   "winAtMoves": 0.733,
+   "wonEver": 1
+  }
+ ],
+ "127": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 11,
+   "winAtMoves": 0.617,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 16,
+   "winAtMoves": 0.633,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.84,
+   "moves": 18,
+   "winAtMoves": 0.65,
+   "wonEver": 1
+  }
+ ],
+ "128": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 10,
+   "winAtMoves": 0.65,
+   "wonEver": 1
+  }
+ ],
+ "129": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 12,
+   "winAtMoves": 0.633,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.5,
+   "moves": 14,
+   "winAtMoves": 0.6,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.929,
+   "moves": 19,
+   "winAtMoves": 0.65,
+   "wonEver": 1
+  }
+ ],
+ "130": [
+  {
+   "round": 0,
+   "scale": 1,
+   "moves": 10,
+   "winAtMoves": 0.383,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 16,
+   "winAtMoves": 0.35,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.84,
+   "moves": 13,
+   "winAtMoves": 0.317,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 2.548,
+   "moves": 15,
+   "winAtMoves": 0.367,
+   "wonEver": 1
+  },
+  {
+   "round": 4,
+   "scale": 3.057,
+   "moves": 15,
+   "winAtMoves": 0.333,
+   "wonEver": 1
+  },
+  {
+   "round": 5,
+   "scale": 3.669,
+   "moves": 14,
+   "winAtMoves": 0.35,
+   "wonEver": 1
+  },
+  {
+   "round": 6,
+   "scale": 4.717,
+   "moves": 15,
+   "winAtMoves": 0.35,
+   "wonEver": 1
+  }
+ ]
+}

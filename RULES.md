@@ -56,7 +56,7 @@ A special caught in another special's blast goes off too (chain reaction).
 - After a clear, candies fall and new ones drop in. Any new matches resolve as the next cascade step.
 - Each cleared candy scores 20 × the cascade step (capped at 8).
 - Making a special adds 120 (striped), 200 (wrapped), 150 (unicorn) or 500 (rainbow). Setting one off adds 100, 180, 150 or 300.
-- A new candy carries a key with 7% chance while fewer than 3 keys are on the board (not after the level is won).
+- A new candy carries a key with 4% chance (`TUNE.keyChance`) while fewer than 3 keys are on the board (not after the level is won).
 
 ## Goals
 
@@ -70,8 +70,8 @@ A special caught in another special's blast goes off too (chain reaction).
 ## Keys, chests and the rainbow meter
 
 - Clearing a key candy adds a key to the chest. The first chest needs 3 keys and each later one needs one more (up to 6).
-- An opened chest turns 3 random plain candies into a rainbow plus two of striped / wrapped / unicorn, and gives one booster and some gold.
-- Every 36 candies cleared (before the level is won) fills the rainbow meter, which drops a free rainbow on a random candy.
+- An opened chest turns one random plain candy into a random special (rainbow, unicorn, wrapped or striped), and gives one booster and some gold. (`TUNE.chestRewards = 'rainbow+2'` restores the original rainbow plus two specials.)
+- Every 150 candies cleared (`TUNE.meterMax`, before the level is won) fills the rainbow meter, which drops a free rainbow on a random candy.
 - Chests open and meter rainbows drop at the end of a turn, only while the level is still being played.
 
 ## Boosters

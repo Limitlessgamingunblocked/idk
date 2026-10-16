@@ -37,6 +37,7 @@ function diff(a, b, p = '') {
   await page.goto('file://' + path.join(__dirname, '..', 'index.html'));
   await page.waitForTimeout(500);
   // run the game fast: the timing of animations does not affect any rule decision
+  await page.evaluate(() => __sugar.skipTutorials());
   await page.evaluate(() => { const orig = window.requestAnimationFrame; let t = performance.now(); window.requestAnimationFrame = f => setTimeout(() => { t += 50; f(t); }, 0); });
   const levels = [1, 2, 3, 5, 7, 9, 12, 14, 19, 26, 101, 107];
   let checked = 0, mismatches = 0;

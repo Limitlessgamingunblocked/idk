@@ -204,18 +204,23 @@ test('scoring: 20 per candy times the cascade number, plus bonuses for making an
   assert.equal(w.score, 3 * 20 * 2);
 });
 
-test('keys: the third key opens the chest, which places a rainbow and two specials', () => {
-  const w = world(blank());
-  for (let i = 0; i < 3; i++) R.applyClear(w, { tile: { type: 0, special: 0, key: true }, r: 0, c: 0, pts: 0 });
-  assert.equal(w.chest.pending, 1);
-  const out = R.openChest(w);
-  assert.equal(out.placed.length, 3); assert.equal(out.placed[0].special, BOMB);
-  assert.equal(w.chest.need, 4);
+test('keys: the third key opens the chest; the chest places one special (or a rainbow and two specials)', () => {
+  for (const mode of ['one', 'rainbow+2']) {
+    const saved = R.TUNE.chestRewards; R.TUNE.chestRewards = mode;
+    const w = world(blank());
+    for (let i = 0; i < 3; i++) R.applyClear(w, { tile: { type: 0, special: 0, key: true }, r: 0, c: 0, pts: 0 });
+    assert.equal(w.chest.pending, 1);
+    const out = R.openChest(w);
+    assert.equal(out.placed.length, mode === 'one' ? 1 : 3);
+    if (mode !== 'one') assert.equal(out.placed[0].special, BOMB);
+    assert.equal(w.chest.need, 4);
+    R.TUNE.chestRewards = saved;
+  }
 });
 
-test('rainbow meter: every 36 candies cleared earns one free rainbow', () => {
+test('rainbow meter: every TUNE.meterMax candies cleared earns one free rainbow', () => {
   const w = world(blank());
-  for (let i = 0; i < 36; i++) R.applyClear(w, { tile: { type: 1, special: 0 }, r: 0, c: 0, pts: 0 });
+  for (let i = 0; i < R.TUNE.meterMax; i++) R.applyClear(w, { tile: { type: 1, special: 0 }, r: 0, c: 0, pts: 0 });
   assert.equal(w.rainbows, 1); assert.equal(w.meter, 0);
 });
 
@@ -234,7 +239,7 @@ test('new boards: no ready-made matches, at least 3 moves, 2 keys (200 seeds)', 
     const w = R.newWorld(R.makeLevel(1 + (s % 30)), s); R.genBoard(w);
     assert.equal(R.findGroups(w).length, 0, 'seed ' + s);
     assert.ok(R.allMoves(w).length >= 3, 'seed ' + s);
-    assert.equal(R.keysOnBoard(w), 2);
+    assert.equal(R.keysOnBoard(w), R.TUNE.keyChance > 0 ? 2 : 0);
   }
 });
 

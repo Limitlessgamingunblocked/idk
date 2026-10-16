@@ -300,13 +300,19 @@ const NONE = 0, SH = 1, SV = 2, WRAP = 3, BOMB = 4, SEEK = 5;
 const CREATE_BONUS = [0, 120, 120, 200, 500, 150];
 const FIRE_BONUS = [0, 100, 100, 180, 300, 150];
 const POINTS_PER_CANDY = 20, MAX_MULT = 8, RUSH_POINTS = 150;
-const METER_MAX = 36;                      // candies cleared to earn a free rainbow
-const KEY_CHANCE = .07, KEY_MAX = 3, START_KEYS = 2;
+const KEY_MAX = 3, START_KEYS = 2;
 const CHEST_FIRST = 3, CHEST_MAX = 6;
 const UNICORNS = 3, PARADE = 7;
 
 // Booster strength and the in-game economy, in one place so the economy model and the game share them.
 const TUNE = {
+  // generosity of the core rules (the balance study switches these to measure each feature)
+  boxMatches: true,                         // 2x2 boxes match and make unicorns
+  bigRainbow: 6,                            // a group this big makes a rainbow (Infinity: only 5 in a line)
+  meterMax: 150,                            // candies cleared per free rainbow (Infinity: meter off)
+  keyChance: .04,                           // chance a new candy carries a key (0: no keys)
+  chestRewards: 'one',                      // 'rainbow+2' or 'one' (a single random special)
+  unicornSplash: 'plus',                    // 'plus': target and 4 neighbours; 'single': just the target
   stampede: 8,                              // unicorns launched by Unicorn Stampede
   party: 'board',                           // 'board': hits every candy; 'specials': fires partySpecials random specials
   partySpecials: 6,
@@ -321,9 +327,8 @@ const TUNE = {
     boosterPool: ['hammer', 'hammer', 'swap', 'swap', 'rainbow', 'swarm', 'swarm', 'moves', 'party'],
   },
 };
-const ECON = TUNE.econ;
-const winGold = (stars, firstClear) => ECON.winGold[0] + ECON.winGold[1] * stars + (firstClear ? ECON.winGold[2] : 0);
-const reviveCost = n => ECON.reviveBase * n;
+const winGold = (stars, firstClear) => TUNE.econ.winGold[0] + TUNE.econ.winGold[1] * stars + (firstClear ? TUNE.econ.winGold[2] : 0);
+const reviveCost = n => TUNE.econ.reviveBase * n;
 
 function mulberry(a) {
   return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
@@ -386,9 +391,9 @@ function levelDef(n) {
   if (!d) throw new Error('No level ' + n);
   return d;
 }
-function makeLevel(n) {
-  const d = levelDef(n);
-  const L = { n, moves: d.moves, colors: d.colors, jelly: d.jelly || null, spread: !!d.spread, goals: d.goals, home: n >= HOME_FIRST, stars: d.stars };
+function makeLevel(n) { return levelFromDef(n, levelDef(n)); }
+function levelFromDef(n, d) {
+  const L = { n, moves: d.moves, colors: d.colors, jelly: d.jelly || null, layers: d.layers || 0, spread: !!d.spread, goals: d.goals, home: n >= HOME_FIRST, stars: d.stars };
   if (!L.stars) {
     const r100 = v => Math.round(v / 100) * 100, sg = d.goals.find(g => g[0] === 'score');
     L.stars = sg ? [sg[1], r100(sg[1] * 1.5), r100(sg[1] * 2.1)] : (() => { const b = d.moves * 130; return [r100(b * .5), r100(b), r100(b * 1.7)]; })();
@@ -407,7 +412,8 @@ function newWorld(level, seed, mkTile) {
   };
   const pat = level.jelly ? PAT[level.jelly] : null;
   let jt = 0;
-  for (let r = 0; r < ROWS; r++) { w.jelly.push([]); for (let c = 0; c < COLS; c++) { const v = pat ? pat(r, c) : 0; w.jelly[r].push(v); jt += v; } }
+  // `layers` (if set) gives every jelly cell that many layers instead of the pattern's own count
+  for (let r = 0; r < ROWS; r++) { w.jelly.push([]); for (let c = 0; c < COLS; c++) { let v = pat ? pat(r, c) : 0; if (v && level.layers) v = level.layers; w.jelly[r].push(v); jt += v; } }
   w.goals = level.goals.map(g => g[0] === 'score' ? { kind: 'score', need: g[1] } : g[0] === 'collect' ? { kind: 'collect', type: g[1], need: g[2], left: g[2] } : { kind: 'jelly', need: jt, left: jt });
   return w;
 }
@@ -438,7 +444,7 @@ function findGroups(w) {
       r = e;
     }
   }
-  for (let r = 0; r < ROWS - 1; r++) for (let c = 0; c < COLS - 1; c++) {
+  if (TUNE.boxMatches) for (let r = 0; r < ROWS - 1; r++) for (let c = 0; c < COLS - 1; c++) {
     const k = colorOf(g_[r][c]);
     if (k >= 0 && colorOf(g_[r][c + 1]) === k && colorOf(g_[r + 1][c]) === k && colorOf(g_[r + 1][c + 1]) === k)
       runs.push({ box: true, cells: [idxOf(r, c), idxOf(r, c + 1), idxOf(r + 1, c), idxOf(r + 1, c + 1)], type: k });
@@ -460,7 +466,7 @@ function findGroups(w) {
     g.longest = longest; g.inter = -1; for (const [x, n] of seen) if (n > 1) { g.inter = x; break; }
     const hasH = lines.some(r => r.h), hasV = lines.some(r => !r.h), len = lines.length ? longest.cells.length : 0;
     // priority: rainbow (5 in a line, or 6+ candies) > wrapped (L/T) > striped (4) > unicorn (2x2 box)
-    g.special = len >= 5 || g.cells.size >= 6 ? BOMB : hasH && hasV ? WRAP : len === 4 ? (longest.h ? SV : SH) : hasBox ? SEEK : NONE;
+    g.special = len >= 5 || g.cells.size >= TUNE.bigRainbow ? BOMB : hasH && hasV ? WRAP : len === 4 ? (longest.h ? SV : SH) : hasBox ? SEEK : NONE;
   }
   return groups;
 }
@@ -470,7 +476,7 @@ function matchAt(w, r, c) {
   if (n >= 3) return true;
   n = 1; for (let y = r - 1; y >= 0 && colorOf(g[y][c]) === k; y--) n++; for (let y = r + 1; y < ROWS && colorOf(g[y][c]) === k; y++) n++;
   if (n >= 3) return true;
-  for (const [dr, dc] of [[0, 0], [0, -1], [-1, 0], [-1, -1]]) {
+  if (TUNE.boxMatches) for (const [dr, dc] of [[0, 0], [0, -1], [-1, 0], [-1, -1]]) {
     const r0 = r + dr, c0 = c + dc; if (r0 < 0 || c0 < 0 || r0 + 1 >= ROWS || c0 + 1 >= COLS) continue;
     if (colorOf(g[r0][c0]) === k && colorOf(g[r0][c0 + 1]) === k && colorOf(g[r0 + 1][c0]) === k && colorOf(g[r0 + 1][c0 + 1]) === k) return true;
   }
@@ -508,7 +514,7 @@ function genBoard(w) {
     }
     if (allMoves(w).length >= 3) break;
   }
-  for (let placed = 0; placed < START_KEYS;) { const t = w.grid[1 + randi(w, ROWS - 2)][randi(w, COLS)]; if (!t.key) { t.key = true; placed++; } }
+  for (let placed = 0; placed < (TUNE.keyChance > 0 ? START_KEYS : 0);) { const t = w.grid[1 + randi(w, ROWS - 2)][randi(w, COLS)]; if (!t.key) { t.key = true; placed++; } }
 }
 
 /* ------------------------------------------------------------------ blasts */
@@ -608,7 +614,7 @@ function launchSeekers(B, r, c, type, t, n, carry, src) {
     fx(w, 'unicornHit', { r: tr, c: tc, type: col, carry }, hit);
     if (carry === WRAP) { for (const [dr, dc] of DIAMOND2) B.addRC(tr + dr, tc + dc, hit + .04 + (Math.abs(dr) + Math.abs(dc)) * .04, src); }
     else if (carry === SH || carry === SV) beamCells(B, tr, tc, carry === SH, hit, src);
-    else for (const [dr, dc] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) B.addRC(tr + dr, tc + dc, hit + .05, src);
+    else if (TUNE.unicornSplash === 'plus') for (const [dr, dc] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) B.addRC(tr + dr, tc + dc, hit + .05, src);
   });
 }
 
@@ -647,7 +653,7 @@ function applyClear(w, cl) {
   const t = cl.tile, ev = { jelly: false, key: false, meterFull: false, collect: null };
   w.score += cl.pts;
   if (!w.over) {
-    if (++w.meter >= METER_MAX) { w.meter = 0; w.rainbows++; ev.meterFull = true; }
+    if (++w.meter >= TUNE.meterMax) { w.meter = 0; w.rainbows++; ev.meterFull = true; }
     if (t.key) { const ch = w.chest; ch.have++; if (ch.have >= ch.need && ch.have - ch.need < 1) ch.pending++; ev.key = true; }
   }
   if (w.jelly[cl.r][cl.c] > 0) { w.jelly[cl.r][cl.c]--; w.turnJelly++; ev.jelly = true; const g = jellyGoal(w); if (g) g.left--; }
@@ -703,7 +709,7 @@ function collapse(w) {
     for (let r = ROWS - 1; r >= 0; r--) { const t = g[r][c]; if (t) { if (r !== wr) { g[wr][c] = t; g[r][c] = null; t.r = wr; moved.push(t); } wr--; } }
     for (let r = wr; r >= 0; r--) {
       const t = w.mkTile(randType(w)); t.r = r; t.c = c; t.dropFrom = r - wr - 1.15;
-      if (!w.over && keysOnBoard(w) < KEY_MAX && w.rng() < KEY_CHANCE) t.key = true;
+      if (!w.over && keysOnBoard(w) < KEY_MAX && w.rng() < TUNE.keyChance) t.key = true;
       g[r][c] = t; spawned.push(t);
     }
   }
@@ -725,11 +731,11 @@ function startTurn(w) { w.turnJelly = 0; }
 function openChest(w) {
   const ch = w.chest; if (ch.pending <= 0) return null;
   ch.pending--; ch.have -= ch.need; ch.need = Math.min(CHEST_MAX, ch.need + 1); w.stats.chests++;
-  const rewards = [BOMB, [SEEK, WRAP, SH][randi(w, 3)], [SEEK, WRAP, SV][randi(w, 3)]];
+  const rewards = TUNE.chestRewards === 'one' ? [[BOMB, SEEK, WRAP, SH, SV][randi(w, 5)]] : [BOMB, [SEEK, WRAP, SH][randi(w, 3)], [SEEK, WRAP, SV][randi(w, 3)]];
   const pool = shuffleInPlace(w, plainTiles(w)), placed = [];
   rewards.forEach((sp, i) => { if (pool[i]) { pool[i].special = sp; placed.push({ tile: pool[i], special: sp }); } });
-  const prize = ECON.boosterPool[randi(w, ECON.boosterPool.length)];
-  const gold = ECON.chestGold[0] + randi(w, ECON.chestGold[1] - ECON.chestGold[0] + 1);
+  const prize = TUNE.econ.boosterPool[randi(w, TUNE.econ.boosterPool.length)];
+  const gold = TUNE.econ.chestGold[0] + randi(w, TUNE.econ.chestGold[1] - TUNE.econ.chestGold[0] + 1);
   return { placed, prize, gold };
 }
 function dropRainbow(w) {
@@ -785,9 +791,9 @@ function partyPlan(w) {
 function rainbowDropAt(w, r, c) { const t = w.grid[r][c]; if (!t) return null; t.special = BOMB; return t; }
 
 return {
-  COLS, ROWS, NONE, SH, SV, WRAP, BOMB, SEEK, CREATE_BONUS, FIRE_BONUS, POINTS_PER_CANDY, MAX_MULT, METER_MAX, KEY_CHANCE, KEY_MAX,
-  CHEST_FIRST, CHEST_MAX, UNICORNS, PARADE, UNICORN_FLIGHT, TUNE, ECON, winGold, reviveCost, LEVEL_COUNT, HOME_FIRST, HOME_LAST, PAT,
-  mulberry, idxOf, rOf, cOf, colorOf, logoCell, setLevels, levelDef, makeLevel, newWorld, goalsMet, plainTiles, keysOnBoard,
+  COLS, ROWS, NONE, SH, SV, WRAP, BOMB, SEEK, CREATE_BONUS, FIRE_BONUS, POINTS_PER_CANDY, MAX_MULT, KEY_MAX,
+  CHEST_FIRST, CHEST_MAX, UNICORNS, PARADE, UNICORN_FLIGHT, TUNE, get ECON() { return TUNE.econ; }, winGold, reviveCost, LEVEL_COUNT, HOME_FIRST, HOME_LAST, PAT,
+  mulberry, idxOf, rOf, cOf, colorOf, logoCell, setLevels, levelDef, makeLevel, levelFromDef, newWorld, goalsMet, plainTiles, keysOnBoard,
   findGroups, matchAt, isComboSwap, allMoves, swapGrid, genBoard, Blast, mostCommon, seekTargets, pickSpawn, matchStep, applyCreate,
   endCreates, applyClear, comboPlan, collapse, shuffleBoard, startTurn, openChest, dropRainbow, spreadDust, rushConvert, rushDetonate,
   hammerPlan, swarmPlan, partyPlan, rainbowDropAt,
@@ -829,14 +835,15 @@ const starSvg = cls => `<svg viewBox="0 0 24 24" class="${cls || ''}" aria-hidde
 
 /* ---------- constants ---------- */
 const R = SugarRules;
-const { COLS, ROWS, NONE, SH, SV, WRAP, BOMB, SEEK, METER_MAX, HOME_FIRST, HOME_LAST, LEVEL_COUNT } = R;
+const { COLS, ROWS, NONE, SH, SV, WRAP, BOMB, SEEK, HOME_FIRST, HOME_LAST, LEVEL_COUNT } = R;
 const CANDY = [
-  { name: 'cherry candies',    base: '#ff3b5c', light: '#ffa3b1', dark: '#a10f2c' },
-  { name: 'tangerine candies', base: '#ff9419', light: '#ffd497', dark: '#b05200' },
-  { name: 'lemon candies',     base: '#ffd92e', light: '#fff6b8', dark: '#b38300' },
-  { name: 'lime candies',      base: '#35d05e', light: '#b0f7c0', dark: '#0f7a2c' },
-  { name: 'blueberry candies', base: '#2f9bff', light: '#b2dbff', dark: '#0a4ca6' },
-  { name: 'grape candies',     base: '#a752f5', light: '#e0bcff', dark: '#5a199c' },
+  // palette tuned so the colours stay apart under common colour blindness (tools/cvd.js); each also carries a mark
+  { name: 'cherry candies',    base: '#ff2a4b', light: '#ffa4b2', dark: '#a40019' },
+  { name: 'tangerine candies', base: '#ff9520', light: '#ffcf9a', dark: '#9a5100' },
+  { name: 'lemon candies',     base: '#fff914', light: '#fffc8e', dark: '#b38f00' },
+  { name: 'lime candies',      base: '#5cd986', light: '#bff0d0', dark: '#218f46' },
+  { name: 'blueberry candies', base: '#5d94ff', light: '#ccddff', dark: '#0049d7' },
+  { name: 'grape candies',     base: '#892af3', light: '#c99efa', dark: '#480890' },
 ];
 const BOOSTERS = [
   { id: 'hammer', name: 'Hammer', aim: true, tip: 'Tap a candy to smash it' },
@@ -936,6 +943,7 @@ const SFX = (() => {
     setSfx(on) { if (sfx) sfx.gain.setTargetAtTime(on ? 1 : 0, ctx.currentTime, .05); },
     setMusic(on) { if (mus) mus.gain.setTargetAtTime(on ? .55 : 0, ctx.currentTime, .1); },
     suspend() { if (ctx && ctx.state === 'running') ctx.suspend().catch(() => {}); },
+    latency() { return ctx ? { base: ctx.baseLatency || 0, output: ctx.outputLatency || 0, state: ctx.state } : null; },
     resume() { if (ctx && ctx.state === 'suspended') ctx.resume().catch(() => {}); },
     pop(i) {
       if (!ok()) return; const now = ctx.currentTime; if (now - lastPop < .028) return; lastPop = now;
@@ -1050,6 +1058,8 @@ function paintLogo(g, w, C, special, rainbow) {
     else { rg.addColorStop(0, C.light); rg.addColorStop(.5, C.base); rg.addColorStop(1, C.dark); }
     g.fillStyle = rg; g.beginPath(); g.arc(cx, cy, R, 0, Math.PI * 2); g.fill();
   });
+  // a white mark per colour on the bottom ball, so colour is never the only cue
+  if (!rainbow) { const p = PIECES[2], k2 = w / LOGO_BOX.w; drawMark(g, CANDY.indexOf(C), p.ox * k2, p.oy * k2 + p.r * k2 * .08, p.r * k2 * .78, C); }
   if (special === SH || special === SV) {
     const sw = w * .065, st = w * .16;
     for (let i = -4; i <= 4; i++) {
@@ -1082,6 +1092,18 @@ function paintLogo(g, w, C, special, rainbow) {
   });
   g.restore();
   g.lineWidth = Math.max(1, w * .014); g.strokeStyle = rainbow ? 'rgba(255,255,255,.6)' : hexA(C.dark, .7); g.stroke(P);
+}
+// dot, bar, ring, plus, diamond, two dots
+function drawMark(g, type, x, y, s, C) {
+  if (type < 0) return;
+  const p = new Path2D();
+  if (type === 0) p.arc(x, y, s * .5, 0, Math.PI * 2);
+  else if (type === 1) { p.moveTo(x - s * .7, y - s * .22); p.lineTo(x + s * .7, y - s * .22); p.lineTo(x + s * .7, y + s * .22); p.lineTo(x - s * .7, y + s * .22); p.closePath(); }
+  else if (type === 2) { p.arc(x, y, s * .62, 0, Math.PI * 2); p.moveTo(x + s * .3, y); p.arc(x, y, s * .3, 0, Math.PI * 2, true); }
+  else if (type === 3) { const a = s * .2, b = s * .66; p.moveTo(x - a, y - b); p.lineTo(x + a, y - b); p.lineTo(x + a, y - a); p.lineTo(x + b, y - a); p.lineTo(x + b, y + a); p.lineTo(x + a, y + a); p.lineTo(x + a, y + b); p.lineTo(x - a, y + b); p.lineTo(x - a, y + a); p.lineTo(x - b, y + a); p.lineTo(x - b, y - a); p.lineTo(x - a, y - a); p.closePath(); }
+  else if (type === 4) { p.moveTo(x, y - s * .66); p.lineTo(x + s * .5, y); p.lineTo(x, y + s * .66); p.lineTo(x - s * .5, y); p.closePath(); }
+  else { p.arc(x - s * .36, y, s * .3, 0, Math.PI * 2); p.moveTo(x + s * .66, y); p.arc(x + s * .36, y, s * .3, 0, Math.PI * 2); }
+  g.save(); g.lineJoin = 'round'; g.lineWidth = s * .22; g.strokeStyle = hexA(C.dark, .9); g.stroke(p); g.fillStyle = 'rgba(255,255,255,.95)'; g.fill(p, 'evenodd'); g.restore();
 }
 function makeCandy(type, special, S, theme = THEME) {
   if (theme === 'home') return makeFurniture(type, special, S);
@@ -1467,7 +1489,105 @@ let tutorial = null;
 const tutorialBlocks = () => !!(tutorial && tutorial.blocking);
 const tutorialAllows = (a, b) => !tutorial || !tutorial.move || (same(a, tutorial.move.a) && same(b, tutorial.move.b)) || (same(a, tutorial.move.b) && same(b, tutorial.move.a));
 const same = (p, q) => p.r === q.r && p.c === q.c;
-function tutorialAfterMove() {}
+
+/* ---------- tutorials: one scripted move the first time each special appears ---------- */
+// Each lesson writes a small pattern onto the board (checked with the rules so nothing else matches),
+// spotlights it, and accepts only the one swap that teaches the special.
+const LESSONS = {
+  1: { id: 'match', cells: [[0, 0], [0, 1], [1, 2]], move: [[1, 2], [0, 2]], special: NONE, before: 'Swap two neighbours to line up three of a kind.', after: null },
+  2: { id: 'stripe', cells: [[0, 0], [0, 1], [0, 3], [1, 2]], move: [[1, 2], [0, 2]], special: SV, before: 'Line up four to make a striped candy.', after: 'Striped candies clear a whole row or column. Match one to set it off.' },
+  3: { id: 'unicorn', cells: [[0, 0], [0, 1], [1, 0], [1, 2]], move: [[1, 2], [1, 1]], special: SEEK, before: 'Make a 2×2 box to summon a unicorn.', after: 'Unicorns fly to the tiles you need most. Match it to set them loose.' },
+  4: { id: 'wrap', cells: [[0, 0], [0, 1], [1, 2], [2, 2], [0, 3]], move: [[0, 3], [0, 2]], special: WRAP, before: 'Make an L or T shape for a wrapped candy.', after: 'Wrapped candies explode around themselves.' },
+  5: { id: 'rainbow', cells: [[0, 0], [0, 1], [0, 3], [0, 4], [1, 2]], move: [[1, 2], [0, 2]], special: BOMB, before: 'Line up five for a rainbow!', after: 'Swap a rainbow with any candy to clear every candy of that colour.' },
+};
+const TIPS = {
+  6: { id: 'keys', text: 'Candies with gold keys fill your chest. A full chest gives you a special, a booster and gold.', focus: 'key' },
+  101: { id: 'dust', text: 'Clean all the dust. Each turn you clean none, it spreads to a new tile.', focus: 'dust' },
+};
+const tutDone = id => !!(save.tut && save.tut[id]);
+function tutFinish(id) { save.tut = save.tut || {}; save.tut[id] = true; persist(); tutorial = null; idleT = 0; }
+function setUpLesson(lesson) {
+  const want = lesson.special, X = (state.rng() * L.colors) | 0;
+  for (let attempt = 0; attempt < 40; attempt++) {
+    const r0 = 3 + ((state.rng() * 3) | 0), c0 = (state.rng() * (COLS - 4)) | 0;
+    const pat = new Set(lesson.cells.map(([dr, dc]) => (r0 + dr) * COLS + c0 + dc));
+    for (const [dr, dc] of lesson.cells) grid[r0 + dr][c0 + dc].type = X;
+    // nothing else of colour X near the pattern, and no stray matches anywhere
+    for (let r = r0 - 2; r <= r0 + 4; r++) for (let c = c0 - 2; c <= c0 + 6; c++) {
+      if (r < 0 || r >= ROWS || c < 0 || c >= COLS || pat.has(r * COLS + c)) continue;
+      const t = grid[r][c]; if (t.type === X) t.type = (X + 1 + ((state.rng() * (L.colors - 1)) | 0)) % L.colors;
+      t.special = 0;
+    }
+    // break any stray match by recolouring one of its candies (never a pattern candy) to a colour that makes no match there
+    for (let k = 0; k < 60; k++) {
+      const gs = R.findGroups(state); if (!gs.length) break;
+      for (const g of gs) {
+        const i = [...g.cells].find(i => !pat.has(i)); if (i === undefined) continue;
+        const r = (i / COLS) | 0, c = i % COLS, t = grid[r][c], start = (state.rng() * L.colors) | 0;
+        for (let d = 0; d < L.colors; d++) { const col = (start + d) % L.colors; if (col === X) continue; t.type = col; if (!R.matchAt(state, r, c)) break; }
+      }
+    }
+    if (R.findGroups(state).length) continue;
+    const a = { r: r0 + lesson.move[0][0], c: c0 + lesson.move[0][1] }, b = { r: r0 + lesson.move[1][0], c: c0 + lesson.move[1][1] };
+    R.swapGrid(state, a, b); const gs = R.findGroups(state); R.swapGrid(state, a, b);
+    if (gs.length === 1 && gs[0].special === want) return { a, b, cells: [...pat].map(i => ({ r: (i / COLS) | 0, c: i % COLS })) };
+  }
+  return null;
+}
+async function maybeTutorial() {
+  const lesson = LESSONS[L.n], tip = TIPS[L.n];
+  if (lesson && !tutDone(lesson.id)) {
+    const set = setUpLesson(lesson);
+    if (set) { tutorial = { lesson, move: { a: set.a, b: set.b }, cells: set.cells.concat([set.a, set.b]), text: lesson.before, blocking: false, t0: gameTime }; return; }
+  }
+  if (tip && !tutDone(tip.id)) {
+    let cells = [];
+    if (tip.focus === 'key') grid.forEach(row => row.forEach(t => t.key && cells.push({ r: t.r, c: t.c })));
+    else jelly.forEach((row, r) => row.forEach((v, c) => v > 0 && cells.push({ r, c })));
+    tutorial = { tip, cells, text: tip.text, blocking: true, t0: gameTime, onDismiss: () => tutFinish(tip.id) };
+  }
+}
+function tutorialAfterMove() {
+  if (!tutorial || !tutorial.lesson) return;
+  const lesson = tutorial.lesson;
+  if (!lesson.after) { tutFinish(lesson.id); return; }
+  let cells = [];
+  grid.forEach(row => row.forEach(t => t.special === lesson.special && cells.push({ r: t.r, c: t.c })));
+  tutorial = { cells, text: lesson.after, blocking: true, t0: gameTime, onDismiss: () => tutFinish(lesson.id) };
+}
+function dismissTutorial() { if (tutorial && tutorial.blocking && gameTime - tutorial.t0 > .4) { const f = tutorial.onDismiss; tutorial = null; SFX.click(); f && f(); } }
+function wrapText(text, maxW) {
+  const words = text.split(' '), lines = []; let line = '';
+  for (const w of words) { const t = line ? line + ' ' + w : w; if (gx.measureText(t).width > maxW && line) { lines.push(line); line = w; } else line = t; }
+  if (line) lines.push(line); return lines;
+}
+function drawTutorial(now) {
+  if (!tutorial || tutorial.hidden) return;
+  const cs = BR.cs, tu = tutorial, k = Math.min(1, (gameTime - tu.t0) / .3);
+  // dim the board except the cells this step is about
+  gx.save(); rrPath(gx, BR.x - cs * .2, BR.y - cs * .2, BR.w + cs * .4, BR.w + cs * .4, cs * .42);
+  for (const p of tu.cells) { const x = BR.x + p.c * cs, y = BR.y + p.r * cs; gx.moveTo(x + cs, y); gx.rect(x + cs * .02, y + cs * .02, cs * .96, cs * .96); }
+  gx.fillStyle = `rgba(36,13,22,${.62 * k})`; gx.fill('evenodd'); gx.restore();
+  for (const p of tu.cells) { gx.save(); rrPath(gx, BR.x + p.c * cs + 2, BR.y + p.r * cs + 2, cs - 4, cs - 4, cs * .22); gx.lineWidth = 2.5; gx.strokeStyle = `rgba(255,210,63,${(.5 + .5 * Math.sin(now * 5)) * k})`; gx.stroke(); gx.restore(); }
+  // a finger that drags from one cell to the other
+  if (tu.move) {
+    const ph = ((gameTime - tu.t0) % 1.6) / 1.6, e = Ease.inOutQuad(clamp((ph - .15) / .5, 0, 1));
+    const x = lerp(sx(tu.move.a.c), sx(tu.move.b.c), e), y = lerp(sy(tu.move.a.r), sy(tu.move.b.r), e), a = ph > .85 ? (1 - ph) / .15 : 1;
+    gx.save(); gx.globalAlpha = a * k;
+    gx.beginPath(); gx.arc(x + cs * .12, y + cs * .18, cs * .2, 0, Math.PI * 2); gx.fillStyle = '#fff3e3'; gx.fill(); gx.lineWidth = 3; gx.strokeStyle = '#3b1824'; gx.stroke();
+    gx.beginPath(); gx.arc(x, y, cs * (.3 + .15 * Math.sin(ph * 12)), 0, Math.PI * 2); gx.strokeStyle = 'rgba(255,243,227,.7)'; gx.lineWidth = 2; gx.stroke();
+    gx.restore();
+  }
+  // caption above the board
+  const size = Math.round(Math.max(15, cs * .34)), pad = size * .7;
+  gx.save(); gx.font = `${size}px "Lilita One","Arial Rounded MT Bold",sans-serif`;
+  const lines = wrapText(tu.text, BR.w - pad * 2), lh = size * 1.25, h = lines.length * lh + pad * 1.2 + (tu.blocking ? lh : 0);
+  const bx = BR.x, by = Math.max(4, BR.y - h - cs * .35);
+  gx.globalAlpha = k; rrPath(gx, bx, by, BR.w, h, size * .8); gx.fillStyle = 'rgba(59,24,36,.95)'; gx.fill(); gx.lineWidth = 2; gx.strokeStyle = '#ffd23f'; gx.stroke();
+  lines.forEach((ln, i) => textFx(ln, bx + BR.w / 2, by + pad * .6 + lh * (i + .5), size, '#fff3e3', '#3b1824'));
+  if (tu.blocking) { gx.font = `${Math.round(size * .8)}px "Nunito",sans-serif`; gx.fillStyle = `rgba(255,210,63,${.6 + .4 * Math.sin(now * 4)})`; gx.textAlign = 'center'; gx.fillText('Tap to continue', bx + BR.w / 2, by + pad * .6 + lh * (lines.length + .5)); }
+  gx.restore();
+}
 
 /* ---------- turn flow: the rules decide, this code animates ---------- */
 // Visual effects the rules report while planning a blast, scheduled at their time offsets.
@@ -1517,10 +1637,10 @@ async function attemptSwap(a, b, free = false) {
   const combo = R.isComboSwap(ta, tb);
   if (free && !combo && !R.findGroups(state).length) { ta.bsv += 4; tb.bsv += 4; await afterTurn(); return; }
   if (!combo && !R.findGroups(state).length) {
-    SFX.bad(); R.swapGrid(state, a, b);
+    SFX.bad(); R.swapGrid(state, a, b); mark('bounce');
     await Promise.all([tween(ta, { x: a.c, y: a.r }, TIMING.bounce, Ease.outBack), tween(tb, { x: b.c, y: b.r }, TIMING.bounce, Ease.outBack)]);
     ta.bsv -= 3; tb.bsv -= 3; shake(2);
-    state.busy = false; idleT = 0; return;
+    state.busy = false; idleT = 0; mark('ready'); return;
   }
   if (!free) { state.moves--; updateHUD(); }
   popSeq = 0;
@@ -1570,7 +1690,8 @@ function collapse() {
   for (const t of moved) { t.falling = true; t.delay = t.c * TIMING.columnStagger; }
   for (const t of spawned) { t.x = t.c; t.y = t.dropFrom; t.falling = true; t.delay = t.c * TIMING.columnStagger; }
   if (!moved.length && !spawned.length) return Promise.resolve();
-  return waitFor(() => !anyFalling());
+  mark('fall');
+  return waitFor(() => !anyFalling()).then(() => mark('land'));
 }
 async function afterTurn() {
   if (!R.goalsMet(state) && state.moves > 0 && (state.chest.pending || state.rainbows)) {
@@ -1843,7 +1964,7 @@ function update(dt) {
   // idle hint
   if (canPlay()) {
     idleT += dt;
-    if (idleT > 5 && !hint) { const m = R.allMoves(state); if (m.length) { const mv = m[randi(m.length)]; hint = { a: grid[mv.a.r][mv.a.c], b: grid[mv.b.r][mv.b.c], dx: mv.b.c - mv.a.c, dy: mv.b.r - mv.a.r, t0: gameTime }; } }
+    if (idleT > 5 && !hint && !tutorial) { const m = R.allMoves(state); if (m.length) { const mv = m[randi(m.length)]; hint = { a: grid[mv.a.r][mv.a.c], b: grid[mv.b.r][mv.b.c], dx: mv.b.c - mv.a.c, dy: mv.b.r - mv.a.r, t0: gameTime }; } }
   }
   // HUD score roll
   if (state.shown !== state.score) {
@@ -1966,6 +2087,7 @@ function drawBoard(now) {
     rrPath(gx, tx - tw / 2, ty - size * .85, tw, size * 1.7, size * .85); gx.fillStyle = 'rgba(59,24,36,.92)'; gx.fill();
     gx.lineWidth = 2; gx.strokeStyle = '#ffd23f'; gx.stroke(); textFx(tip, tx, ty, size, '#fff3e3', '#3b1824'); gx.restore();
   }
+  drawTutorial(now);
   if (kbOn && document.activeElement === boardEl) {
     gx.save(); gx.setLineDash([6, 5]); gx.lineDashOffset = -now * 30; gx.lineWidth = 3; gx.strokeStyle = '#fff3e3';
     rrPath(gx, BR.x + cursor.c * cs + 2, BR.y + cursor.r * cs + 2, cs - 4, cs - 4, cs * .22); gx.stroke(); gx.restore();
@@ -2086,8 +2208,10 @@ function drawFx(now) {
   }
 }
 let lastNow = performance.now();
+const frameTimes = [];
 function frame(nowMs) {
-  const dt = Math.min(.05, Math.max(0, (nowMs - lastNow) / 1000)); lastNow = nowMs;
+  const rawDt = nowMs - lastNow, dt = Math.min(.05, Math.max(0, rawDt / 1000)); lastNow = nowMs;
+  frameTimes.push(rawDt); if (frameTimes.length > 4000) frameTimes.splice(0, 1000);
   const now = nowMs / 1000;
   // hit-stop: big impacts freeze the simulation for a few frames while the screen keeps drawing
   let udt = dt; if (hitStopT > 0) { hitStopT -= dt; udt = 0; }
@@ -2153,8 +2277,8 @@ function updateGoals() {
 }
 
 function updateMeter() {
-  const f = $('#meterFill'); if (f) f.style.width = (state.meter / METER_MAX * 100) + '%';
-  const m = $('#meter'); if (m) { m.classList.toggle('full', state.rainbows > 0); m.setAttribute('aria-label', `Rainbow meter, ${Math.round(state.meter / METER_MAX * 100)}% full`); }
+  const f = $('#meterFill'); if (f) f.style.width = (state.meter / R.TUNE.meterMax * 100) + '%';
+  const m = $('#meter'); if (m) { m.classList.toggle('full', state.rainbows > 0); m.setAttribute('aria-label', `Rainbow meter, ${Math.round(state.meter / R.TUNE.meterMax * 100)}% full`); }
 }
 function updateChest() {
   const ch = state.chest; $('#chestN').textContent = `${Math.min(ch.shownHave, ch.need)}/${ch.need}`;
@@ -2439,6 +2563,7 @@ function setupLevel(n, seed) {
   shownScoreText = '';
 }
 function startLevel(n, seed) {
+  tutorial = null;
   setupLevel(n, seed);
   R.genBoard(state); grid = state.grid;
   grid.forEach(row => row.forEach(t => { t.x = t.c; t.y = t.r - ROWS - .6; }));
@@ -2448,8 +2573,11 @@ function startLevel(n, seed) {
 }
 async function beginLevel() {
   SFX.whoosh();
+  await maybeTutorial();                      // writes any lesson pattern before the candies drop in
+  if (tutorial) tutorial.hidden = true;
   grid.forEach(row => row.forEach(t => { t.falling = true; t.vy = 0; t.delay = .05 + t.c * .035 + (ROWS - 1 - t.r) * .045; }));
   await waitFor(() => !anyFalling());
+  if (tutorial) { tutorial.hidden = false; tutorial.t0 = gameTime; }
   state.busy = false; idleT = 0;
   boardEl.focus({ preventScroll: true });
 }
@@ -2462,6 +2590,7 @@ function cellAt(x, y) {
 }
 boardEl.addEventListener('pointerdown', e => {
   SFX.init(); kbOn = false; boardEl.classList.remove('kb');
+  if (tutorial && tutorial.blocking) { dismissTutorial(); return; }
   if (!canPlay()) return;
   const cell = cellAt(e.clientX, e.clientY); if (!cell) return;
   drag = { ...cell, x: e.clientX, y: e.clientY, moved: false, id: e.pointerId };
@@ -2496,6 +2625,7 @@ boardEl.addEventListener('keydown', e => {
   const d = { ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1] }[e.key];
   if (!d && e.key !== 'Enter' && e.key !== ' ') return;
   e.preventDefault(); SFX.init(); kbOn = true; boardEl.classList.add('kb');
+  if (tutorial && tutorial.blocking) { dismissTutorial(); return; }
   if (!canPlay()) return;
   if (d) {
     if (sel) { const a = sel; sel = null; const b = { r: a.r + d[0], c: a.c + d[1] }; cursor = { r: clamp(b.r, 0, ROWS - 1), c: clamp(b.c, 0, COLS - 1) }; attemptSwap(a, b); }
@@ -2561,7 +2691,7 @@ window.claude?.hot?.ready ? window.claude.hot.ready(boot) : boot(window.claude?.
 if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol) && window.self === window.top) navigator.serviceWorker.register('sw.js').catch(() => {});
 
 // lightweight hooks for automated play-testing
-window.__sugar = { moves: () => R.allMoves(state), swap: (a, b) => attemptSwap(a, b), state: () => ({ score: state.score, moves: state.moves, over: state.over, busy: state.busy, meter: state.meter, rainbows: state.rainbows, chest: { ...state.chest }, revives: state.revives, seed: state.seed, goals: state.goals.map(g => ({ kind: g.kind, left: g.left, need: g.need })) }), snapshot: () => ({ g: grid.map(r => r.map(t => t ? [t.type, t.special, t.key ? 1 : 0] : null)), j: jelly.map(r => r.slice()), score: state.score, moves: state.moves, chest: { need: state.chest.need, have: state.chest.have }, meter: state.meter, goals: state.goals.map(g => g.left) }), canPlay: () => canPlay(), start: (n, seed) => startLevel(n, seed), marks: () => marks, boost: id => useBooster(id), setMoves: n => { state.moves = n; updateHUD(); }, setTile: (r, c, type, special = 0, key = false) => { const t = grid[r][c]; t.type = type; t.special = special; t.key = key; }, aimTap: (r, c) => tap({ r, c }), grid: () => grid.map(row => row.map(t => t ? [t.type, t.special, t.key ? 1 : 0] : null)), sprite: (t, s, S = 160) => (s === BOMB ? makeBomb(S) : makeCandy(t, s, S)).toDataURL(), icon: (k, t) => iconSrc(k, t), begin: () => { closeModal(); beginLevel(); } };
+window.__sugar = { moves: () => R.allMoves(state), swap: (a, b) => attemptSwap(a, b), state: () => ({ score: state.score, moves: state.moves, over: state.over, busy: state.busy, meter: state.meter, rainbows: state.rainbows, chest: { ...state.chest }, revives: state.revives, seed: state.seed, goals: state.goals.map(g => ({ kind: g.kind, left: g.left, need: g.need })) }), snapshot: () => ({ g: grid.map(r => r.map(t => t ? [t.type, t.special, t.key ? 1 : 0] : null)), j: jelly.map(r => r.slice()), score: state.score, moves: state.moves, chest: { need: state.chest.need, have: state.chest.have }, meter: state.meter, goals: state.goals.map(g => g.left) }), canPlay: () => canPlay(), start: (n, seed) => startLevel(n, seed), marks: () => marks, frames: () => frameTimes.slice(), audio: () => { SFX.init(); return SFX.latency(); }, timing: () => ({ ...TIMING }), skipTutorials: () => { save.tut = { match: 1, stripe: 1, unicorn: 1, wrap: 1, rainbow: 1, keys: 1, dust: 1 }; }, tutorial: () => tutorial && { text: tutorial.text, blocking: tutorial.blocking, move: tutorial.move || null }, dismiss: () => dismissTutorial(), boost: id => useBooster(id), setMoves: n => { state.moves = n; updateHUD(); }, setTile: (r, c, type, special = 0, key = false) => { const t = grid[r][c]; t.type = type; t.special = special; t.key = key; }, aimTap: (r, c) => tap({ r, c }), grid: () => grid.map(row => row.map(t => t ? [t.type, t.special, t.key ? 1 : 0] : null)), sprite: (t, s, S = 160) => (s === BOMB ? makeBomb(S) : makeCandy(t, s, S)).toDataURL(), icon: (k, t) => iconSrc(k, t), begin: () => { closeModal(); beginLevel(); } };
 })();
 </script>
 </body>

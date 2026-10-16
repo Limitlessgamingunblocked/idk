@@ -1,0 +1,9075 @@
+{
+ "when": "2026-10-16T17:41:50.321Z",
+ "levels": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29,
+  30,
+  101,
+  102,
+  103,
+  104,
+  105,
+  106,
+  107,
+  108,
+  109,
+  110,
+  111,
+  112,
+  113,
+  114,
+  115,
+  116,
+  117,
+  118,
+  119,
+  120,
+  121,
+  122,
+  123,
+  124,
+  125,
+  126,
+  127,
+  128,
+  129,
+  130
+ ],
+ "bots": [
+  "random",
+  "greedy",
+  "lookahead"
+ ],
+ "games": 1000,
+ "lookGames": 200,
+ "kit": null,
+ "results": {
+  "1:random": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 7.898,
+    "p10": 4,
+    "p50": 8,
+    "p90": 12
+   },
+   "movesLeftOnWin": 12.102,
+   "stars": [
+    0,
+    0.002,
+    0.998
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 10214.72,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.078,
+     1.877,
+     1.043,
+     1.657,
+     2.359
+    ],
+    "specialsFired": [
+     0,
+     7.108,
+     8.213,
+     1.227,
+     2.181,
+     2.711
+    ],
+    "cascades": 14.972,
+    "shuffles": 0,
+    "chests": 0.292,
+    "rainbowsDropped": 0.793,
+    "spreads": 0,
+    "gold": 2.224,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "1:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 3.455,
+    "p10": 2,
+    "p50": 3,
+    "p90": 6
+   },
+   "movesLeftOnWin": 16.545,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 10849.09,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.954,
+     1.825,
+     0.976,
+     1.713,
+     2.181
+    ],
+    "specialsFired": [
+     0,
+     9.244,
+     10.194,
+     1.125,
+     1.842,
+     2.353
+    ],
+    "cascades": 14.772,
+    "shuffles": 0,
+    "chests": 0.142,
+    "rainbowsDropped": 0.38,
+    "spreads": 0,
+    "gold": 1.065,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "1:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 2.91,
+    "p10": 2,
+    "p50": 3,
+    "p90": 4
+   },
+   "movesLeftOnWin": 17.09,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 10591.6,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.96,
+     1.86,
+     1,
+     1.565,
+     2.09
+    ],
+    "specialsFired": [
+     0,
+     9.68,
+     10.305,
+     1.075,
+     1.595,
+     2.41
+    ],
+    "cascades": 14.05,
+    "shuffles": 0,
+    "chests": 0.125,
+    "rainbowsDropped": 0.325,
+    "spreads": 0,
+    "gold": 0.96,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "2:random": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 9.789,
+    "p10": 6,
+    "p50": 10,
+    "p90": 14
+   },
+   "movesLeftOnWin": 10.211,
+   "stars": [
+    0,
+    0.004,
+    0.996
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11609.59,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.278,
+     2.262,
+     1.119,
+     2.014,
+     2.761
+    ],
+    "specialsFired": [
+     0,
+     6.733,
+     7.7,
+     1.653,
+     3.171,
+     3.483
+    ],
+    "cascades": 17.567,
+    "shuffles": 0,
+    "chests": 0.668,
+    "rainbowsDropped": 1.634,
+    "spreads": 0,
+    "gold": 5.002,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "2:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.576,
+    "p10": 3,
+    "p50": 4,
+    "p90": 7
+   },
+   "movesLeftOnWin": 15.424,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 12532.54,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.117,
+     2.149,
+     1.222,
+     2.209,
+     2.69
+    ],
+    "specialsFired": [
+     0,
+     9.221,
+     10.22,
+     1.744,
+     2.993,
+     3.552
+    ],
+    "cascades": 16.903,
+    "shuffles": 0,
+    "chests": 0.613,
+    "rainbowsDropped": 1.337,
+    "spreads": 0,
+    "gold": 4.603,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "2:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 3.99,
+    "p10": 3,
+    "p50": 4,
+    "p90": 6
+   },
+   "movesLeftOnWin": 16.01,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 12714.3,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.095,
+     2.27,
+     1.11,
+     2.33,
+     2.73
+    ],
+    "specialsFired": [
+     0,
+     9.69,
+     10.67,
+     1.735,
+     2.905,
+     3.73
+    ],
+    "cascades": 16.48,
+    "shuffles": 0,
+    "chests": 0.56,
+    "rainbowsDropped": 1.21,
+    "spreads": 0,
+    "gold": 4.29,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "3:random": {
+   "games": 1000,
+   "wins": 997,
+   "winRate": 0.997,
+   "ci": [
+    0.9912168282105722,
+    0.9989792345945557
+   ],
+   "turnsToWin": {
+    "mean": 9.854563691073219,
+    "p10": 5,
+    "p50": 9,
+    "p90": 15
+   },
+   "movesLeftOnWin": 12.145436308926781,
+   "stars": [
+    0,
+    0.002,
+    0.995
+   ],
+   "nearMiss": 0.002,
+   "lossLeftShare": 0.125,
+   "score": 12429.27,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.287,
+     2.354,
+     1.221,
+     2.11,
+     2.869
+    ],
+    "specialsFired": [
+     0,
+     7.66,
+     8.7,
+     1.74,
+     3.227,
+     3.511
+    ],
+    "cascades": 18.216,
+    "shuffles": 0,
+    "chests": 0.632,
+    "rainbowsDropped": 1.721,
+    "spreads": 0,
+    "gold": 4.707,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "3:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 3.966,
+    "p10": 2,
+    "p50": 4,
+    "p90": 6
+   },
+   "movesLeftOnWin": 18.034,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 12141.98,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.103,
+     2.082,
+     1.151,
+     1.972,
+     2.525
+    ],
+    "specialsFired": [
+     0,
+     10.519,
+     11.286,
+     1.558,
+     2.375,
+     2.953
+    ],
+    "cascades": 15.808,
+    "shuffles": 0,
+    "chests": 0.331,
+    "rainbowsDropped": 0.9,
+    "spreads": 0,
+    "gold": 2.441,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "3:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 3.4,
+    "p10": 2,
+    "p50": 3,
+    "p90": 5
+   },
+   "movesLeftOnWin": 18.6,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 12008.2,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.895,
+     1.87,
+     1.16,
+     1.965,
+     2.605
+    ],
+    "specialsFired": [
+     0,
+     10.345,
+     11.345,
+     1.36,
+     2.25,
+     3.26
+    ],
+    "cascades": 15.18,
+    "shuffles": 0,
+    "chests": 0.265,
+    "rainbowsDropped": 0.72,
+    "spreads": 0,
+    "gold": 1.985,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "4:random": {
+   "games": 1000,
+   "wins": 997,
+   "winRate": 0.997,
+   "ci": [
+    0.9912168282105722,
+    0.9989792345945557
+   ],
+   "turnsToWin": {
+    "mean": 9.063189568706118,
+    "p10": 5,
+    "p50": 9,
+    "p90": 14
+   },
+   "movesLeftOnWin": 8.936810431293882,
+   "stars": [
+    0.001,
+    0.048,
+    0.948
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0.31777777777777777,
+   "score": 11214.14,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.276,
+     2.179,
+     1.193,
+     2.019,
+     2.713
+    ],
+    "specialsFired": [
+     0,
+     5.964,
+     6.909,
+     1.635,
+     2.883,
+     3.144
+    ],
+    "cascades": 17.282,
+    "shuffles": 0,
+    "chests": 0.53,
+    "rainbowsDropped": 1.264,
+    "spreads": 0,
+    "gold": 4.062,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "4:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.123,
+    "p10": 2,
+    "p50": 4,
+    "p90": 6
+   },
+   "movesLeftOnWin": 13.877,
+   "stars": [
+    0,
+    0.003,
+    0.997
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11495.21,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.992,
+     2.003,
+     1.172,
+     1.901,
+     2.525
+    ],
+    "specialsFired": [
+     0,
+     8.175,
+     9.054,
+     1.489,
+     2.294,
+     3.013
+    ],
+    "cascades": 16.173,
+    "shuffles": 0,
+    "chests": 0.388,
+    "rainbowsDropped": 0.859,
+    "spreads": 0,
+    "gold": 2.856,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "4:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 3.61,
+    "p10": 2,
+    "p50": 4,
+    "p90": 5
+   },
+   "movesLeftOnWin": 14.39,
+   "stars": [
+    0,
+    0.005,
+    0.995
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11943.9,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.125,
+     1.995,
+     1.01,
+     2.215,
+     2.825
+    ],
+    "specialsFired": [
+     0,
+     8.37,
+     9.63,
+     1.225,
+     2.415,
+     3.325
+    ],
+    "cascades": 16.025,
+    "shuffles": 0,
+    "chests": 0.33,
+    "rainbowsDropped": 0.76,
+    "spreads": 0,
+    "gold": 2.55,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "5:random": {
+   "games": 1000,
+   "wins": 972,
+   "winRate": 0.972,
+   "ci": [
+    0.9598295551975795,
+    0.9805578525368679
+   ],
+   "turnsToWin": {
+    "mean": 14.09670781893004,
+    "p10": 9,
+    "p50": 14,
+    "p90": 19
+   },
+   "movesLeftOnWin": 7.903292181069959,
+   "stars": [
+    0,
+    0.021,
+    0.951
+   ],
+   "nearMiss": 0.018,
+   "lossLeftShare": 0.08705357142857144,
+   "score": 8296.84,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.929,
+     1.463,
+     0.635,
+     0.88,
+     1.855
+    ],
+    "specialsFired": [
+     0,
+     5.238,
+     5.831,
+     1.501,
+     2.133,
+     2.883
+    ],
+    "cascades": 13.63,
+    "shuffles": 0,
+    "chests": 1.027,
+    "rainbowsDropped": 2.446,
+    "spreads": 0,
+    "gold": 7.801,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "5:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 7.228,
+    "p10": 4,
+    "p50": 7,
+    "p90": 10
+   },
+   "movesLeftOnWin": 14.772,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 9794.06,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.764,
+     1.569,
+     0.703,
+     0.982,
+     1.968
+    ],
+    "specialsFired": [
+     0,
+     8.986,
+     9.557,
+     1.747,
+     2.004,
+     3.36
+    ],
+    "cascades": 13.841,
+    "shuffles": 0.002,
+    "chests": 0.964,
+    "rainbowsDropped": 2.136,
+    "spreads": 0,
+    "gold": 7.265,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "5:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 6.29,
+    "p10": 4,
+    "p50": 6,
+    "p90": 9
+   },
+   "movesLeftOnWin": 15.71,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 9955.4,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.695,
+     1.45,
+     0.75,
+     1.06,
+     1.795
+    ],
+    "specialsFired": [
+     0,
+     9.45,
+     10,
+     1.775,
+     1.96,
+     3.72
+    ],
+    "cascades": 13.27,
+    "shuffles": 0,
+    "chests": 0.96,
+    "rainbowsDropped": 1.995,
+    "spreads": 0,
+    "gold": 7.39,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "6:random": {
+   "games": 1000,
+   "wins": 990,
+   "winRate": 0.99,
+   "ci": [
+    0.9816903346946079,
+    0.9945593046907295
+   ],
+   "turnsToWin": {
+    "mean": 11.996969696969696,
+    "p10": 7,
+    "p50": 12,
+    "p90": 17
+   },
+   "movesLeftOnWin": 12.003030303030304,
+   "stars": [
+    0,
+    0,
+    0.99
+   ],
+   "nearMiss": 0.006,
+   "lossLeftShare": 0.1,
+   "score": 14824.03,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.552,
+     2.825,
+     1.522,
+     2.657,
+     3.488
+    ],
+    "specialsFired": [
+     0,
+     8.123,
+     9.437,
+     2.57,
+     4.743,
+     4.623
+    ],
+    "cascades": 21.73,
+    "shuffles": 0,
+    "chests": 1.134,
+    "rainbowsDropped": 3.146,
+    "spreads": 0,
+    "gold": 8.453,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "6:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.85,
+    "p10": 3,
+    "p50": 6,
+    "p90": 9
+   },
+   "movesLeftOnWin": 18.15,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 14755.3,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.249,
+     2.575,
+     1.391,
+     2.562,
+     3.134
+    ],
+    "specialsFired": [
+     0,
+     11.122,
+     12.463,
+     2.418,
+     3.756,
+     4.314
+    ],
+    "cascades": 18.945,
+    "shuffles": 0,
+    "chests": 0.865,
+    "rainbowsDropped": 2.295,
+    "spreads": 0,
+    "gold": 6.541,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "6:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.75,
+    "p10": 3,
+    "p50": 5,
+    "p90": 7
+   },
+   "movesLeftOnWin": 19.25,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 14077.8,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.145,
+     2.605,
+     1.26,
+     2.465,
+     3.235
+    ],
+    "specialsFired": [
+     0,
+     12.055,
+     13.43,
+     2.94,
+     3.46,
+     4.625
+    ],
+    "cascades": 17.51,
+    "shuffles": 0,
+    "chests": 0.815,
+    "rainbowsDropped": 1.97,
+    "spreads": 0,
+    "gold": 6.15,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "7:random": {
+   "games": 1000,
+   "wins": 998,
+   "winRate": 0.998,
+   "ci": [
+    0.9927370411104123,
+    0.9994513678975429
+   ],
+   "turnsToWin": {
+    "mean": 11.82565130260521,
+    "p10": 7,
+    "p50": 12,
+    "p90": 17
+   },
+   "movesLeftOnWin": 14.17434869739479,
+   "stars": [
+    0,
+    0,
+    0.998
+   ],
+   "nearMiss": 0.002,
+   "lossLeftShare": 0.037500000000000006,
+   "score": 15276.68,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.596,
+     2.717,
+     1.522,
+     2.779,
+     3.456
+    ],
+    "specialsFired": [
+     0,
+     9.163,
+     10.383,
+     2.604,
+     4.894,
+     4.693
+    ],
+    "cascades": 21.718,
+    "shuffles": 0,
+    "chests": 1.146,
+    "rainbowsDropped": 3.016,
+    "spreads": 0,
+    "gold": 8.57,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "7:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.072,
+    "p10": 3,
+    "p50": 5,
+    "p90": 7
+   },
+   "movesLeftOnWin": 20.928,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 15241.86,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.203,
+     2.602,
+     1.49,
+     2.594,
+     3.1
+    ],
+    "specialsFired": [
+     0,
+     12.53,
+     13.959,
+     2.775,
+     3.933,
+     4.463
+    ],
+    "cascades": 18.802,
+    "shuffles": 0,
+    "chests": 0.954,
+    "rainbowsDropped": 2.323,
+    "spreads": 0,
+    "gold": 7.216,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "7:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.59,
+    "p10": 3,
+    "p50": 4,
+    "p90": 6
+   },
+   "movesLeftOnWin": 21.41,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 14799.7,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.205,
+     2.54,
+     1.33,
+     2.65,
+     3.165
+    ],
+    "specialsFired": [
+     0,
+     12.775,
+     14.125,
+     2.495,
+     3.825,
+     4.525
+    ],
+    "cascades": 17.71,
+    "shuffles": 0,
+    "chests": 0.915,
+    "rainbowsDropped": 2.16,
+    "spreads": 0,
+    "gold": 6.755,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "8:random": {
+   "games": 1000,
+   "wins": 976,
+   "winRate": 0.976,
+   "ci": [
+    0.9645368449129426,
+    0.9838199476328138
+   ],
+   "turnsToWin": {
+    "mean": 12.104508196721312,
+    "p10": 7,
+    "p50": 12,
+    "p90": 17
+   },
+   "movesLeftOnWin": 7.895491803278689,
+   "stars": [
+    0.014,
+    0.197,
+    0.765
+   ],
+   "nearMiss": 0.011,
+   "lossLeftShare": 0.1571428571428571,
+   "score": 7144.22,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.78,
+     1.27,
+     0.542,
+     0.707,
+     1.583
+    ],
+    "specialsFired": [
+     0,
+     5.043,
+     5.368,
+     1.092,
+     1.565,
+     2.176
+    ],
+    "cascades": 11.65,
+    "shuffles": 0.001,
+    "chests": 0.701,
+    "rainbowsDropped": 1.651,
+    "spreads": 0,
+    "gold": 5.267,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "8:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 6.151,
+    "p10": 3,
+    "p50": 6,
+    "p90": 9
+   },
+   "movesLeftOnWin": 13.849,
+   "stars": [
+    0,
+    0.015,
+    0.985
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 8285.49,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.659,
+     1.273,
+     0.57,
+     0.785,
+     1.592
+    ],
+    "specialsFired": [
+     0,
+     7.869,
+     8.499,
+     1.107,
+     1.223,
+     2.187
+    ],
+    "cascades": 12.292,
+    "shuffles": 0,
+    "chests": 0.544,
+    "rainbowsDropped": 1.195,
+    "spreads": 0,
+    "gold": 4.095,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "8:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.24,
+    "p10": 3,
+    "p50": 5,
+    "p90": 8
+   },
+   "movesLeftOnWin": 14.76,
+   "stars": [
+    0,
+    0.005,
+    0.995
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 8461.9,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.485,
+     1.395,
+     0.5,
+     0.825,
+     1.46
+    ],
+    "specialsFired": [
+     0,
+     8.005,
+     9.09,
+     1.04,
+     1.125,
+     2.02
+    ],
+    "cascades": 11.635,
+    "shuffles": 0,
+    "chests": 0.505,
+    "rainbowsDropped": 1.08,
+    "spreads": 0,
+    "gold": 3.755,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "9:random": {
+   "games": 1000,
+   "wins": 996,
+   "winRate": 0.996,
+   "ci": [
+    0.9897602795701941,
+    0.9984434370321066
+   ],
+   "turnsToWin": {
+    "mean": 11.315261044176706,
+    "p10": 7,
+    "p50": 11,
+    "p90": 17
+   },
+   "movesLeftOnWin": 12.684738955823294,
+   "stars": [
+    0,
+    0,
+    0.996
+   ],
+   "nearMiss": 0.004,
+   "lossLeftShare": 0.026785714285714284,
+   "score": 14287.34,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.512,
+     2.65,
+     1.444,
+     2.562,
+     3.278
+    ],
+    "specialsFired": [
+     0,
+     8.458,
+     9.332,
+     2.16,
+     4.299,
+     4.336
+    ],
+    "cascades": 20.653,
+    "shuffles": 0,
+    "chests": 0.966,
+    "rainbowsDropped": 2.585,
+    "spreads": 0,
+    "gold": 7.337,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "9:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.931,
+    "p10": 3,
+    "p50": 5,
+    "p90": 7
+   },
+   "movesLeftOnWin": 19.069,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 14830.93,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.257,
+     2.514,
+     1.456,
+     2.581,
+     2.998
+    ],
+    "specialsFired": [
+     0,
+     11.544,
+     12.747,
+     2.398,
+     3.741,
+     4.211
+    ],
+    "cascades": 18.914,
+    "shuffles": 0,
+    "chests": 0.813,
+    "rainbowsDropped": 2.04,
+    "spreads": 0,
+    "gold": 6.161,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "9:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.445,
+    "p10": 3,
+    "p50": 4,
+    "p90": 6
+   },
+   "movesLeftOnWin": 19.555,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 14242.95,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.075,
+     2.405,
+     1.3,
+     2.545,
+     3.025
+    ],
+    "specialsFired": [
+     0,
+     11.675,
+     13.195,
+     2.575,
+     3.54,
+     4.315
+    ],
+    "cascades": 17.565,
+    "shuffles": 0,
+    "chests": 0.75,
+    "rainbowsDropped": 1.86,
+    "spreads": 0,
+    "gold": 5.74,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "10:random": {
+   "games": 1000,
+   "wins": 971,
+   "winRate": 0.971,
+   "ci": [
+    0.958661377168108,
+    0.9797336843635123
+   ],
+   "turnsToWin": {
+    "mean": 15.975283213182287,
+    "p10": 11,
+    "p50": 16,
+    "p90": 21
+   },
+   "movesLeftOnWin": 8.024716786817713,
+   "stars": [
+    0,
+    0.009,
+    0.962
+   ],
+   "nearMiss": 0.014,
+   "lossLeftShare": 0.1285919540229885,
+   "score": 9698.16,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.039,
+     1.769,
+     0.795,
+     1.036,
+     2.207
+    ],
+    "specialsFired": [
+     0,
+     5.535,
+     6.321,
+     2,
+     2.946,
+     3.579
+    ],
+    "cascades": 15.832,
+    "shuffles": 0.002,
+    "chests": 1.388,
+    "rainbowsDropped": 3.529,
+    "spreads": 0,
+    "gold": 10.401,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "10:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 8.391,
+    "p10": 5,
+    "p50": 8,
+    "p90": 12
+   },
+   "movesLeftOnWin": 15.609,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11163.87,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.898,
+     1.69,
+     0.836,
+     1.165,
+     2.16
+    ],
+    "specialsFired": [
+     0,
+     9.856,
+     10.477,
+     2.401,
+     2.727,
+     4.122
+    ],
+    "cascades": 15.592,
+    "shuffles": 0,
+    "chests": 1.336,
+    "rainbowsDropped": 3.192,
+    "spreads": 0,
+    "gold": 10.08,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "10:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 6.94,
+    "p10": 5,
+    "p50": 7,
+    "p90": 10
+   },
+   "movesLeftOnWin": 17.06,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11167.8,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.875,
+     1.69,
+     0.855,
+     1.135,
+     2.185
+    ],
+    "specialsFired": [
+     0,
+     10.485,
+     11.63,
+     2.42,
+     2.74,
+     4.295
+    ],
+    "cascades": 14.445,
+    "shuffles": 0,
+    "chests": 1.305,
+    "rainbowsDropped": 2.945,
+    "spreads": 0,
+    "gold": 9.435,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "11:random": {
+   "games": 1000,
+   "wins": 999,
+   "winRate": 0.999,
+   "ci": [
+    0.9943572970398397,
+    0.9998234581709428
+   ],
+   "turnsToWin": {
+    "mean": 14.34934934934935,
+    "p10": 9,
+    "p50": 14,
+    "p90": 20
+   },
+   "movesLeftOnWin": 13.65065065065065,
+   "stars": [
+    0,
+    0,
+    0.999
+   ],
+   "nearMiss": 0.001,
+   "lossLeftShare": 0.03125,
+   "score": 17440.93,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.891,
+     3.179,
+     1.771,
+     3.151,
+     3.936
+    ],
+    "specialsFired": [
+     0,
+     9.8,
+     10.909,
+     3.372,
+     6.738,
+     5.787
+    ],
+    "cascades": 25.267,
+    "shuffles": 0,
+    "chests": 1.707,
+    "rainbowsDropped": 5.023,
+    "spreads": 0,
+    "gold": 12.786,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "11:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.982,
+    "p10": 4,
+    "p50": 6,
+    "p90": 8
+   },
+   "movesLeftOnWin": 22.018,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 17846.24,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.417,
+     2.973,
+     1.639,
+     3.21,
+     3.701
+    ],
+    "specialsFired": [
+     0,
+     13.773,
+     14.982,
+     3.11,
+     5.682,
+     5.807
+    ],
+    "cascades": 21.73,
+    "shuffles": 0,
+    "chests": 1.381,
+    "rainbowsDropped": 3.905,
+    "spreads": 0,
+    "gold": 10.291,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "11:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.325,
+    "p10": 4,
+    "p50": 5,
+    "p90": 7
+   },
+   "movesLeftOnWin": 22.675,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 17329.85,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.39,
+     2.69,
+     1.49,
+     3.21,
+     3.86
+    ],
+    "specialsFired": [
+     0,
+     13.61,
+     15.345,
+     3.235,
+     5.53,
+     5.71
+    ],
+    "cascades": 20.2,
+    "shuffles": 0,
+    "chests": 1.325,
+    "rainbowsDropped": 3.605,
+    "spreads": 0,
+    "gold": 9.815,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "12:random": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 12.563,
+    "p10": 8,
+    "p50": 12,
+    "p90": 18
+   },
+   "movesLeftOnWin": 19.437,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 16315.77,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.608,
+     2.747,
+     1.537,
+     2.694,
+     3.448
+    ],
+    "specialsFired": [
+     0,
+     12.166,
+     13.308,
+     2.828,
+     5.223,
+     4.936
+    ],
+    "cascades": 22.034,
+    "shuffles": 0,
+    "chests": 1.326,
+    "rainbowsDropped": 3.538,
+    "spreads": 0,
+    "gold": 9.942,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "12:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.218,
+    "p10": 3,
+    "p50": 5,
+    "p90": 7
+   },
+   "movesLeftOnWin": 26.782,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 16831.36,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.301,
+     2.569,
+     1.472,
+     2.719,
+     3.241
+    ],
+    "specialsFired": [
+     0,
+     15.874,
+     17.111,
+     2.842,
+     4.301,
+     5.524
+    ],
+    "cascades": 19.418,
+    "shuffles": 0,
+    "chests": 1.086,
+    "rainbowsDropped": 2.729,
+    "spreads": 0,
+    "gold": 8.208,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "12:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.5,
+    "p10": 3,
+    "p50": 4,
+    "p90": 6
+   },
+   "movesLeftOnWin": 27.5,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 16389.2,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.31,
+     2.34,
+     1.465,
+     2.95,
+     3.095
+    ],
+    "specialsFired": [
+     0,
+     16.635,
+     17.495,
+     2.865,
+     4.11,
+     5.45
+    ],
+    "cascades": 18.695,
+    "shuffles": 0,
+    "chests": 0.97,
+    "rainbowsDropped": 2.205,
+    "spreads": 0,
+    "gold": 7.355,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "13:random": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 8.417,
+    "p10": 4,
+    "p50": 8,
+    "p90": 13
+   },
+   "movesLeftOnWin": 11.583,
+   "stars": [
+    0,
+    0.008,
+    0.992
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11014.93,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.157,
+     2.128,
+     1.105,
+     1.906,
+     2.53
+    ],
+    "specialsFired": [
+     0,
+     7.237,
+     8.171,
+     1.457,
+     2.626,
+     2.925
+    ],
+    "cascades": 16.232,
+    "shuffles": 0,
+    "chests": 0.419,
+    "rainbowsDropped": 1.064,
+    "spreads": 0,
+    "gold": 3.229,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "13:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 3.808,
+    "p10": 2,
+    "p50": 4,
+    "p90": 6
+   },
+   "movesLeftOnWin": 16.192,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11237.66,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.947,
+     1.918,
+     0.959,
+     1.814,
+     2.302
+    ],
+    "specialsFired": [
+     0,
+     9.272,
+     10.093,
+     1.212,
+     2.058,
+     2.551
+    ],
+    "cascades": 15.335,
+    "shuffles": 0,
+    "chests": 0.271,
+    "rainbowsDropped": 0.655,
+    "spreads": 0,
+    "gold": 2.038,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "13:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 3.335,
+    "p10": 2,
+    "p50": 3,
+    "p90": 5
+   },
+   "movesLeftOnWin": 16.665,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 12156.95,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.09,
+     2.165,
+     1.215,
+     2.135,
+     2.595
+    ],
+    "specialsFired": [
+     0,
+     9.62,
+     10.655,
+     1.365,
+     2.265,
+     3.115
+    ],
+    "cascades": 16.305,
+    "shuffles": 0,
+    "chests": 0.245,
+    "rainbowsDropped": 0.575,
+    "spreads": 0,
+    "gold": 1.905,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "14:random": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 10.155,
+    "p10": 6,
+    "p50": 10,
+    "p90": 15
+   },
+   "movesLeftOnWin": 11.845,
+   "stars": [
+    0,
+    0.001,
+    0.999
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 12609.37,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.309,
+     2.246,
+     1.291,
+     2.263,
+     2.994
+    ],
+    "specialsFired": [
+     0,
+     7.583,
+     8.508,
+     1.949,
+     3.609,
+     3.737
+    ],
+    "cascades": 18.498,
+    "shuffles": 0,
+    "chests": 0.793,
+    "rainbowsDropped": 1.821,
+    "spreads": 0,
+    "gold": 5.948,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "14:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.762,
+    "p10": 3,
+    "p50": 5,
+    "p90": 7
+   },
+   "movesLeftOnWin": 17.238,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 13410.52,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.213,
+     2.268,
+     1.236,
+     2.378,
+     2.764
+    ],
+    "specialsFired": [
+     0,
+     10.352,
+     11.412,
+     1.98,
+     3.239,
+     3.574
+    ],
+    "cascades": 17.689,
+    "shuffles": 0,
+    "chests": 0.697,
+    "rainbowsDropped": 1.591,
+    "spreads": 0,
+    "gold": 5.28,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "14:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.06,
+    "p10": 3,
+    "p50": 4,
+    "p90": 6
+   },
+   "movesLeftOnWin": 17.94,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 13120.1,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.12,
+     2.165,
+     1.16,
+     2.43,
+     2.825
+    ],
+    "specialsFired": [
+     0,
+     10.68,
+     11.83,
+     1.825,
+     3.295,
+     4.28
+    ],
+    "cascades": 16.61,
+    "shuffles": 0,
+    "chests": 0.68,
+    "rainbowsDropped": 1.5,
+    "spreads": 0,
+    "gold": 5.045,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "15:random": {
+   "games": 1000,
+   "wins": 998,
+   "winRate": 0.998,
+   "ci": [
+    0.9927370411104123,
+    0.9994513678975429
+   ],
+   "turnsToWin": {
+    "mean": 14.630260521042084,
+    "p10": 9,
+    "p50": 14,
+    "p90": 20
+   },
+   "movesLeftOnWin": 15.369739478957916,
+   "stars": [
+    0,
+    0,
+    0.998
+   ],
+   "nearMiss": 0.002,
+   "lossLeftShare": 0.03125,
+   "score": 18780.21,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.942,
+     3.352,
+     1.991,
+     3.4,
+     4.236
+    ],
+    "specialsFired": [
+     0,
+     10.54,
+     12.092,
+     3.696,
+     7.406,
+     6.413
+    ],
+    "cascades": 26.08,
+    "shuffles": 0,
+    "chests": 1.887,
+    "rainbowsDropped": 5.539,
+    "spreads": 0,
+    "gold": 14.277,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "15:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 6.388,
+    "p10": 4,
+    "p50": 6,
+    "p90": 9
+   },
+   "movesLeftOnWin": 23.612,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 19190.12,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.593,
+     3.096,
+     1.78,
+     3.408,
+     3.909
+    ],
+    "specialsFired": [
+     0,
+     14.843,
+     16.268,
+     3.83,
+     6.519,
+     6.073
+    ],
+    "cascades": 22.945,
+    "shuffles": 0,
+    "chests": 1.641,
+    "rainbowsDropped": 4.719,
+    "spreads": 0,
+    "gold": 12.242,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "15:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.485,
+    "p10": 4,
+    "p50": 5,
+    "p90": 7
+   },
+   "movesLeftOnWin": 24.515,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 18900.75,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.44,
+     2.995,
+     1.995,
+     3.475,
+     3.495
+    ],
+    "specialsFired": [
+     0,
+     15.435,
+     16.615,
+     4.33,
+     6.305,
+     6.03
+    ],
+    "cascades": 21.515,
+    "shuffles": 0,
+    "chests": 1.53,
+    "rainbowsDropped": 4.275,
+    "spreads": 0,
+    "gold": 11.64,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "16:random": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 10.323,
+    "p10": 6,
+    "p50": 10,
+    "p90": 15
+   },
+   "movesLeftOnWin": 15.677,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 13422.05,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.394,
+     2.35,
+     1.296,
+     2.28,
+     3.058
+    ],
+    "specialsFired": [
+     0,
+     9.574,
+     10.729,
+     1.929,
+     3.558,
+     3.782
+    ],
+    "cascades": 18.74,
+    "shuffles": 0,
+    "chests": 0.738,
+    "rainbowsDropped": 1.947,
+    "spreads": 0,
+    "gold": 5.544,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "16:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.6,
+    "p10": 3,
+    "p50": 4,
+    "p90": 7
+   },
+   "movesLeftOnWin": 21.4,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 13943.38,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.143,
+     2.289,
+     1.291,
+     2.294,
+     2.772
+    ],
+    "specialsFired": [
+     0,
+     12.225,
+     13.419,
+     1.837,
+     3.064,
+     3.66
+    ],
+    "cascades": 17.506,
+    "shuffles": 0,
+    "chests": 0.607,
+    "rainbowsDropped": 1.49,
+    "spreads": 0,
+    "gold": 4.559,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "16:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.005,
+    "p10": 3,
+    "p50": 4,
+    "p90": 6
+   },
+   "movesLeftOnWin": 21.995,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 14479.65,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.12,
+     2.29,
+     1.43,
+     2.485,
+     2.925
+    ],
+    "specialsFired": [
+     0,
+     12.28,
+     14.055,
+     2.435,
+     3.165,
+     3.83
+    ],
+    "cascades": 17.925,
+    "shuffles": 0,
+    "chests": 0.56,
+    "rainbowsDropped": 1.4,
+    "spreads": 0,
+    "gold": 4.375,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "17:random": {
+   "games": 1000,
+   "wins": 983,
+   "winRate": 0.983,
+   "ci": [
+    0.972943815628765,
+    0.9893594003367818
+   ],
+   "turnsToWin": {
+    "mean": 13.149542217700915,
+    "p10": 8,
+    "p50": 13,
+    "p90": 18
+   },
+   "movesLeftOnWin": 8.850457782299085,
+   "stars": [
+    0.012,
+    0.22,
+    0.751
+   ],
+   "nearMiss": 0.004,
+   "lossLeftShare": 0.19253034547152192,
+   "score": 7883.4,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.78,
+     1.341,
+     0.604,
+     0.762,
+     1.805
+    ],
+    "specialsFired": [
+     0,
+     5.491,
+     6.041,
+     1.32,
+     1.771,
+     2.499
+    ],
+    "cascades": 12.642,
+    "shuffles": 0.002,
+    "chests": 0.829,
+    "rainbowsDropped": 1.969,
+    "spreads": 0,
+    "gold": 6.184,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "17:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 6.398,
+    "p10": 4,
+    "p50": 6,
+    "p90": 10
+   },
+   "movesLeftOnWin": 15.602,
+   "stars": [
+    0,
+    0.012,
+    0.988
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 8986.26,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.623,
+     1.4,
+     0.608,
+     0.798,
+     1.677
+    ],
+    "specialsFired": [
+     0,
+     8.905,
+     9.511,
+     1.147,
+     1.345,
+     2.331
+    ],
+    "cascades": 13.009,
+    "shuffles": 0.001,
+    "chests": 0.653,
+    "rainbowsDropped": 1.429,
+    "spreads": 0,
+    "gold": 4.907,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "17:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.43,
+    "p10": 3,
+    "p50": 5,
+    "p90": 8
+   },
+   "movesLeftOnWin": 16.57,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 9075.8,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.6,
+     1.445,
+     0.54,
+     0.92,
+     1.67
+    ],
+    "specialsFired": [
+     0,
+     9.65,
+     10.005,
+     1.325,
+     1.425,
+     2.58
+    ],
+    "cascades": 12.045,
+    "shuffles": 0,
+    "chests": 0.705,
+    "rainbowsDropped": 1.32,
+    "spreads": 0,
+    "gold": 5.26,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "18:random": {
+   "games": 1000,
+   "wins": 941,
+   "winRate": 0.941,
+   "ci": [
+    0.9246387632925527,
+    0.9539859121542509
+   ],
+   "turnsToWin": {
+    "mean": 14.87778958554729,
+    "p10": 10,
+    "p50": 15,
+    "p90": 20
+   },
+   "movesLeftOnWin": 7.12221041445271,
+   "stars": [
+    0,
+    0.005,
+    0.936
+   ],
+   "nearMiss": 0.032,
+   "lossLeftShare": 0.13790446841294302,
+   "score": 8893.26,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.937,
+     1.674,
+     0.657,
+     0.886,
+     2.065
+    ],
+    "specialsFired": [
+     0,
+     4.845,
+     5.573,
+     1.689,
+     2.531,
+     3.34
+    ],
+    "cascades": 14.904,
+    "shuffles": 0.002,
+    "chests": 1.264,
+    "rainbowsDropped": 3.087,
+    "spreads": 0,
+    "gold": 9.455,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "18:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 7.917,
+    "p10": 5,
+    "p50": 8,
+    "p90": 11
+   },
+   "movesLeftOnWin": 14.083,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 10354.83,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.839,
+     1.685,
+     0.753,
+     1.076,
+     2.113
+    ],
+    "specialsFired": [
+     0,
+     8.778,
+     9.616,
+     2.011,
+     2.389,
+     3.696
+    ],
+    "cascades": 14.617,
+    "shuffles": 0,
+    "chests": 1.167,
+    "rainbowsDropped": 2.728,
+    "spreads": 0,
+    "gold": 8.808,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "18:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 6.665,
+    "p10": 5,
+    "p50": 7,
+    "p90": 9
+   },
+   "movesLeftOnWin": 15.335,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 10683.35,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.85,
+     1.605,
+     0.8,
+     1.205,
+     2.11
+    ],
+    "specialsFired": [
+     0,
+     10.03,
+     10.195,
+     2.155,
+     2.52,
+     3.94
+    ],
+    "cascades": 14.1,
+    "shuffles": 0.005,
+    "chests": 1.275,
+    "rainbowsDropped": 2.685,
+    "spreads": 0,
+    "gold": 9.675,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "19:random": {
+   "games": 1000,
+   "wins": 999,
+   "winRate": 0.999,
+   "ci": [
+    0.9943572970398397,
+    0.9998234581709428
+   ],
+   "turnsToWin": {
+    "mean": 13.368368368368369,
+    "p10": 7,
+    "p50": 13,
+    "p90": 20
+   },
+   "movesLeftOnWin": 16.63163163163163,
+   "stars": [
+    0,
+    0.047,
+    0.952
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0.125,
+   "score": 9294.03,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.851,
+     1.31,
+     0.609,
+     0.746,
+     1.731
+    ],
+    "specialsFired": [
+     0,
+     9.458,
+     10.088,
+     1.144,
+     1.688,
+     2.553
+    ],
+    "cascades": 12.802,
+    "shuffles": 0,
+    "chests": 0.757,
+    "rainbowsDropped": 1.989,
+    "spreads": 0,
+    "gold": 5.592,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "19:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.782,
+    "p10": 3,
+    "p50": 6,
+    "p90": 8
+   },
+   "movesLeftOnWin": 24.218,
+   "stars": [
+    0,
+    0.032,
+    0.968
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 9232.1,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.614,
+     1.177,
+     0.561,
+     0.715,
+     1.553
+    ],
+    "specialsFired": [
+     0,
+     13.052,
+     13.506,
+     0.856,
+     1.04,
+     1.913
+    ],
+    "cascades": 10.513,
+    "shuffles": 0,
+    "chests": 0.328,
+    "rainbowsDropped": 0.948,
+    "spreads": 0,
+    "gold": 2.43,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "19:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.9,
+    "p10": 3,
+    "p50": 5,
+    "p90": 7
+   },
+   "movesLeftOnWin": 25.1,
+   "stars": [
+    0,
+    0.065,
+    0.935
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 9121.5,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.495,
+     1.045,
+     0.515,
+     0.68,
+     1.56
+    ],
+    "specialsFired": [
+     0,
+     13.165,
+     13.64,
+     0.85,
+     1.005,
+     1.905
+    ],
+    "cascades": 9.715,
+    "shuffles": 0,
+    "chests": 0.32,
+    "rainbowsDropped": 0.71,
+    "spreads": 0,
+    "gold": 2.395,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "20:random": {
+   "games": 1000,
+   "wins": 838,
+   "winRate": 0.838,
+   "ci": [
+    0.8138767565198541,
+    0.8595362600357459
+   ],
+   "turnsToWin": {
+    "mean": 19.094272076372317,
+    "p10": 14,
+    "p50": 19,
+    "p90": 25
+   },
+   "movesLeftOnWin": 6.905727923627685,
+   "stars": [
+    0,
+    0,
+    0.838
+   ],
+   "nearMiss": 0.158,
+   "lossLeftShare": 0.02434413580246916,
+   "score": 11488.37,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.282,
+     2.187,
+     0.912,
+     1.287,
+     2.909
+    ],
+    "specialsFired": [
+     0,
+     5.331,
+     6.028,
+     2.399,
+     3.863,
+     4.986
+    ],
+    "cascades": 19.436,
+    "shuffles": 0.001,
+    "chests": 1.934,
+    "rainbowsDropped": 5.658,
+    "spreads": 0,
+    "gold": 14.464,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "20:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 9.605,
+    "p10": 6,
+    "p50": 9,
+    "p90": 13
+   },
+   "movesLeftOnWin": 16.395,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 13403.71,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.024,
+     2.132,
+     1.011,
+     1.568,
+     2.532
+    ],
+    "specialsFired": [
+     0,
+     11.041,
+     11.974,
+     3.594,
+     3.914,
+     5.335
+    ],
+    "cascades": 18.194,
+    "shuffles": 0.001,
+    "chests": 1.796,
+    "rainbowsDropped": 4.845,
+    "spreads": 0,
+    "gold": 13.469,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "20:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 8.31,
+    "p10": 6,
+    "p50": 8,
+    "p90": 11
+   },
+   "movesLeftOnWin": 17.69,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 13347.3,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.095,
+     1.955,
+     0.86,
+     1.475,
+     2.72
+    ],
+    "specialsFired": [
+     0,
+     11.67,
+     12.795,
+     3.32,
+     3.815,
+     6.31
+    ],
+    "cascades": 17.34,
+    "shuffles": 0,
+    "chests": 1.815,
+    "rainbowsDropped": 4.565,
+    "spreads": 0,
+    "gold": 13.815,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "21:random": {
+   "games": 1000,
+   "wins": 836,
+   "winRate": 0.836,
+   "ci": [
+    0.8117721376883167,
+    0.8576561864616289
+   ],
+   "turnsToWin": {
+    "mean": 12.808612440191387,
+    "p10": 8,
+    "p50": 13,
+    "p90": 17
+   },
+   "movesLeftOnWin": 5.1913875598086126,
+   "stars": [
+    0.074,
+    0.442,
+    0.32
+   ],
+   "nearMiss": 0.04,
+   "lossLeftShare": 0.2546016260162602,
+   "score": 6872.2,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.802,
+     1.302,
+     0.57,
+     0.752,
+     1.74
+    ],
+    "specialsFired": [
+     0,
+     3.342,
+     3.854,
+     1.264,
+     1.715,
+     2.448
+    ],
+    "cascades": 12.302,
+    "shuffles": 0.001,
+    "chests": 0.947,
+    "rainbowsDropped": 2.241,
+    "spreads": 0,
+    "gold": 7.172,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "21:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 6.957,
+    "p10": 4,
+    "p50": 7,
+    "p90": 10
+   },
+   "movesLeftOnWin": 11.043,
+   "stars": [
+    0.002,
+    0.339,
+    0.659
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 8847.57,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.759,
+     1.491,
+     0.642,
+     0.934,
+     1.813
+    ],
+    "specialsFired": [
+     0,
+     6.771,
+     7.51,
+     1.38,
+     1.729,
+     2.838
+    ],
+    "cascades": 13.908,
+    "shuffles": 0.001,
+    "chests": 0.846,
+    "rainbowsDropped": 1.864,
+    "spreads": 0,
+    "gold": 6.326,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "21:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 6.06,
+    "p10": 4,
+    "p50": 6,
+    "p90": 8
+   },
+   "movesLeftOnWin": 11.94,
+   "stars": [
+    0,
+    0.235,
+    0.765
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 9085.8,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.81,
+     1.54,
+     0.655,
+     0.96,
+     1.905
+    ],
+    "specialsFired": [
+     0,
+     7.24,
+     7.78,
+     1.625,
+     1.62,
+     2.915
+    ],
+    "cascades": 13.68,
+    "shuffles": 0,
+    "chests": 0.79,
+    "rainbowsDropped": 1.7,
+    "spreads": 0,
+    "gold": 5.745,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "22:random": {
+   "games": 1000,
+   "wins": 892,
+   "winRate": 0.892,
+   "ci": [
+    0.8712406103126095,
+    0.9097591011956604
+   ],
+   "turnsToWin": {
+    "mean": 15.939461883408072,
+    "p10": 11,
+    "p50": 16,
+    "p90": 21
+   },
+   "movesLeftOnWin": 6.060538116591928,
+   "stars": [
+    0,
+    0.002,
+    0.89
+   ],
+   "nearMiss": 0.053,
+   "lossLeftShare": 0.1488603988603989,
+   "score": 9288.18,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.089,
+     1.713,
+     0.755,
+     1.045,
+     2.268
+    ],
+    "specialsFired": [
+     0,
+     4.548,
+     5.061,
+     2.081,
+     2.991,
+     3.651
+    ],
+    "cascades": 15.911,
+    "shuffles": 0,
+    "chests": 1.528,
+    "rainbowsDropped": 3.802,
+    "spreads": 0,
+    "gold": 11.494,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "22:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 8.404,
+    "p10": 5,
+    "p50": 8,
+    "p90": 12
+   },
+   "movesLeftOnWin": 13.596,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11192.44,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.908,
+     1.721,
+     0.883,
+     1.228,
+     2.378
+    ],
+    "specialsFired": [
+     0,
+     8.993,
+     9.705,
+     2.672,
+     3.182,
+     4.716
+    ],
+    "cascades": 15.796,
+    "shuffles": 0,
+    "chests": 1.488,
+    "rainbowsDropped": 3.606,
+    "spreads": 0,
+    "gold": 11.203,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "22:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 7.245,
+    "p10": 5,
+    "p50": 7,
+    "p90": 10
+   },
+   "movesLeftOnWin": 14.755,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11414.85,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.85,
+     1.73,
+     0.96,
+     1.34,
+     2.265
+    ],
+    "specialsFired": [
+     0,
+     9.78,
+     10.385,
+     2.675,
+     3.21,
+     4.775
+    ],
+    "cascades": 15.34,
+    "shuffles": 0,
+    "chests": 1.505,
+    "rainbowsDropped": 3.53,
+    "spreads": 0,
+    "gold": 11.255,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "23:random": {
+   "games": 1000,
+   "wins": 944,
+   "winRate": 0.944,
+   "ci": [
+    0.9279763237468874,
+    0.9566253903083978
+   ],
+   "turnsToWin": {
+    "mean": 20.170550847457626,
+    "p10": 14,
+    "p50": 20,
+    "p90": 27
+   },
+   "movesLeftOnWin": 9.829449152542374,
+   "stars": [
+    0,
+    0,
+    0.944
+   ],
+   "nearMiss": 0.052,
+   "lossLeftShare": 0.03482142857142855,
+   "score": 12901.51,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.376,
+     2.216,
+     1.001,
+     1.492,
+     2.939
+    ],
+    "specialsFired": [
+     0,
+     7.202,
+     7.908,
+     2.739,
+     4.321,
+     5.088
+    ],
+    "cascades": 20.878,
+    "shuffles": 0.002,
+    "chests": 1.995,
+    "rainbowsDropped": 5.956,
+    "spreads": 0,
+    "gold": 14.961,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "23:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 9.229,
+    "p10": 6,
+    "p50": 9,
+    "p90": 13
+   },
+   "movesLeftOnWin": 20.771,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 13863.65,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.104,
+     2.073,
+     0.947,
+     1.456,
+     2.592
+    ],
+    "specialsFired": [
+     0,
+     13.276,
+     14.342,
+     3.477,
+     3.748,
+     5.432
+    ],
+    "cascades": 17.94,
+    "shuffles": 0,
+    "chests": 1.723,
+    "rainbowsDropped": 4.8,
+    "spreads": 0,
+    "gold": 12.905,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "23:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 7.845,
+    "p10": 6,
+    "p50": 8,
+    "p90": 10
+   },
+   "movesLeftOnWin": 22.155,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 13559.05,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.99,
+     2.005,
+     0.935,
+     1.65,
+     2.58
+    ],
+    "specialsFired": [
+     0,
+     13.605,
+     14.975,
+     3.72,
+     3.835,
+     5.585
+    ],
+    "cascades": 16.42,
+    "shuffles": 0,
+    "chests": 1.725,
+    "rainbowsDropped": 4.46,
+    "spreads": 0,
+    "gold": 12.725,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "24:random": {
+   "games": 1000,
+   "wins": 983,
+   "winRate": 0.983,
+   "ci": [
+    0.972943815628765,
+    0.9893594003367818
+   ],
+   "turnsToWin": {
+    "mean": 15.883011190233978,
+    "p10": 11,
+    "p50": 16,
+    "p90": 21
+   },
+   "movesLeftOnWin": 10.116988809766022,
+   "stars": [
+    0,
+    0.005,
+    0.978
+   ],
+   "nearMiss": 0.012,
+   "lossLeftShare": 0.08059954751131222,
+   "score": 9990.79,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.004,
+     1.8,
+     0.782,
+     1.047,
+     2.265
+    ],
+    "specialsFired": [
+     0,
+     6.62,
+     7.315,
+     1.962,
+     2.813,
+     3.585
+    ],
+    "cascades": 15.828,
+    "shuffles": 0.001,
+    "chests": 1.274,
+    "rainbowsDropped": 3.363,
+    "spreads": 0,
+    "gold": 9.558,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "24:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 8.14,
+    "p10": 5,
+    "p50": 8,
+    "p90": 11
+   },
+   "movesLeftOnWin": 17.86,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 10986.02,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.861,
+     1.622,
+     0.759,
+     1.067,
+     2.172
+    ],
+    "specialsFired": [
+     0,
+     10.513,
+     11.617,
+     2.031,
+     2.506,
+     3.911
+    ],
+    "cascades": 14.861,
+    "shuffles": 0.001,
+    "chests": 1.182,
+    "rainbowsDropped": 2.962,
+    "spreads": 0,
+    "gold": 8.865,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "24:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 7.125,
+    "p10": 5,
+    "p50": 7,
+    "p90": 10
+   },
+   "movesLeftOnWin": 18.875,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11015.95,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.84,
+     1.575,
+     0.725,
+     1.155,
+     2.095
+    ],
+    "specialsFired": [
+     0,
+     11.505,
+     11.705,
+     1.915,
+     2.58,
+     3.645
+    ],
+    "cascades": 14.04,
+    "shuffles": 0,
+    "chests": 1.22,
+    "rainbowsDropped": 2.8,
+    "spreads": 0,
+    "gold": 9.095,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "25:random": {
+   "games": 1000,
+   "wins": 877,
+   "winRate": 0.877,
+   "ci": [
+    0.8551883398130525,
+    0.8959261786528091
+   ],
+   "turnsToWin": {
+    "mean": 14.190421892816419,
+    "p10": 10,
+    "p50": 14,
+    "p90": 19
+   },
+   "movesLeftOnWin": 5.80957810718358,
+   "stars": [
+    0.085,
+    0.514,
+    0.278
+   ],
+   "nearMiss": 0.039,
+   "lossLeftShare": 0.21255957387160082,
+   "score": 7905.19,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.911,
+     1.435,
+     0.641,
+     0.886,
+     1.937
+    ],
+    "specialsFired": [
+     0,
+     3.911,
+     4.471,
+     1.594,
+     2.234,
+     2.924
+    ],
+    "cascades": 13.799,
+    "shuffles": 0.003,
+    "chests": 1.14,
+    "rainbowsDropped": 2.788,
+    "spreads": 0,
+    "gold": 8.619,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "25:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 7.214,
+    "p10": 4,
+    "p50": 7,
+    "p90": 10
+   },
+   "movesLeftOnWin": 12.786,
+   "stars": [
+    0,
+    0.369,
+    0.631
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 9888.54,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.812,
+     1.519,
+     0.716,
+     1.028,
+     1.923
+    ],
+    "specialsFired": [
+     0,
+     7.949,
+     8.518,
+     1.663,
+     1.974,
+     3.052
+    ],
+    "cascades": 15.006,
+    "shuffles": 0.005,
+    "chests": 0.952,
+    "rainbowsDropped": 2.182,
+    "spreads": 0,
+    "gold": 7.102,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "25:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 6.5,
+    "p10": 4,
+    "p50": 6,
+    "p90": 9
+   },
+   "movesLeftOnWin": 13.5,
+   "stars": [
+    0,
+    0.365,
+    0.635
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 9995.2,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.675,
+     1.53,
+     0.74,
+     1.075,
+     1.975
+    ],
+    "specialsFired": [
+     0,
+     7.94,
+     8.795,
+     2.18,
+     2.015,
+     3.515
+    ],
+    "cascades": 14.385,
+    "shuffles": 0,
+    "chests": 0.92,
+    "rainbowsDropped": 2.08,
+    "spreads": 0,
+    "gold": 6.91,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "26:random": {
+   "games": 1000,
+   "wins": 827,
+   "winRate": 0.827,
+   "ci": [
+    0.8023160584363541,
+    0.8491811498881465
+   ],
+   "turnsToWin": {
+    "mean": 16.623941958887546,
+    "p10": 12,
+    "p50": 17,
+    "p90": 21
+   },
+   "movesLeftOnWin": 5.376058041112454,
+   "stars": [
+    0,
+    0,
+    0.827
+   ],
+   "nearMiss": 0.085,
+   "lossLeftShare": 0.16483622350674385,
+   "score": 9545.08,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.181,
+     1.842,
+     0.838,
+     1.082,
+     2.296
+    ],
+    "specialsFired": [
+     0,
+     4.271,
+     4.906,
+     2.05,
+     3.172,
+     3.836
+    ],
+    "cascades": 16.434,
+    "shuffles": 0.002,
+    "chests": 1.666,
+    "rainbowsDropped": 4.318,
+    "spreads": 0,
+    "gold": 12.456,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "26:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 9.312,
+    "p10": 6,
+    "p50": 9,
+    "p90": 12
+   },
+   "movesLeftOnWin": 12.688,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11963.96,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.999,
+     1.973,
+     0.959,
+     1.385,
+     2.612
+    ],
+    "specialsFired": [
+     0,
+     8.811,
+     9.754,
+     2.756,
+     3.567,
+     5.133
+    ],
+    "cascades": 17.028,
+    "shuffles": 0.001,
+    "chests": 1.689,
+    "rainbowsDropped": 4.207,
+    "spreads": 0,
+    "gold": 12.724,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "26:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 7.63,
+    "p10": 6,
+    "p50": 7,
+    "p90": 10
+   },
+   "movesLeftOnWin": 14.37,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 12193.4,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.98,
+     1.93,
+     0.905,
+     1.625,
+     2.495
+    ],
+    "specialsFired": [
+     0,
+     9.635,
+     10.665,
+     3.285,
+     3.735,
+     5.45
+    ],
+    "cascades": 16.165,
+    "shuffles": 0,
+    "chests": 1.65,
+    "rainbowsDropped": 4.13,
+    "spreads": 0,
+    "gold": 12.515,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "27:random": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 13.278,
+    "p10": 8,
+    "p50": 13,
+    "p90": 19
+   },
+   "movesLeftOnWin": 16.722,
+   "stars": [
+    0,
+    0.049,
+    0.951
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 9273.46,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.821,
+     1.328,
+     0.628,
+     0.786,
+     1.785
+    ],
+    "specialsFired": [
+     0,
+     9.478,
+     10.119,
+     1.252,
+     1.717,
+     2.511
+    ],
+    "cascades": 12.697,
+    "shuffles": 0.001,
+    "chests": 0.737,
+    "rainbowsDropped": 1.982,
+    "spreads": 0,
+    "gold": 5.465,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "27:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.682,
+    "p10": 3,
+    "p50": 6,
+    "p90": 8
+   },
+   "movesLeftOnWin": 24.318,
+   "stars": [
+    0,
+    0.039,
+    0.961
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 9012.64,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.622,
+     1.141,
+     0.533,
+     0.678,
+     1.473
+    ],
+    "specialsFired": [
+     0,
+     13.097,
+     13.427,
+     0.823,
+     0.977,
+     1.865
+    ],
+    "cascades": 10.103,
+    "shuffles": 0,
+    "chests": 0.308,
+    "rainbowsDropped": 0.849,
+    "spreads": 0,
+    "gold": 2.333,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "27:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.73,
+    "p10": 3,
+    "p50": 4,
+    "p90": 7
+   },
+   "movesLeftOnWin": 25.27,
+   "stars": [
+    0,
+    0.035,
+    0.965
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 9155.8,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.6,
+     1.22,
+     0.49,
+     0.825,
+     1.66
+    ],
+    "specialsFired": [
+     0,
+     13.295,
+     14.24,
+     0.82,
+     0.995,
+     2.1
+    ],
+    "cascades": 9.75,
+    "shuffles": 0,
+    "chests": 0.285,
+    "rainbowsDropped": 0.66,
+    "spreads": 0,
+    "gold": 2.16,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "28:random": {
+   "games": 1000,
+   "wins": 834,
+   "winRate": 0.834,
+   "ci": [
+    0.809668727086498,
+    0.8557749046577932
+   ],
+   "turnsToWin": {
+    "mean": 19.437649880095922,
+    "p10": 14,
+    "p50": 20,
+    "p90": 25
+   },
+   "movesLeftOnWin": 6.562350119904076,
+   "stars": [
+    0,
+    0,
+    0.834
+   ],
+   "nearMiss": 0.145,
+   "lossLeftShare": 0.043599397590361376,
+   "score": 11918.03,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.34,
+     2.286,
+     1.002,
+     1.398,
+     2.74
+    ],
+    "specialsFired": [
+     0,
+     5.236,
+     5.978,
+     2.668,
+     4.14,
+     4.638
+    ],
+    "cascades": 20.423,
+    "shuffles": 0.001,
+    "chests": 2.036,
+    "rainbowsDropped": 5.926,
+    "spreads": 0,
+    "gold": 15.245,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "28:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 9.867,
+    "p10": 6,
+    "p50": 10,
+    "p90": 13
+   },
+   "movesLeftOnWin": 16.133,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 13715.31,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.093,
+     2.065,
+     1.064,
+     1.634,
+     2.641
+    ],
+    "specialsFired": [
+     0,
+     10.859,
+     11.948,
+     3.449,
+     4.108,
+     5.602
+    ],
+    "cascades": 18.916,
+    "shuffles": 0.002,
+    "chests": 1.848,
+    "rainbowsDropped": 5.054,
+    "spreads": 0,
+    "gold": 13.91,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "28:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 8.46,
+    "p10": 6,
+    "p50": 8,
+    "p90": 12
+   },
+   "movesLeftOnWin": 17.54,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 13473.1,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.98,
+     2.015,
+     1.065,
+     1.74,
+     2.62
+    ],
+    "specialsFired": [
+     0,
+     11.555,
+     12.5,
+     4.18,
+     4.055,
+     5.46
+    ],
+    "cascades": 17.68,
+    "shuffles": 0,
+    "chests": 1.77,
+    "rainbowsDropped": 4.765,
+    "spreads": 0,
+    "gold": 13.41,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "29:random": {
+   "games": 1000,
+   "wins": 910,
+   "winRate": 0.91,
+   "ci": [
+    0.8906578220441299,
+    0.92620412111503
+   ],
+   "turnsToWin": {
+    "mean": 14.934065934065934,
+    "p10": 10,
+    "p50": 15,
+    "p90": 20
+   },
+   "movesLeftOnWin": 7.065934065934066,
+   "stars": [
+    0.093,
+    0.578,
+    0.239
+   ],
+   "nearMiss": 0.019,
+   "lossLeftShare": 0.22922558922558917,
+   "score": 8932.72,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.999,
+     1.601,
+     0.729,
+     0.977,
+     2.176
+    ],
+    "specialsFired": [
+     0,
+     4.84,
+     5.49,
+     1.721,
+     2.669,
+     3.43
+    ],
+    "cascades": 15.024,
+    "shuffles": 0.001,
+    "chests": 1.341,
+    "rainbowsDropped": 3.306,
+    "spreads": 0,
+    "gold": 10.008,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "29:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 7.685,
+    "p10": 5,
+    "p50": 7,
+    "p90": 11
+   },
+   "movesLeftOnWin": 14.315,
+   "stars": [
+    0,
+    0.498,
+    0.502
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 10789.65,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.842,
+     1.71,
+     0.776,
+     1.092,
+     2.146
+    ],
+    "specialsFired": [
+     0,
+     8.835,
+     9.711,
+     1.915,
+     2.378,
+     3.594
+    ],
+    "cascades": 15.593,
+    "shuffles": 0.002,
+    "chests": 1.159,
+    "rainbowsDropped": 2.696,
+    "spreads": 0,
+    "gold": 8.762,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "29:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 6.455,
+    "p10": 4,
+    "p50": 6,
+    "p90": 9
+   },
+   "movesLeftOnWin": 15.545,
+   "stars": [
+    0,
+    0.43,
+    0.57
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 10965.85,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.875,
+     1.645,
+     0.725,
+     1.13,
+     2.16
+    ],
+    "specialsFired": [
+     0,
+     9.45,
+     10.24,
+     2.025,
+     2.33,
+     3.73
+    ],
+    "cascades": 15.07,
+    "shuffles": 0,
+    "chests": 1.145,
+    "rainbowsDropped": 2.47,
+    "spreads": 0,
+    "gold": 8.595,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "30:random": {
+   "games": 1000,
+   "wins": 777,
+   "winRate": 0.777,
+   "ci": [
+    0.7501675946610772,
+    0.8017123035220626
+   ],
+   "turnsToWin": {
+    "mean": 17.357786357786356,
+    "p10": 13,
+    "p50": 18,
+    "p90": 21
+   },
+   "movesLeftOnWin": 4.642213642213642,
+   "stars": [
+    0,
+    0,
+    0.777
+   ],
+   "nearMiss": 0.085,
+   "lossLeftShare": 0.17521762068055938,
+   "score": 9936.79,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.144,
+     1.98,
+     0.865,
+     1.102,
+     2.473
+    ],
+    "specialsFired": [
+     0,
+     3.753,
+     4.557,
+     2.318,
+     3.458,
+     4.116
+    ],
+    "cascades": 17.605,
+    "shuffles": 0.001,
+    "chests": 1.842,
+    "rainbowsDropped": 4.99,
+    "spreads": 0,
+    "gold": 13.747,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "30:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 9.786,
+    "p10": 7,
+    "p50": 10,
+    "p90": 13
+   },
+   "movesLeftOnWin": 12.214,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 12695.9,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.091,
+     2.191,
+     0.964,
+     1.508,
+     2.697
+    ],
+    "specialsFired": [
+     0,
+     9.118,
+     9.802,
+     3.248,
+     4.17,
+     5.675
+    ],
+    "cascades": 17.943,
+    "shuffles": 0,
+    "chests": 1.931,
+    "rainbowsDropped": 4.994,
+    "spreads": 0,
+    "gold": 14.466,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "30:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 8.565,
+    "p10": 6,
+    "p50": 8,
+    "p90": 11
+   },
+   "movesLeftOnWin": 13.435,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 12681.25,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.975,
+     1.935,
+     0.95,
+     1.535,
+     2.535
+    ],
+    "specialsFired": [
+     0,
+     9.62,
+     10.375,
+     3.235,
+     4.205,
+     6.355
+    ],
+    "cascades": 16.88,
+    "shuffles": 0,
+    "chests": 1.945,
+    "rainbowsDropped": 4.92,
+    "spreads": 0,
+    "gold": 14.555,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "101:random": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 7.74,
+    "p10": 3,
+    "p50": 8,
+    "p90": 12
+   },
+   "movesLeftOnWin": 12.26,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 10335.76,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.097,
+     1.853,
+     0.991,
+     1.759,
+     2.28
+    ],
+    "specialsFired": [
+     0,
+     7.268,
+     8.13,
+     1.213,
+     2.252,
+     2.549
+    ],
+    "cascades": 15.198,
+    "shuffles": 0,
+    "chests": 0.28,
+    "rainbowsDropped": 0.749,
+    "spreads": 0,
+    "gold": 2.098,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "101:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 3.478,
+    "p10": 2,
+    "p50": 3,
+    "p90": 6
+   },
+   "movesLeftOnWin": 16.522,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 10586.52,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.916,
+     1.757,
+     0.962,
+     1.58,
+     2.109
+    ],
+    "specialsFired": [
+     0,
+     9.281,
+     10.073,
+     1.133,
+     1.695,
+     2.223
+    ],
+    "cascades": 14.411,
+    "shuffles": 0,
+    "chests": 0.146,
+    "rainbowsDropped": 0.383,
+    "spreads": 0,
+    "gold": 1.122,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "101:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 2.77,
+    "p10": 2,
+    "p50": 3,
+    "p90": 4
+   },
+   "movesLeftOnWin": 17.23,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11104.3,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.875,
+     1.845,
+     0.95,
+     1.895,
+     2.29
+    ],
+    "specialsFired": [
+     0,
+     9.705,
+     10.305,
+     1.02,
+     1.95,
+     2.525
+    ],
+    "cascades": 14.585,
+    "shuffles": 0,
+    "chests": 0.145,
+    "rainbowsDropped": 0.23,
+    "spreads": 0,
+    "gold": 1.06,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "102:random": {
+   "games": 1000,
+   "wins": 999,
+   "winRate": 0.999,
+   "ci": [
+    0.9943572970398397,
+    0.9998234581709428
+   ],
+   "turnsToWin": {
+    "mean": 9.48048048048048,
+    "p10": 6,
+    "p50": 9,
+    "p90": 14
+   },
+   "movesLeftOnWin": 10.51951951951952,
+   "stars": [
+    0,
+    0,
+    0.999
+   ],
+   "nearMiss": 0.001,
+   "lossLeftShare": 0.03125,
+   "score": 11941.35,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.279,
+     2.256,
+     1.264,
+     2.115,
+     2.821
+    ],
+    "specialsFired": [
+     0,
+     6.851,
+     7.835,
+     1.85,
+     3.248,
+     3.439
+    ],
+    "cascades": 17.839,
+    "shuffles": 0,
+    "chests": 0.673,
+    "rainbowsDropped": 1.574,
+    "spreads": 0,
+    "gold": 4.879,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "102:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.581,
+    "p10": 3,
+    "p50": 4,
+    "p90": 7
+   },
+   "movesLeftOnWin": 15.419,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 12533.77,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.119,
+     2.18,
+     1.166,
+     2.152,
+     2.704
+    ],
+    "specialsFired": [
+     0,
+     9.17,
+     10.34,
+     1.729,
+     2.892,
+     3.435
+    ],
+    "cascades": 16.94,
+    "shuffles": 0,
+    "chests": 0.591,
+    "rainbowsDropped": 1.37,
+    "spreads": 0,
+    "gold": 4.415,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "102:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 3.79,
+    "p10": 2,
+    "p50": 4,
+    "p90": 5
+   },
+   "movesLeftOnWin": 16.21,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 12549.3,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.955,
+     2.09,
+     1.215,
+     2.095,
+     2.795
+    ],
+    "specialsFired": [
+     0,
+     9.79,
+     10.77,
+     1.88,
+     2.73,
+     3.575
+    ],
+    "cascades": 16.13,
+    "shuffles": 0,
+    "chests": 0.57,
+    "rainbowsDropped": 1.225,
+    "spreads": 0,
+    "gold": 4.265,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "103:random": {
+   "games": 1000,
+   "wins": 996,
+   "winRate": 0.996,
+   "ci": [
+    0.9897602795701941,
+    0.9984434370321066
+   ],
+   "turnsToWin": {
+    "mean": 9.89859437751004,
+    "p10": 5,
+    "p50": 10,
+    "p90": 15
+   },
+   "movesLeftOnWin": 12.10140562248996,
+   "stars": [
+    0,
+    0.001,
+    0.995
+   ],
+   "nearMiss": 0.002,
+   "lossLeftShare": 0.09375,
+   "score": 12339.83,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.33,
+     2.326,
+     1.297,
+     2.104,
+     2.834
+    ],
+    "specialsFired": [
+     0,
+     7.769,
+     8.635,
+     1.83,
+     3.252,
+     3.497
+    ],
+    "cascades": 18.231,
+    "shuffles": 0,
+    "chests": 0.619,
+    "rainbowsDropped": 1.726,
+    "spreads": 0,
+    "gold": 4.707,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "103:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 3.976,
+    "p10": 2,
+    "p50": 4,
+    "p90": 6
+   },
+   "movesLeftOnWin": 18.024,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 12461.76,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.987,
+     2.1,
+     1.145,
+     2.053,
+     2.66
+    ],
+    "specialsFired": [
+     0,
+     10.36,
+     11.233,
+     1.566,
+     2.51,
+     3.133
+    ],
+    "cascades": 16.214,
+    "shuffles": 0,
+    "chests": 0.364,
+    "rainbowsDropped": 0.942,
+    "spreads": 0,
+    "gold": 2.818,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "103:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 3.475,
+    "p10": 2,
+    "p50": 3,
+    "p90": 5
+   },
+   "movesLeftOnWin": 18.525,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 12369.35,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.89,
+     2.295,
+     1.215,
+     2.015,
+     2.775
+    ],
+    "specialsFired": [
+     0,
+     10.43,
+     11.935,
+     1.43,
+     2.345,
+     3.365
+    ],
+    "cascades": 15.77,
+    "shuffles": 0,
+    "chests": 0.28,
+    "rainbowsDropped": 0.805,
+    "spreads": 0,
+    "gold": 1.98,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "104:random": {
+   "games": 1000,
+   "wins": 995,
+   "winRate": 0.995,
+   "ci": [
+    0.9883488743952387,
+    0.9978624960042348
+   ],
+   "turnsToWin": {
+    "mean": 8.905527638190955,
+    "p10": 4,
+    "p50": 9,
+    "p90": 13
+   },
+   "movesLeftOnWin": 9.094472361809045,
+   "stars": [
+    0.001,
+    0.059,
+    0.935
+   ],
+   "nearMiss": 0.003,
+   "lossLeftShare": 0.10800000000000001,
+   "score": 11045.07,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.233,
+     2.138,
+     1.172,
+     2.009,
+     2.634
+    ],
+    "specialsFired": [
+     0,
+     5.966,
+     6.873,
+     1.62,
+     2.899,
+     3.145
+    ],
+    "cascades": 16.943,
+    "shuffles": 0,
+    "chests": 0.531,
+    "rainbowsDropped": 1.286,
+    "spreads": 0,
+    "gold": 3.953,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "104:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.07,
+    "p10": 2,
+    "p50": 4,
+    "p90": 6
+   },
+   "movesLeftOnWin": 13.93,
+   "stars": [
+    0,
+    0.003,
+    0.997
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11845.7,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.058,
+     2.155,
+     1.153,
+     2.07,
+     2.482
+    ],
+    "specialsFired": [
+     0,
+     8.268,
+     9.357,
+     1.516,
+     2.48,
+     2.922
+    ],
+    "cascades": 16.66,
+    "shuffles": 0,
+    "chests": 0.398,
+    "rainbowsDropped": 0.9,
+    "spreads": 0,
+    "gold": 2.955,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "104:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 3.485,
+    "p10": 2,
+    "p50": 3,
+    "p90": 5
+   },
+   "movesLeftOnWin": 14.515,
+   "stars": [
+    0,
+    0.005,
+    0.995
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 12250.65,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.97,
+     2.25,
+     1.2,
+     2.195,
+     2.74
+    ],
+    "specialsFired": [
+     0,
+     8.55,
+     9.64,
+     1.59,
+     2.435,
+     3.27
+    ],
+    "cascades": 16.805,
+    "shuffles": 0,
+    "chests": 0.365,
+    "rainbowsDropped": 0.765,
+    "spreads": 0,
+    "gold": 2.815,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "105:random": {
+   "games": 1000,
+   "wins": 975,
+   "winRate": 0.975,
+   "ci": [
+    0.9633544581334903,
+    0.9830099882094387
+   ],
+   "turnsToWin": {
+    "mean": 13.928205128205128,
+    "p10": 9,
+    "p50": 14,
+    "p90": 19
+   },
+   "movesLeftOnWin": 8.071794871794872,
+   "stars": [
+    0,
+    0.023,
+    0.952
+   ],
+   "nearMiss": 0.019,
+   "lossLeftShare": 0.07583333333333334,
+   "score": 8308.9,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.899,
+     1.432,
+     0.622,
+     0.907,
+     1.924
+    ],
+    "specialsFired": [
+     0,
+     5.382,
+     5.813,
+     1.47,
+     2.143,
+     2.939
+    ],
+    "cascades": 13.517,
+    "shuffles": 0,
+    "chests": 1.006,
+    "rainbowsDropped": 2.409,
+    "spreads": 0,
+    "gold": 7.536,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "105:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 7.281,
+    "p10": 5,
+    "p50": 7,
+    "p90": 10
+   },
+   "movesLeftOnWin": 14.719,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 9663.47,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.748,
+     1.543,
+     0.71,
+     0.979,
+     1.888
+    ],
+    "specialsFired": [
+     0,
+     8.866,
+     9.545,
+     1.655,
+     1.92,
+     3.298
+    ],
+    "cascades": 13.679,
+    "shuffles": 0,
+    "chests": 0.958,
+    "rainbowsDropped": 2.133,
+    "spreads": 0,
+    "gold": 7.27,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "105:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 6.295,
+    "p10": 4,
+    "p50": 6,
+    "p90": 9
+   },
+   "movesLeftOnWin": 15.705,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 9712.65,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.745,
+     1.515,
+     0.6,
+     1.11,
+     2.015
+    ],
+    "specialsFired": [
+     0,
+     9.35,
+     10.015,
+     1.825,
+     1.975,
+     3.905
+    ],
+    "cascades": 12.86,
+    "shuffles": 0,
+    "chests": 0.945,
+    "rainbowsDropped": 1.955,
+    "spreads": 0,
+    "gold": 7.31,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "106:random": {
+   "games": 1000,
+   "wins": 996,
+   "winRate": 0.996,
+   "ci": [
+    0.9897602795701941,
+    0.9984434370321066
+   ],
+   "turnsToWin": {
+    "mean": 12.231927710843374,
+    "p10": 7,
+    "p50": 12,
+    "p90": 17
+   },
+   "movesLeftOnWin": 11.768072289156626,
+   "stars": [
+    0,
+    0,
+    0.996
+   ],
+   "nearMiss": 0.003,
+   "lossLeftShare": 0.06249999999999999,
+   "score": 14555.45,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.602,
+     2.675,
+     1.502,
+     2.686,
+     3.396
+    ],
+    "specialsFired": [
+     0,
+     8.189,
+     9.032,
+     2.571,
+     4.783,
+     4.58
+    ],
+    "cascades": 21.435,
+    "shuffles": 0,
+    "chests": 1.133,
+    "rainbowsDropped": 3.099,
+    "spreads": 0,
+    "gold": 8.616,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "106:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.815,
+    "p10": 3,
+    "p50": 6,
+    "p90": 9
+   },
+   "movesLeftOnWin": 18.185,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 14617.33,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.286,
+     2.567,
+     1.293,
+     2.477,
+     3.106
+    ],
+    "specialsFired": [
+     0,
+     11.217,
+     12.508,
+     2.481,
+     3.702,
+     4.498
+    ],
+    "cascades": 18.911,
+    "shuffles": 0,
+    "chests": 0.88,
+    "rainbowsDropped": 2.263,
+    "spreads": 0,
+    "gold": 6.574,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "106:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.945,
+    "p10": 3,
+    "p50": 5,
+    "p90": 7
+   },
+   "movesLeftOnWin": 19.055,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 14227.05,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.24,
+     2.415,
+     1.27,
+     2.37,
+     3.095
+    ],
+    "specialsFired": [
+     0,
+     11.805,
+     12.655,
+     2.795,
+     3.445,
+     4.75
+    ],
+    "cascades": 17.5,
+    "shuffles": 0,
+    "chests": 0.82,
+    "rainbowsDropped": 2.035,
+    "spreads": 0,
+    "gold": 6.325,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "107:random": {
+   "games": 1000,
+   "wins": 997,
+   "winRate": 0.997,
+   "ci": [
+    0.9912168282105722,
+    0.9989792345945557
+   ],
+   "turnsToWin": {
+    "mean": 11.9358074222668,
+    "p10": 7,
+    "p50": 11,
+    "p90": 17
+   },
+   "movesLeftOnWin": 14.0641925777332,
+   "stars": [
+    0,
+    0,
+    0.997
+   ],
+   "nearMiss": 0.003,
+   "lossLeftShare": 0.03333333333333333,
+   "score": 15023.56,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.493,
+     2.761,
+     1.501,
+     2.555,
+     3.462
+    ],
+    "specialsFired": [
+     0,
+     9.147,
+     10.355,
+     2.607,
+     4.738,
+     4.584
+    ],
+    "cascades": 21.498,
+    "shuffles": 0,
+    "chests": 1.137,
+    "rainbowsDropped": 3.069,
+    "spreads": 0,
+    "gold": 8.464,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "107:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.081,
+    "p10": 3,
+    "p50": 5,
+    "p90": 7
+   },
+   "movesLeftOnWin": 20.919,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 15265.99,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.294,
+     2.678,
+     1.359,
+     2.653,
+     3.166
+    ],
+    "specialsFired": [
+     0,
+     12.748,
+     14.026,
+     2.581,
+     3.927,
+     4.644
+    ],
+    "cascades": 19.051,
+    "shuffles": 0,
+    "chests": 0.925,
+    "rainbowsDropped": 2.296,
+    "spreads": 0,
+    "gold": 6.931,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "107:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.305,
+    "p10": 3,
+    "p50": 4,
+    "p90": 6
+   },
+   "movesLeftOnWin": 21.695,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 14901.45,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.075,
+     2.26,
+     1.455,
+     2.67,
+     3.225
+    ],
+    "specialsFired": [
+     0,
+     12.885,
+     13.685,
+     3.07,
+     3.63,
+     5.215
+    ],
+    "cascades": 17.72,
+    "shuffles": 0,
+    "chests": 0.825,
+    "rainbowsDropped": 1.92,
+    "spreads": 0,
+    "gold": 6.085,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "108:random": {
+   "games": 1000,
+   "wins": 977,
+   "winRate": 0.977,
+   "ci": [
+    0.965723303051515,
+    0.9846258356970685
+   ],
+   "turnsToWin": {
+    "mean": 12.040941658137154,
+    "p10": 7,
+    "p50": 12,
+    "p90": 17
+   },
+   "movesLeftOnWin": 7.959058341862845,
+   "stars": [
+    0.014,
+    0.201,
+    0.762
+   ],
+   "nearMiss": 0.013,
+   "lossLeftShare": 0.1291925465838509,
+   "score": 7184.36,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.756,
+     1.238,
+     0.541,
+     0.763,
+     1.648
+    ],
+    "specialsFired": [
+     0,
+     4.918,
+     5.488,
+     1.076,
+     1.551,
+     2.267
+    ],
+    "cascades": 11.798,
+    "shuffles": 0.001,
+    "chests": 0.679,
+    "rainbowsDropped": 1.634,
+    "spreads": 0,
+    "gold": 5.057,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "108:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 6.302,
+    "p10": 3,
+    "p50": 6,
+    "p90": 10
+   },
+   "movesLeftOnWin": 13.698,
+   "stars": [
+    0,
+    0.015,
+    0.985
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 8328.68,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.676,
+     1.269,
+     0.563,
+     0.76,
+     1.678
+    ],
+    "specialsFired": [
+     0,
+     7.851,
+     8.384,
+     1.035,
+     1.206,
+     2.336
+    ],
+    "cascades": 12.391,
+    "shuffles": 0.002,
+    "chests": 0.564,
+    "rainbowsDropped": 1.221,
+    "spreads": 0,
+    "gold": 4.288,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "108:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.36,
+    "p10": 3,
+    "p50": 5,
+    "p90": 8
+   },
+   "movesLeftOnWin": 14.64,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 8793.2,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.635,
+     1.275,
+     0.565,
+     0.84,
+     1.83
+    ],
+    "specialsFired": [
+     0,
+     8.27,
+     8.975,
+     1.19,
+     1.22,
+     2.45
+    ],
+    "cascades": 12.47,
+    "shuffles": 0,
+    "chests": 0.595,
+    "rainbowsDropped": 1.05,
+    "spreads": 0,
+    "gold": 4.525,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "109:random": {
+   "games": 1000,
+   "wins": 997,
+   "winRate": 0.997,
+   "ci": [
+    0.9912168282105722,
+    0.9989792345945557
+   ],
+   "turnsToWin": {
+    "mean": 11.412236710130392,
+    "p10": 7,
+    "p50": 11,
+    "p90": 16
+   },
+   "movesLeftOnWin": 12.587763289869608,
+   "stars": [
+    0,
+    0,
+    0.997
+   ],
+   "nearMiss": 0.003,
+   "lossLeftShare": 0.04642857142857143,
+   "score": 13953.84,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.487,
+     2.566,
+     1.422,
+     2.458,
+     3.148
+    ],
+    "specialsFired": [
+     0,
+     8.398,
+     9.332,
+     2.327,
+     4.187,
+     4.092
+    ],
+    "cascades": 20.292,
+    "shuffles": 0,
+    "chests": 0.956,
+    "rainbowsDropped": 2.617,
+    "spreads": 0,
+    "gold": 7.188,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "109:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.99,
+    "p10": 3,
+    "p50": 5,
+    "p90": 7
+   },
+   "movesLeftOnWin": 19.01,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 14698.74,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.249,
+     2.417,
+     1.374,
+     2.676,
+     3.059
+    ],
+    "specialsFired": [
+     0,
+     11.47,
+     12.655,
+     2.432,
+     3.81,
+     4.512
+    ],
+    "cascades": 19.057,
+    "shuffles": 0,
+    "chests": 0.819,
+    "rainbowsDropped": 2.041,
+    "spreads": 0,
+    "gold": 6.278,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "109:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.32,
+    "p10": 3,
+    "p50": 4,
+    "p90": 6
+   },
+   "movesLeftOnWin": 19.68,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 14587.1,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.38,
+     2.445,
+     1.335,
+     2.61,
+     2.935
+    ],
+    "specialsFired": [
+     0,
+     12.04,
+     12.945,
+     2.34,
+     3.565,
+     4.305
+    ],
+    "cascades": 17.57,
+    "shuffles": 0,
+    "chests": 0.75,
+    "rainbowsDropped": 1.845,
+    "spreads": 0,
+    "gold": 5.695,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "110:random": {
+   "games": 1000,
+   "wins": 956,
+   "winRate": 0.956,
+   "ci": [
+    0.9414479081796453,
+    0.9670619603095665
+   ],
+   "turnsToWin": {
+    "mean": 15.912133891213388,
+    "p10": 11,
+    "p50": 16,
+    "p90": 21
+   },
+   "movesLeftOnWin": 8.087866108786612,
+   "stars": [
+    0,
+    0.002,
+    0.954
+   ],
+   "nearMiss": 0.016,
+   "lossLeftShare": 0.15340909090909094,
+   "score": 9457.92,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.025,
+     1.648,
+     0.805,
+     0.979,
+     2.216
+    ],
+    "specialsFired": [
+     0,
+     5.592,
+     6.224,
+     1.9,
+     2.86,
+     3.575
+    ],
+    "cascades": 15.444,
+    "shuffles": 0,
+    "chests": 1.391,
+    "rainbowsDropped": 3.507,
+    "spreads": 0,
+    "gold": 10.417,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "110:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 8.34,
+    "p10": 5,
+    "p50": 8,
+    "p90": 12
+   },
+   "movesLeftOnWin": 15.66,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11189,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.931,
+     1.698,
+     0.811,
+     1.169,
+     2.355
+    ],
+    "specialsFired": [
+     0,
+     9.872,
+     10.577,
+     2.492,
+     2.844,
+     4.414
+    ],
+    "cascades": 15.459,
+    "shuffles": 0.001,
+    "chests": 1.357,
+    "rainbowsDropped": 3.22,
+    "spreads": 0,
+    "gold": 10.171,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "110:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 7.255,
+    "p10": 5,
+    "p50": 7,
+    "p90": 10
+   },
+   "movesLeftOnWin": 16.745,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11165.15,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.91,
+     1.775,
+     0.76,
+     1.275,
+     2.235
+    ],
+    "specialsFired": [
+     0,
+     10.59,
+     11.27,
+     2.425,
+     2.8,
+     4.17
+    ],
+    "cascades": 14.825,
+    "shuffles": 0,
+    "chests": 1.32,
+    "rainbowsDropped": 3.01,
+    "spreads": 0,
+    "gold": 9.95,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "111:random": {
+   "games": 1000,
+   "wins": 998,
+   "winRate": 0.998,
+   "ci": [
+    0.9927370411104123,
+    0.9994513678975429
+   ],
+   "turnsToWin": {
+    "mean": 13.934869739478957,
+    "p10": 9,
+    "p50": 14,
+    "p90": 19
+   },
+   "movesLeftOnWin": 14.065130260521043,
+   "stars": [
+    0,
+    0,
+    0.998
+   ],
+   "nearMiss": 0.002,
+   "lossLeftShare": 0.046875,
+   "score": 17456.19,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.834,
+     3.138,
+     1.714,
+     3.14,
+     3.876
+    ],
+    "specialsFired": [
+     0,
+     9.81,
+     11.195,
+     3.172,
+     6.586,
+     5.78
+    ],
+    "cascades": 24.691,
+    "shuffles": 0,
+    "chests": 1.659,
+    "rainbowsDropped": 4.847,
+    "spreads": 0,
+    "gold": 12.467,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "111:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.886,
+    "p10": 4,
+    "p50": 6,
+    "p90": 8
+   },
+   "movesLeftOnWin": 22.114,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 17744.56,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.544,
+     2.896,
+     1.643,
+     3.123,
+     3.705
+    ],
+    "specialsFired": [
+     0,
+     13.752,
+     15.053,
+     3.163,
+     5.568,
+     5.644
+    ],
+    "cascades": 21.618,
+    "shuffles": 0,
+    "chests": 1.362,
+    "rainbowsDropped": 3.8,
+    "spreads": 0,
+    "gold": 10.221,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "111:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.185,
+    "p10": 4,
+    "p50": 5,
+    "p90": 7
+   },
+   "movesLeftOnWin": 22.815,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 17525.85,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.545,
+     2.68,
+     1.605,
+     3.085,
+     3.445
+    ],
+    "specialsFired": [
+     0,
+     14.33,
+     15.42,
+     2.72,
+     5.375,
+     5.75
+    ],
+    "cascades": 20.35,
+    "shuffles": 0,
+    "chests": 1.335,
+    "rainbowsDropped": 3.61,
+    "spreads": 0,
+    "gold": 9.995,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "112:random": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 12.363,
+    "p10": 7,
+    "p50": 12,
+    "p90": 18
+   },
+   "movesLeftOnWin": 19.637,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 16492.77,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.623,
+     2.766,
+     1.597,
+     2.72,
+     3.549
+    ],
+    "specialsFired": [
+     0,
+     12.288,
+     13.305,
+     2.782,
+     5.202,
+     5.074
+    ],
+    "cascades": 22.177,
+    "shuffles": 0,
+    "chests": 1.326,
+    "rainbowsDropped": 3.552,
+    "spreads": 0,
+    "gold": 9.936,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "112:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.267,
+    "p10": 3,
+    "p50": 5,
+    "p90": 8
+   },
+   "movesLeftOnWin": 26.733,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 16550.65,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.347,
+     2.649,
+     1.457,
+     2.697,
+     3.145
+    ],
+    "specialsFired": [
+     0,
+     15.805,
+     17.084,
+     2.975,
+     4.262,
+     5.257
+    ],
+    "cascades": 19.142,
+    "shuffles": 0,
+    "chests": 1.093,
+    "rainbowsDropped": 2.755,
+    "spreads": 0,
+    "gold": 8.329,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "112:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.53,
+    "p10": 3,
+    "p50": 4,
+    "p90": 7
+   },
+   "movesLeftOnWin": 27.47,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 15989,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.185,
+     2.53,
+     1.35,
+     2.55,
+     3.205
+    ],
+    "specialsFired": [
+     0,
+     16.335,
+     17.785,
+     3.09,
+     3.855,
+     5.29
+    ],
+    "cascades": 17.99,
+    "shuffles": 0,
+    "chests": 1.02,
+    "rainbowsDropped": 2.37,
+    "spreads": 0,
+    "gold": 7.675,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "113:random": {
+   "games": 1000,
+   "wins": 999,
+   "winRate": 0.999,
+   "ci": [
+    0.9943572970398397,
+    0.9998234581709428
+   ],
+   "turnsToWin": {
+    "mean": 8.62862862862863,
+    "p10": 4,
+    "p50": 8,
+    "p90": 13
+   },
+   "movesLeftOnWin": 11.37137137137137,
+   "stars": [
+    0,
+    0.011,
+    0.988
+   ],
+   "nearMiss": 0.001,
+   "lossLeftShare": 0.06666666666666667,
+   "score": 10728.28,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.092,
+     1.973,
+     1.075,
+     1.844,
+     2.378
+    ],
+    "specialsFired": [
+     0,
+     6.897,
+     7.975,
+     1.372,
+     2.538,
+     2.702
+    ],
+    "cascades": 16.106,
+    "shuffles": 0,
+    "chests": 0.424,
+    "rainbowsDropped": 1.061,
+    "spreads": 0,
+    "gold": 3.193,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "113:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 3.895,
+    "p10": 2,
+    "p50": 4,
+    "p90": 6
+   },
+   "movesLeftOnWin": 16.105,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11385.89,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.946,
+     1.962,
+     1.036,
+     1.74,
+     2.354
+    ],
+    "specialsFired": [
+     0,
+     9.083,
+     10.151,
+     1.348,
+     2.017,
+     2.672
+    ],
+    "cascades": 15.596,
+    "shuffles": 0,
+    "chests": 0.278,
+    "rainbowsDropped": 0.65,
+    "spreads": 0,
+    "gold": 2.14,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "113:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 3.16,
+    "p10": 2,
+    "p50": 3,
+    "p90": 5
+   },
+   "movesLeftOnWin": 16.84,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11558.7,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.935,
+     2.015,
+     1.02,
+     1.845,
+     2.54
+    ],
+    "specialsFired": [
+     0,
+     9.255,
+     10.88,
+     1.49,
+     1.93,
+     2.82
+    ],
+    "cascades": 14.94,
+    "shuffles": 0,
+    "chests": 0.235,
+    "rainbowsDropped": 0.485,
+    "spreads": 0,
+    "gold": 1.725,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "114:random": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 9.834,
+    "p10": 6,
+    "p50": 10,
+    "p90": 14
+   },
+   "movesLeftOnWin": 12.166,
+   "stars": [
+    0,
+    0.001,
+    0.999
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 12290.64,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.284,
+     2.329,
+     1.245,
+     2.12,
+     2.826
+    ],
+    "specialsFired": [
+     0,
+     7.695,
+     8.854,
+     1.924,
+     3.485,
+     3.651
+    ],
+    "cascades": 18.016,
+    "shuffles": 0,
+    "chests": 0.785,
+    "rainbowsDropped": 1.818,
+    "spreads": 0,
+    "gold": 5.899,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "114:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.73,
+    "p10": 3,
+    "p50": 5,
+    "p90": 7
+   },
+   "movesLeftOnWin": 17.27,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 13374.16,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.125,
+     2.356,
+     1.319,
+     2.239,
+     2.769
+    ],
+    "specialsFired": [
+     0,
+     10.317,
+     11.292,
+     2.011,
+     3.112,
+     3.745
+    ],
+    "cascades": 17.506,
+    "shuffles": 0,
+    "chests": 0.69,
+    "rainbowsDropped": 1.553,
+    "spreads": 0,
+    "gold": 5.184,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "114:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.045,
+    "p10": 3,
+    "p50": 4,
+    "p90": 5
+   },
+   "movesLeftOnWin": 17.955,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 12988.35,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.99,
+     2.05,
+     1.225,
+     2.27,
+     2.745
+    ],
+    "specialsFired": [
+     0,
+     10.645,
+     11.375,
+     1.94,
+     2.985,
+     3.81
+    ],
+    "cascades": 16.55,
+    "shuffles": 0,
+    "chests": 0.63,
+    "rainbowsDropped": 1.52,
+    "spreads": 0,
+    "gold": 4.735,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "115:random": {
+   "games": 1000,
+   "wins": 998,
+   "winRate": 0.998,
+   "ci": [
+    0.9927370411104123,
+    0.9994513678975429
+   ],
+   "turnsToWin": {
+    "mean": 14.789579158316633,
+    "p10": 10,
+    "p50": 14,
+    "p90": 20
+   },
+   "movesLeftOnWin": 15.210420841683367,
+   "stars": [
+    0,
+    0,
+    0.998
+   ],
+   "nearMiss": 0.002,
+   "lossLeftShare": 0.056249999999999994,
+   "score": 18424.58,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.961,
+     3.406,
+     1.893,
+     3.239,
+     4.092
+    ],
+    "specialsFired": [
+     0,
+     10.745,
+     12.081,
+     3.765,
+     7.282,
+     6.192
+    ],
+    "cascades": 25.952,
+    "shuffles": 0,
+    "chests": 1.89,
+    "rainbowsDropped": 5.583,
+    "spreads": 0,
+    "gold": 14.211,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "115:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 6.447,
+    "p10": 4,
+    "p50": 6,
+    "p90": 9
+   },
+   "movesLeftOnWin": 23.553,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 19066.85,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.565,
+     3.024,
+     1.825,
+     3.324,
+     3.709
+    ],
+    "specialsFired": [
+     0,
+     14.756,
+     16.089,
+     3.907,
+     6.495,
+     6.081
+    ],
+    "cascades": 22.706,
+    "shuffles": 0,
+    "chests": 1.648,
+    "rainbowsDropped": 4.714,
+    "spreads": 0,
+    "gold": 12.489,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "115:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.67,
+    "p10": 4,
+    "p50": 6,
+    "p90": 8
+   },
+   "movesLeftOnWin": 24.33,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 18044.5,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.555,
+     2.865,
+     1.72,
+     3.335,
+     3.475
+    ],
+    "specialsFired": [
+     0,
+     15.615,
+     16.72,
+     4.045,
+     6.165,
+     6.23
+    ],
+    "cascades": 20.785,
+    "shuffles": 0,
+    "chests": 1.565,
+    "rainbowsDropped": 4.29,
+    "spreads": 0,
+    "gold": 11.78,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "116:random": {
+   "games": 1000,
+   "wins": 999,
+   "winRate": 0.999,
+   "ci": [
+    0.9943572970398397,
+    0.9998234581709428
+   ],
+   "turnsToWin": {
+    "mean": 10.693693693693694,
+    "p10": 6,
+    "p50": 11,
+    "p90": 16
+   },
+   "movesLeftOnWin": 15.306306306306306,
+   "stars": [
+    0,
+    0,
+    0.999
+   ],
+   "nearMiss": 0.001,
+   "lossLeftShare": 0.03125,
+   "score": 13396.09,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.331,
+     2.42,
+     1.231,
+     2.267,
+     2.96
+    ],
+    "specialsFired": [
+     0,
+     9.446,
+     10.385,
+     1.869,
+     3.694,
+     3.779
+    ],
+    "cascades": 18.919,
+    "shuffles": 0,
+    "chests": 0.799,
+    "rainbowsDropped": 2.038,
+    "spreads": 0,
+    "gold": 6.007,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "116:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.532,
+    "p10": 3,
+    "p50": 4,
+    "p90": 6
+   },
+   "movesLeftOnWin": 21.468,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 13643.8,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.096,
+     2.261,
+     1.254,
+     2.262,
+     2.684
+    ],
+    "specialsFired": [
+     0,
+     12.113,
+     13.416,
+     1.934,
+     3.075,
+     3.552
+    ],
+    "cascades": 17.011,
+    "shuffles": 0,
+    "chests": 0.6,
+    "rainbowsDropped": 1.528,
+    "spreads": 0,
+    "gold": 4.467,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "116:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.165,
+    "p10": 3,
+    "p50": 4,
+    "p90": 6
+   },
+   "movesLeftOnWin": 21.835,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 13857.55,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.155,
+     2.33,
+     1.25,
+     2.325,
+     2.815
+    ],
+    "specialsFired": [
+     0,
+     12.455,
+     13.935,
+     2.1,
+     3,
+     3.4
+    ],
+    "cascades": 17.235,
+    "shuffles": 0,
+    "chests": 0.575,
+    "rainbowsDropped": 1.34,
+    "spreads": 0,
+    "gold": 4.28,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "117:random": {
+   "games": 1000,
+   "wins": 980,
+   "winRate": 0.98,
+   "ci": [
+    0.9693097584861027,
+    0.9870164188709625
+   ],
+   "turnsToWin": {
+    "mean": 12.873469387755103,
+    "p10": 8,
+    "p50": 13,
+    "p90": 18
+   },
+   "movesLeftOnWin": 9.126530612244897,
+   "stars": [
+    0.009,
+    0.237,
+    0.734
+   ],
+   "nearMiss": 0.005,
+   "lossLeftShare": 0.1819047619047619,
+   "score": 7818.28,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.849,
+     1.284,
+     0.581,
+     0.752,
+     1.722
+    ],
+    "specialsFired": [
+     0,
+     5.805,
+     6.084,
+     1.34,
+     1.788,
+     2.446
+    ],
+    "cascades": 12.45,
+    "shuffles": 0.002,
+    "chests": 0.81,
+    "rainbowsDropped": 1.937,
+    "spreads": 0,
+    "gold": 5.995,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "117:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 6.49,
+    "p10": 4,
+    "p50": 6,
+    "p90": 10
+   },
+   "movesLeftOnWin": 15.51,
+   "stars": [
+    0,
+    0.015,
+    0.985
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 8928.9,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.639,
+     1.282,
+     0.654,
+     0.789,
+     1.637
+    ],
+    "specialsFired": [
+     0,
+     8.889,
+     9.402,
+     1.238,
+     1.322,
+     2.431
+    ],
+    "cascades": 12.806,
+    "shuffles": 0,
+    "chests": 0.649,
+    "rainbowsDropped": 1.431,
+    "spreads": 0,
+    "gold": 4.885,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "117:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.31,
+    "p10": 3,
+    "p50": 5,
+    "p90": 8
+   },
+   "movesLeftOnWin": 16.69,
+   "stars": [
+    0,
+    0.005,
+    0.995
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 9195.8,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.63,
+     1.415,
+     0.765,
+     0.975,
+     1.62
+    ],
+    "specialsFired": [
+     0,
+     9.695,
+     10.205,
+     1.755,
+     1.455,
+     2.27
+    ],
+    "cascades": 12.395,
+    "shuffles": 0.005,
+    "chests": 0.655,
+    "rainbowsDropped": 1.265,
+    "spreads": 0,
+    "gold": 4.715,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "118:random": {
+   "games": 1000,
+   "wins": 943,
+   "winRate": 0.943,
+   "ci": [
+    0.9268626022720122,
+    0.9557467655804457
+   ],
+   "turnsToWin": {
+    "mean": 15.033934252386002,
+    "p10": 10,
+    "p50": 15,
+    "p90": 20
+   },
+   "movesLeftOnWin": 6.966065747613998,
+   "stars": [
+    0,
+    0.005,
+    0.938
+   ],
+   "nearMiss": 0.027,
+   "lossLeftShare": 0.1411483253588517,
+   "score": 8716.49,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.946,
+     1.551,
+     0.685,
+     0.901,
+     2.091
+    ],
+    "specialsFired": [
+     0,
+     4.776,
+     5.334,
+     1.605,
+     2.512,
+     3.225
+    ],
+    "cascades": 14.729,
+    "shuffles": 0,
+    "chests": 1.24,
+    "rainbowsDropped": 3.092,
+    "spreads": 0,
+    "gold": 9.333,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "118:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 8.029,
+    "p10": 5,
+    "p50": 8,
+    "p90": 11
+   },
+   "movesLeftOnWin": 13.971,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 10454.47,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.846,
+     1.693,
+     0.825,
+     1.136,
+     2.137
+    ],
+    "specialsFired": [
+     0,
+     8.874,
+     9.527,
+     2.052,
+     2.51,
+     3.744
+    ],
+    "cascades": 14.826,
+    "shuffles": 0,
+    "chests": 1.172,
+    "rainbowsDropped": 2.779,
+    "spreads": 0,
+    "gold": 8.8,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "118:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 6.735,
+    "p10": 4,
+    "p50": 7,
+    "p90": 9
+   },
+   "movesLeftOnWin": 15.265,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 10568.35,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.84,
+     1.595,
+     0.85,
+     1.265,
+     2.1
+    ],
+    "specialsFired": [
+     0,
+     9.795,
+     10.25,
+     2.675,
+     2.58,
+     4.11
+    ],
+    "cascades": 14.16,
+    "shuffles": 0,
+    "chests": 1.23,
+    "rainbowsDropped": 2.67,
+    "spreads": 0,
+    "gold": 9.17,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "119:random": {
+   "games": 1000,
+   "wins": 999,
+   "winRate": 0.999,
+   "ci": [
+    0.9943572970398397,
+    0.9998234581709428
+   ],
+   "turnsToWin": {
+    "mean": 13.37037037037037,
+    "p10": 7,
+    "p50": 13,
+    "p90": 20
+   },
+   "movesLeftOnWin": 16.62962962962963,
+   "stars": [
+    0,
+    0.055,
+    0.944
+   ],
+   "nearMiss": 0.001,
+   "lossLeftShare": 0.0625,
+   "score": 9262.93,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.806,
+     1.382,
+     0.565,
+     0.745,
+     1.737
+    ],
+    "specialsFired": [
+     0,
+     9.476,
+     10.049,
+     1.183,
+     1.642,
+     2.463
+    ],
+    "cascades": 12.709,
+    "shuffles": 0.001,
+    "chests": 0.73,
+    "rainbowsDropped": 1.974,
+    "spreads": 0,
+    "gold": 5.457,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "119:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.552,
+    "p10": 3,
+    "p50": 5,
+    "p90": 8
+   },
+   "movesLeftOnWin": 24.448,
+   "stars": [
+    0,
+    0.026,
+    0.974
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 9190.84,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.59,
+     1.181,
+     0.487,
+     0.777,
+     1.477
+    ],
+    "specialsFired": [
+     0,
+     13.128,
+     13.64,
+     0.886,
+     1.08,
+     1.863
+    ],
+    "cascades": 10.408,
+    "shuffles": 0.001,
+    "chests": 0.341,
+    "rainbowsDropped": 0.926,
+    "spreads": 0,
+    "gold": 2.492,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "119:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.635,
+    "p10": 3,
+    "p50": 4,
+    "p90": 7
+   },
+   "movesLeftOnWin": 25.365,
+   "stars": [
+    0,
+    0.015,
+    0.985
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 9152.65,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.58,
+     1.075,
+     0.51,
+     0.66,
+     1.585
+    ],
+    "specialsFired": [
+     0,
+     13.37,
+     14.055,
+     0.795,
+     0.92,
+     2.085
+    ],
+    "cascades": 9.505,
+    "shuffles": 0,
+    "chests": 0.325,
+    "rainbowsDropped": 0.71,
+    "spreads": 0,
+    "gold": 2.535,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "120:random": {
+   "games": 1000,
+   "wins": 833,
+   "winRate": 0.833,
+   "ci": [
+    0.80861746942018,
+    0.854833816121284
+   ],
+   "turnsToWin": {
+    "mean": 19.463385354141657,
+    "p10": 14,
+    "p50": 20,
+    "p90": 25
+   },
+   "movesLeftOnWin": 6.536614645858343,
+   "stars": [
+    0,
+    0,
+    0.833
+   ],
+   "nearMiss": 0.158,
+   "lossLeftShare": 0.03591113228089275,
+   "score": 11456.05,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.262,
+     2.178,
+     0.939,
+     1.314,
+     2.751
+    ],
+    "specialsFired": [
+     0,
+     5.024,
+     5.905,
+     2.623,
+     3.904,
+     4.801
+    ],
+    "cascades": 19.751,
+    "shuffles": 0,
+    "chests": 1.955,
+    "rainbowsDropped": 5.749,
+    "spreads": 0,
+    "gold": 14.623,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "120:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 9.587,
+    "p10": 6,
+    "p50": 9,
+    "p90": 13
+   },
+   "movesLeftOnWin": 16.413,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 13429.75,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.048,
+     2.094,
+     1.017,
+     1.484,
+     2.697
+    ],
+    "specialsFired": [
+     0,
+     10.958,
+     11.867,
+     3.455,
+     3.848,
+     5.519
+    ],
+    "cascades": 18.385,
+    "shuffles": 0.001,
+    "chests": 1.752,
+    "rainbowsDropped": 4.808,
+    "spreads": 0,
+    "gold": 13.171,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "120:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 8.175,
+    "p10": 6,
+    "p50": 8,
+    "p90": 11
+   },
+   "movesLeftOnWin": 17.825,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 13231.55,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.92,
+     1.97,
+     0.955,
+     1.45,
+     2.705
+    ],
+    "specialsFired": [
+     0,
+     11.545,
+     12.96,
+     3.56,
+     3.62,
+     5.705
+    ],
+    "cascades": 17.34,
+    "shuffles": 0,
+    "chests": 1.665,
+    "rainbowsDropped": 4.59,
+    "spreads": 0,
+    "gold": 12.515,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "121:random": {
+   "games": 1000,
+   "wins": 816,
+   "winRate": 0.816,
+   "ci": [
+    0.7907896944900146,
+    0.8387917056033866
+   ],
+   "turnsToWin": {
+    "mean": 13.03799019607843,
+    "p10": 8,
+    "p50": 14,
+    "p90": 17
+   },
+   "movesLeftOnWin": 4.9620098039215685,
+   "stars": [
+    0.072,
+    0.449,
+    0.295
+   ],
+   "nearMiss": 0.038,
+   "lossLeftShare": 0.23634782608695645,
+   "score": 6754.09,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.847,
+     1.297,
+     0.567,
+     0.748,
+     1.762
+    ],
+    "specialsFired": [
+     0,
+     3.305,
+     3.661,
+     1.324,
+     1.736,
+     2.356
+    ],
+    "cascades": 12.189,
+    "shuffles": 0,
+    "chests": 0.928,
+    "rainbowsDropped": 2.296,
+    "spreads": 0,
+    "gold": 6.996,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "121:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 6.873,
+    "p10": 4,
+    "p50": 7,
+    "p90": 10
+   },
+   "movesLeftOnWin": 11.127,
+   "stars": [
+    0.003,
+    0.283,
+    0.714
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 8898.85,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.736,
+     1.489,
+     0.649,
+     0.891,
+     1.834
+    ],
+    "specialsFired": [
+     0,
+     6.913,
+     7.534,
+     1.405,
+     1.683,
+     2.91
+    ],
+    "cascades": 13.895,
+    "shuffles": 0,
+    "chests": 0.842,
+    "rainbowsDropped": 1.871,
+    "spreads": 0,
+    "gold": 6.377,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "121:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.91,
+    "p10": 4,
+    "p50": 6,
+    "p90": 8
+   },
+   "movesLeftOnWin": 12.09,
+   "stars": [
+    0,
+    0.24,
+    0.76
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 9148.3,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.7,
+     1.59,
+     0.67,
+     1,
+     1.735
+    ],
+    "specialsFired": [
+     0,
+     7.1,
+     8.17,
+     1.81,
+     1.7,
+     2.695
+    ],
+    "cascades": 13.44,
+    "shuffles": 0.005,
+    "chests": 0.865,
+    "rainbowsDropped": 1.645,
+    "spreads": 0,
+    "gold": 6.52,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "122:random": {
+   "games": 1000,
+   "wins": 899,
+   "winRate": 0.899,
+   "ci": [
+    0.8787698568381758,
+    0.9161762780898847
+   ],
+   "turnsToWin": {
+    "mean": 16.088987764182423,
+    "p10": 11,
+    "p50": 16,
+    "p90": 21
+   },
+   "movesLeftOnWin": 5.911012235817575,
+   "stars": [
+    0,
+    0.002,
+    0.897
+   ],
+   "nearMiss": 0.045,
+   "lossLeftShare": 0.14242193450114246,
+   "score": 9149.1,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.054,
+     1.663,
+     0.753,
+     1.046,
+     2.301
+    ],
+    "specialsFired": [
+     0,
+     4.305,
+     5.051,
+     1.929,
+     2.959,
+     3.763
+    ],
+    "cascades": 15.779,
+    "shuffles": 0,
+    "chests": 1.465,
+    "rainbowsDropped": 3.757,
+    "spreads": 0,
+    "gold": 10.923,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "122:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 8.677,
+    "p10": 6,
+    "p50": 8,
+    "p90": 12
+   },
+   "movesLeftOnWin": 13.323,
+   "stars": [
+    0,
+    0.001,
+    0.999
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11137.37,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.877,
+     1.711,
+     0.834,
+     1.257,
+     2.321
+    ],
+    "specialsFired": [
+     0,
+     8.765,
+     9.398,
+     2.506,
+     3.026,
+     4.454
+    ],
+    "cascades": 15.786,
+    "shuffles": 0.002,
+    "chests": 1.44,
+    "rainbowsDropped": 3.513,
+    "spreads": 0,
+    "gold": 10.761,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "122:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 7.46,
+    "p10": 5,
+    "p50": 7,
+    "p90": 10
+   },
+   "movesLeftOnWin": 14.54,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11388.7,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.965,
+     1.79,
+     0.82,
+     1.41,
+     2.295
+    ],
+    "specialsFired": [
+     0,
+     10,
+     10.2,
+     2.675,
+     3.26,
+     4.74
+    ],
+    "cascades": 15.335,
+    "shuffles": 0,
+    "chests": 1.515,
+    "rainbowsDropped": 3.415,
+    "spreads": 0,
+    "gold": 11.22,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "123:random": {
+   "games": 1000,
+   "wins": 947,
+   "winRate": 0.947,
+   "ci": [
+    0.9313250610861061,
+    0.9592536915776607
+   ],
+   "turnsToWin": {
+    "mean": 19.970432946145724,
+    "p10": 14,
+    "p50": 20,
+    "p90": 27
+   },
+   "movesLeftOnWin": 10.029567053854276,
+   "stars": [
+    0,
+    0,
+    0.947
+   ],
+   "nearMiss": 0.047,
+   "lossLeftShare": 0.043867924528301884,
+   "score": 12971.42,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.36,
+     2.324,
+     1.076,
+     1.435,
+     2.908
+    ],
+    "specialsFired": [
+     0,
+     7.101,
+     8.129,
+     2.795,
+     4.32,
+     4.82
+    ],
+    "cascades": 20.813,
+    "shuffles": 0.001,
+    "chests": 1.989,
+    "rainbowsDropped": 5.894,
+    "spreads": 0,
+    "gold": 14.871,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "123:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 9.116,
+    "p10": 6,
+    "p50": 9,
+    "p90": 12
+   },
+   "movesLeftOnWin": 20.884,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 13951.9,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.065,
+     2.101,
+     1.004,
+     1.527,
+     2.619
+    ],
+    "specialsFired": [
+     0,
+     13.008,
+     14.263,
+     3.395,
+     3.922,
+     5.665
+    ],
+    "cascades": 18.142,
+    "shuffles": 0,
+    "chests": 1.721,
+    "rainbowsDropped": 4.796,
+    "spreads": 0,
+    "gold": 12.882,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "123:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 7.985,
+    "p10": 6,
+    "p50": 8,
+    "p90": 10
+   },
+   "movesLeftOnWin": 22.015,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 13753.95,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1,
+     1.95,
+     1.095,
+     1.53,
+     2.78
+    ],
+    "specialsFired": [
+     0,
+     13.515,
+     15.005,
+     3.6,
+     3.71,
+     6.18
+    ],
+    "cascades": 16.93,
+    "shuffles": 0,
+    "chests": 1.67,
+    "rainbowsDropped": 4.435,
+    "spreads": 0,
+    "gold": 12.74,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "124:random": {
+   "games": 1000,
+   "wins": 979,
+   "winRate": 0.979,
+   "ci": [
+    0.9681094652438844,
+    0.9862243659103536
+   ],
+   "turnsToWin": {
+    "mean": 16.332992849846782,
+    "p10": 11,
+    "p50": 16,
+    "p90": 22
+   },
+   "movesLeftOnWin": 9.667007150153218,
+   "stars": [
+    0,
+    0.005,
+    0.974
+   ],
+   "nearMiss": 0.015,
+   "lossLeftShare": 0.08436355311355312,
+   "score": 9931.96,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.942,
+     1.658,
+     0.746,
+     1.024,
+     2.211
+    ],
+    "specialsFired": [
+     0,
+     6.331,
+     7.055,
+     1.771,
+     2.759,
+     3.624
+    ],
+    "cascades": 15.874,
+    "shuffles": 0.003,
+    "chests": 1.323,
+    "rainbowsDropped": 3.417,
+    "spreads": 0,
+    "gold": 9.815,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "124:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 8.135,
+    "p10": 5,
+    "p50": 8,
+    "p90": 11
+   },
+   "movesLeftOnWin": 17.865,
+   "stars": [
+    0,
+    0.001,
+    0.999
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11070.87,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.864,
+     1.662,
+     0.736,
+     1.139,
+     2.115
+    ],
+    "specialsFired": [
+     0,
+     10.745,
+     11.501,
+     2.052,
+     2.556,
+     3.867
+    ],
+    "cascades": 15.051,
+    "shuffles": 0,
+    "chests": 1.172,
+    "rainbowsDropped": 2.938,
+    "spreads": 0,
+    "gold": 8.81,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "124:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 6.95,
+    "p10": 5,
+    "p50": 7,
+    "p90": 10
+   },
+   "movesLeftOnWin": 19.05,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11165.7,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.755,
+     1.685,
+     0.78,
+     1.22,
+     2.07
+    ],
+    "specialsFired": [
+     0,
+     11.245,
+     12.095,
+     2.285,
+     2.715,
+     4
+    ],
+    "cascades": 14.15,
+    "shuffles": 0,
+    "chests": 1.23,
+    "rainbowsDropped": 2.87,
+    "spreads": 0,
+    "gold": 9.05,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "125:random": {
+   "games": 1000,
+   "wins": 882,
+   "winRate": 0.882,
+   "ci": [
+    0.8605274931519409,
+    0.9005487563280569
+   ],
+   "turnsToWin": {
+    "mean": 14.036281179138323,
+    "p10": 9,
+    "p50": 14,
+    "p90": 18
+   },
+   "movesLeftOnWin": 5.963718820861678,
+   "stars": [
+    0.078,
+    0.523,
+    0.281
+   ],
+   "nearMiss": 0.039,
+   "lossLeftShare": 0.19961036430937082,
+   "score": 7995.02,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.918,
+     1.513,
+     0.656,
+     0.87,
+     1.978
+    ],
+    "specialsFired": [
+     0,
+     4.088,
+     4.65,
+     1.529,
+     2.256,
+     2.963
+    ],
+    "cascades": 13.784,
+    "shuffles": 0,
+    "chests": 1.155,
+    "rainbowsDropped": 2.779,
+    "spreads": 0,
+    "gold": 8.711,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "125:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 7.337,
+    "p10": 4,
+    "p50": 7,
+    "p90": 11
+   },
+   "movesLeftOnWin": 12.663,
+   "stars": [
+    0,
+    0.37,
+    0.63
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 9899.33,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.786,
+     1.599,
+     0.722,
+     1.041,
+     1.965
+    ],
+    "specialsFired": [
+     0,
+     7.723,
+     8.612,
+     1.65,
+     2.066,
+     3.161
+    ],
+    "cascades": 15.022,
+    "shuffles": 0,
+    "chests": 0.984,
+    "rainbowsDropped": 2.271,
+    "spreads": 0,
+    "gold": 7.403,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "125:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 6.465,
+    "p10": 4,
+    "p50": 6,
+    "p90": 9
+   },
+   "movesLeftOnWin": 13.535,
+   "stars": [
+    0,
+    0.275,
+    0.725
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 10069.75,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.76,
+     1.595,
+     0.72,
+     1.125,
+     2.09
+    ],
+    "specialsFired": [
+     0,
+     8.39,
+     9.115,
+     1.8,
+     2.13,
+     3.29
+    ],
+    "cascades": 14.315,
+    "shuffles": 0,
+    "chests": 1.045,
+    "rainbowsDropped": 2.135,
+    "spreads": 0,
+    "gold": 7.95,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "126:random": {
+   "games": 1000,
+   "wins": 845,
+   "winRate": 0.845,
+   "ci": [
+    0.8212527009779519,
+    0.8661067389974387
+   ],
+   "turnsToWin": {
+    "mean": 16.462721893491125,
+    "p10": 12,
+    "p50": 17,
+    "p90": 21
+   },
+   "movesLeftOnWin": 5.537278106508876,
+   "stars": [
+    0,
+    0.001,
+    0.844
+   ],
+   "nearMiss": 0.063,
+   "lossLeftShare": 0.19204301075268826,
+   "score": 9592.23,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.133,
+     1.782,
+     0.817,
+     1.132,
+     2.425
+    ],
+    "specialsFired": [
+     0,
+     4.257,
+     4.845,
+     2.206,
+     3.288,
+     3.939
+    ],
+    "cascades": 16.61,
+    "shuffles": 0,
+    "chests": 1.668,
+    "rainbowsDropped": 4.302,
+    "spreads": 0,
+    "gold": 12.461,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "126:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 9.141,
+    "p10": 6,
+    "p50": 9,
+    "p90": 13
+   },
+   "movesLeftOnWin": 12.859,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11957.85,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.036,
+     1.837,
+     0.958,
+     1.391,
+     2.486
+    ],
+    "specialsFired": [
+     0,
+     8.832,
+     9.592,
+     3.077,
+     3.615,
+     5.046
+    ],
+    "cascades": 17.15,
+    "shuffles": 0.002,
+    "chests": 1.705,
+    "rainbowsDropped": 4.23,
+    "spreads": 0,
+    "gold": 12.704,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "126:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 7.68,
+    "p10": 5,
+    "p50": 7,
+    "p90": 10
+   },
+   "movesLeftOnWin": 14.32,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 12323.2,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.9,
+     1.98,
+     0.9,
+     1.45,
+     2.57
+    ],
+    "specialsFired": [
+     0,
+     9.505,
+     10.505,
+     3.01,
+     3.735,
+     5.085
+    ],
+    "cascades": 16.36,
+    "shuffles": 0,
+    "chests": 1.735,
+    "rainbowsDropped": 4.08,
+    "spreads": 0,
+    "gold": 13.22,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "127:random": {
+   "games": 1000,
+   "wins": 999,
+   "winRate": 0.999,
+   "ci": [
+    0.9943572970398397,
+    0.9998234581709428
+   ],
+   "turnsToWin": {
+    "mean": 13.477477477477477,
+    "p10": 8,
+    "p50": 13,
+    "p90": 20
+   },
+   "movesLeftOnWin": 16.52252252252252,
+   "stars": [
+    0,
+    0.047,
+    0.952
+   ],
+   "nearMiss": 0.001,
+   "lossLeftShare": 0.0625,
+   "score": 9139.76,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.808,
+     1.302,
+     0.54,
+     0.696,
+     1.716
+    ],
+    "specialsFired": [
+     0,
+     9.415,
+     9.92,
+     1.143,
+     1.6,
+     2.532
+    ],
+    "cascades": 12.5,
+    "shuffles": 0.001,
+    "chests": 0.752,
+    "rainbowsDropped": 1.933,
+    "spreads": 0,
+    "gold": 5.656,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "127:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 5.663,
+    "p10": 3,
+    "p50": 6,
+    "p90": 8
+   },
+   "movesLeftOnWin": 24.337,
+   "stars": [
+    0,
+    0.03,
+    0.97
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 9046.01,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.589,
+     1.082,
+     0.521,
+     0.631,
+     1.544
+    ],
+    "specialsFired": [
+     0,
+     13.036,
+     13.455,
+     0.834,
+     0.941,
+     1.97
+    ],
+    "cascades": 10.23,
+    "shuffles": 0,
+    "chests": 0.323,
+    "rainbowsDropped": 0.864,
+    "spreads": 0,
+    "gold": 2.406,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "127:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 4.985,
+    "p10": 3,
+    "p50": 5,
+    "p90": 7
+   },
+   "movesLeftOnWin": 25.015,
+   "stars": [
+    0,
+    0.055,
+    0.945
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 8705.75,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.495,
+     1.015,
+     0.48,
+     0.595,
+     1.56
+    ],
+    "specialsFired": [
+     0,
+     13,
+     14.17,
+     0.825,
+     0.9,
+     1.835
+    ],
+    "cascades": 9.045,
+    "shuffles": 0,
+    "chests": 0.325,
+    "rainbowsDropped": 0.72,
+    "spreads": 0,
+    "gold": 2.455,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "128:random": {
+   "games": 1000,
+   "wins": 844,
+   "winRate": 0.844,
+   "ci": [
+    0.8201980443506669,
+    0.8651690494218964
+   ],
+   "turnsToWin": {
+    "mean": 19.19075829383886,
+    "p10": 14,
+    "p50": 19,
+    "p90": 25
+   },
+   "movesLeftOnWin": 6.809241706161138,
+   "stars": [
+    0,
+    0,
+    0.844
+   ],
+   "nearMiss": 0.131,
+   "lossLeftShare": 0.05725160256410257,
+   "score": 11611.47,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.348,
+     2.173,
+     0.987,
+     1.324,
+     2.755
+    ],
+    "specialsFired": [
+     0,
+     5.24,
+     6.058,
+     2.698,
+     3.986,
+     4.654
+    ],
+    "cascades": 19.71,
+    "shuffles": 0.001,
+    "chests": 1.936,
+    "rainbowsDropped": 5.721,
+    "spreads": 0,
+    "gold": 14.563,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "128:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 9.815,
+    "p10": 7,
+    "p50": 9,
+    "p90": 14
+   },
+   "movesLeftOnWin": 16.185,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 13635.55,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.131,
+     2.065,
+     1.01,
+     1.567,
+     2.622
+    ],
+    "specialsFired": [
+     0,
+     11.015,
+     11.925,
+     3.675,
+     3.999,
+     5.582
+    ],
+    "cascades": 18.85,
+    "shuffles": 0,
+    "chests": 1.82,
+    "rainbowsDropped": 5.042,
+    "spreads": 0,
+    "gold": 13.486,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "128:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 8.665,
+    "p10": 6,
+    "p50": 9,
+    "p90": 11
+   },
+   "movesLeftOnWin": 17.335,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 13735.35,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.11,
+     2.185,
+     0.975,
+     1.56,
+     2.57
+    ],
+    "specialsFired": [
+     0,
+     11.61,
+     12.51,
+     3.57,
+     4.105,
+     5.66
+    ],
+    "cascades": 17.78,
+    "shuffles": 0,
+    "chests": 1.845,
+    "rainbowsDropped": 4.965,
+    "spreads": 0,
+    "gold": 14.015,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "129:random": {
+   "games": 1000,
+   "wins": 919,
+   "winRate": 0.919,
+   "ci": [
+    0.9004424261087147,
+    0.9343506328758902
+   ],
+   "turnsToWin": {
+    "mean": 15.266594124047877,
+    "p10": 10,
+    "p50": 15,
+    "p90": 21
+   },
+   "movesLeftOnWin": 6.733405875952122,
+   "stars": [
+    0.107,
+    0.58,
+    0.232
+   ],
+   "nearMiss": 0.021,
+   "lossLeftShare": 0.23192418007232823,
+   "score": 8922.56,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.915,
+     1.646,
+     0.746,
+     0.928,
+     2.154
+    ],
+    "specialsFired": [
+     0,
+     4.695,
+     5.408,
+     1.823,
+     2.626,
+     3.502
+    ],
+    "cascades": 14.956,
+    "shuffles": 0.001,
+    "chests": 1.338,
+    "rainbowsDropped": 3.32,
+    "spreads": 0,
+    "gold": 9.973,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "129:greedy": {
+   "games": 1000,
+   "wins": 1000,
+   "winRate": 1,
+   "ci": [
+    0.9961731014136096,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 7.567,
+    "p10": 5,
+    "p50": 7,
+    "p90": 10
+   },
+   "movesLeftOnWin": 14.433,
+   "stars": [
+    0,
+    0.509,
+    0.491
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 10734.71,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.775,
+     1.591,
+     0.826,
+     1.082,
+     2.079
+    ],
+    "specialsFired": [
+     0,
+     8.888,
+     9.632,
+     1.96,
+     2.293,
+     3.496
+    ],
+    "cascades": 15.696,
+    "shuffles": 0.001,
+    "chests": 1.135,
+    "rainbowsDropped": 2.669,
+    "spreads": 0,
+    "gold": 8.539,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "129:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 6.75,
+    "p10": 4,
+    "p50": 7,
+    "p90": 9
+   },
+   "movesLeftOnWin": 15.25,
+   "stars": [
+    0,
+    0.455,
+    0.545
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 11130.8,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.885,
+     1.75,
+     0.785,
+     1.26,
+     2.22
+    ],
+    "specialsFired": [
+     0,
+     9.265,
+     9.715,
+     2.24,
+     2.48,
+     3.785
+    ],
+    "cascades": 15.59,
+    "shuffles": 0,
+    "chests": 1.21,
+    "rainbowsDropped": 2.455,
+    "spreads": 0,
+    "gold": 9.12,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "130:random": {
+   "games": 1000,
+   "wins": 783,
+   "winRate": 0.783,
+   "ci": [
+    0.7563943490951964,
+    0.8074396263049066
+   ],
+   "turnsToWin": {
+    "mean": 17.1455938697318,
+    "p10": 12,
+    "p50": 18,
+    "p90": 21
+   },
+   "movesLeftOnWin": 4.854406130268199,
+   "stars": [
+    0,
+    0,
+    0.783
+   ],
+   "nearMiss": 0.09,
+   "lossLeftShare": 0.16799945784765535,
+   "score": 10096.45,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.137,
+     2.006,
+     0.899,
+     1.21,
+     2.429
+    ],
+    "specialsFired": [
+     0,
+     3.98,
+     4.793,
+     2.468,
+     3.543,
+     3.957
+    ],
+    "cascades": 17.738,
+    "shuffles": 0.001,
+    "chests": 1.859,
+    "rainbowsDropped": 4.935,
+    "spreads": 0,
+    "gold": 13.938,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "130:greedy": {
+   "games": 1000,
+   "wins": 999,
+   "winRate": 0.999,
+   "ci": [
+    0.9943572970398397,
+    0.9998234581709428
+   ],
+   "turnsToWin": {
+    "mean": 9.684684684684685,
+    "p10": 7,
+    "p50": 9,
+    "p90": 13
+   },
+   "movesLeftOnWin": 12.315315315315315,
+   "stars": [
+    0,
+    0,
+    0.999
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0.16176470588235292,
+   "score": 12740.29,
+   "perGame": {
+    "specialsMade": [
+     0,
+     1.079,
+     2.053,
+     0.982,
+     1.515,
+     2.688
+    ],
+    "specialsFired": [
+     0,
+     8.968,
+     9.838,
+     3.278,
+     4.169,
+     5.688
+    ],
+    "cascades": 18.332,
+    "shuffles": 0.001,
+    "chests": 1.906,
+    "rainbowsDropped": 4.976,
+    "spreads": 0,
+    "gold": 14.247,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  },
+  "130:lookahead": {
+   "games": 200,
+   "wins": 200,
+   "winRate": 1,
+   "ci": [
+    0.9811539940816792,
+    1
+   ],
+   "turnsToWin": {
+    "mean": 8.39,
+    "p10": 6,
+    "p50": 8,
+    "p90": 11
+   },
+   "movesLeftOnWin": 13.61,
+   "stars": [
+    0,
+    0,
+    1
+   ],
+   "nearMiss": 0,
+   "lossLeftShare": 0,
+   "score": 12914.7,
+   "perGame": {
+    "specialsMade": [
+     0,
+     0.93,
+     1.78,
+     0.995,
+     1.53,
+     2.7
+    ],
+    "specialsFired": [
+     0,
+     9.855,
+     10.41,
+     3.855,
+     4.225,
+     5.295
+    ],
+    "cascades": 17.545,
+    "shuffles": 0,
+    "chests": 2,
+    "rainbowsDropped": 4.86,
+    "spreads": 0,
+    "gold": 14.8,
+    "revives": 0
+   },
+   "boostersUsed": {}
+  }
+ }
+}

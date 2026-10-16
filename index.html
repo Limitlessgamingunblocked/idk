@@ -193,7 +193,7 @@ button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
   <h1 class="title-name">Sugar Shapes</h1>
   <div class="candy-row" id="candyRow"></div>
   <button class="btn big" id="btnPlay">Play</button>
-  <p class="how">Swap two neighbouring candies to line up three or more. Match four for a striped candy, an L or T for a wrapped one, and five for the logo bomb.</p>
+  <p class="how">Swap two neighbouring candies to line up three or more. Every candy is the logo. Match four for a striped one, an L or T for a wrapped one, and five for the rainbow bomb.</p>
 </section>
 
 <section class="screen" id="scrMap" aria-label="Levels">
@@ -236,12 +236,6 @@ function rrPath(g, x, y, w, h, r) {
   g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r);
   g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath();
 }
-function roundPoly(p, pts, r) {
-  const n = pts.length, mid = (a, b) => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
-  const s = mid(pts[n - 1], pts[0]); p.moveTo(s[0], s[1]);
-  for (let i = 0; i < n; i++) { const q = mid(pts[i], pts[(i + 1) % n]); p.arcTo(pts[i][0], pts[i][1], q[0], q[1], r); }
-  p.closePath();
-}
 function hexA(hex, a) { const n = parseInt(hex.slice(1), 16); return `rgba(${n >> 16 & 255},${n >> 8 & 255},${n & 255},${a})`; }
 const STAR_D = 'M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z';
 const starSvg = cls => `<svg viewBox="0 0 24 24" class="${cls || ''}" aria-hidden="true"><path d="${STAR_D}"/></svg>`;
@@ -250,12 +244,12 @@ const starSvg = cls => `<svg viewBox="0 0 24 24" class="${cls || ''}" aria-hidde
 const COLS = 8, ROWS = 8;
 const NONE = 0, SH = 1, SV = 2, WRAP = 3, BOMB = 4;
 const CANDY = [
-  { name: 'cherry drops',    base: '#ff3b5c', light: '#ffa3b1', dark: '#a10f2c', shape: 'circle' },
-  { name: 'tangerine cones', base: '#ff9419', light: '#ffd497', dark: '#b05200', shape: 'triangle' },
-  { name: 'lemon stars',     base: '#ffd92e', light: '#fff6b8', dark: '#b38300', shape: 'star' },
-  { name: 'lime gummies',    base: '#35d05e', light: '#b0f7c0', dark: '#0f7a2c', shape: 'square' },
-  { name: 'berry gems',      base: '#2f9bff', light: '#b2dbff', dark: '#0a4ca6', shape: 'diamond' },
-  { name: 'grape hexes',     base: '#a752f5', light: '#e0bcff', dark: '#5a199c', shape: 'hex' },
+  { name: 'cherry candies',    base: '#ff3b5c', light: '#ffa3b1', dark: '#a10f2c' },
+  { name: 'tangerine candies', base: '#ff9419', light: '#ffd497', dark: '#b05200' },
+  { name: 'lemon candies',     base: '#ffd92e', light: '#fff6b8', dark: '#b38300' },
+  { name: 'lime candies',      base: '#35d05e', light: '#b0f7c0', dark: '#0f7a2c' },
+  { name: 'blueberry candies', base: '#2f9bff', light: '#b2dbff', dark: '#0a4ca6' },
+  { name: 'grape candies',     base: '#a752f5', light: '#e0bcff', dark: '#5a199c' },
 ];
 const CREATE_BONUS = [0, 120, 120, 200, 500];
 const FIRE_BONUS = [0, 100, 100, 180, 300];
@@ -457,88 +451,104 @@ function layoutBoard() {
 
 /* ---------- sprites ---------- */
 let SPR = [], BOMB_SPR = null, GLOW = [], GLOW_W = null, JELLY = [], boardBG = null, spriteKey = '';
-function shapePath(shape, r) {
-  const p = new Path2D();
-  switch (shape) {
-    case 'circle': p.arc(0, 0, r * .95, 0, Math.PI * 2); break;
-    case 'triangle': roundPoly(p, [[0, -r * 1.14], [r * 1.06, r * .7], [-r * 1.06, r * .7]], r * .3); break;
-    case 'star': { const pts = []; for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, d = i % 2 ? r * .55 : r * 1.08; pts.push([Math.cos(a) * d, Math.sin(a) * d + r * .05]); } roundPoly(p, pts, r * .14); break; }
-    case 'square': roundPoly(p, [[-r * .84, -r * .84], [r * .84, -r * .84], [r * .84, r * .84], [-r * .84, r * .84]], r * .32); break;
-    case 'diamond': roundPoly(p, [[0, -r * 1.1], [r * .88, 0], [0, r * 1.1], [-r * .88, 0]], r * .22); break;
-    case 'hex': { const pts = []; for (let i = 0; i < 6; i++) { const a = -Math.PI / 2 + i * Math.PI / 3; pts.push([Math.cos(a) * r, Math.sin(a) * r]); } roundPoly(p, pts, r * .22); break; }
+const LCX = LOGO_BOX.x + LOGO_BOX.w / 2, LCY = LOGO_BOX.y + LOGO_BOX.h / 2;
+// the five pieces of the mark, relative to its centre (used for sprites and for shattering)
+const PIECES = [
+  ...LOGO_CIRCLES.map(([x, y, r]) => ({ circle: true, ox: x - LCX, oy: y - LCY, r })),
+  ...LOGO_TRIS.map(t => { const cx = (t[0] + t[2] + t[4]) / 3, cy = (t[1] + t[3] + t[5]) / 3;
+    return { circle: false, ox: cx - LCX, oy: cy - LCY, v: [[t[0] - cx, t[1] - cy], [t[2] - cx, t[3] - cy], [t[4] - cx, t[5] - cy]] }; }),
+];
+function logoPathAt(w) { const p = new Path2D(), k = w / LOGO_BOX.w; p.addPath(LOGO, new DOMMatrix().scale(k).translate(-LCX, -LCY)); return p; }
+// paints a glossy logo candy centred on the origin; `rainbow` paints the colour-bomb version
+function paintLogo(g, w, C, special, rainbow) {
+  const k = w / LOGO_BOX.w, P = logoPathAt(w);
+  g.save(); g.shadowColor = 'rgba(25,5,15,.55)'; g.shadowBlur = w * .07; g.shadowOffsetY = w * .05;
+  g.fillStyle = rainbow ? '#2a0f1a' : C.dark; g.fill(P); g.restore();
+  g.save(); g.clip(P);
+  if (rainbow) {
+    const lg = g.createLinearGradient(-w / 2, -w * .3, w / 2, w * .3);
+    CANDY.forEach((c, i) => lg.addColorStop(i / (CANDY.length - 1), c.base));
+    g.fillStyle = lg; g.fillRect(-w, -w, w * 2, w * 2);
   }
-  return p;
-}
-function gloss(g, r) {
-  g.save(); g.translate(-r * .22, -r * .44); g.rotate(-.35); g.scale(1, .55);
-  const gl = g.createLinearGradient(0, -r * .5, 0, r * .5);
-  gl.addColorStop(0, 'rgba(255,255,255,.95)'); gl.addColorStop(1, 'rgba(255,255,255,0)');
-  g.fillStyle = gl; g.beginPath(); g.arc(0, 0, r * .52, 0, Math.PI * 2); g.fill(); g.restore();
-  g.fillStyle = 'rgba(255,255,255,.9)'; g.beginPath(); g.arc(-r * .36, -r * .36, r * .075, 0, Math.PI * 2); g.fill();
+  // triangles first, circles sit on top like jelly balls
+  PIECES.filter(p => !p.circle).forEach(p => {
+    const cx = p.ox * k, cy = p.oy * k, v = p.v.map(([x, y]) => [cx + x * k, cy + y * k]);
+    const ys = v.map(q => q[1]), top = Math.min(...ys), bot = Math.max(...ys);
+    const lg = g.createLinearGradient(cx - w * .08, top, cx + w * .08, bot);
+    if (rainbow) { lg.addColorStop(0, 'rgba(255,255,255,.45)'); lg.addColorStop(.5, 'rgba(255,255,255,0)'); lg.addColorStop(1, 'rgba(40,0,30,.35)'); }
+    else { lg.addColorStop(0, C.light); lg.addColorStop(.45, C.base); lg.addColorStop(1, C.dark); }
+    g.fillStyle = lg; g.beginPath(); g.moveTo(v[0][0], v[0][1]); g.lineTo(v[1][0], v[1][1]); g.lineTo(v[2][0], v[2][1]); g.closePath(); g.fill();
+  });
+  PIECES.filter(p => p.circle).forEach(p => {
+    const cx = p.ox * k, cy = p.oy * k, R = p.r * k;
+    const rg = g.createRadialGradient(cx - R * .32, cy - R * .38, R * .05, cx, cy, R * 1.05);
+    if (rainbow) { rg.addColorStop(0, 'rgba(255,255,255,.55)'); rg.addColorStop(.5, 'rgba(255,255,255,0)'); rg.addColorStop(1, 'rgba(40,0,30,.45)'); }
+    else { rg.addColorStop(0, C.light); rg.addColorStop(.5, C.base); rg.addColorStop(1, C.dark); }
+    g.fillStyle = rg; g.beginPath(); g.arc(cx, cy, R, 0, Math.PI * 2); g.fill();
+  });
+  if (special === SH || special === SV) {
+    const sw = w * .065, st = w * .16;
+    for (let i = -4; i <= 4; i++) {
+      const o = i * st;
+      g.fillStyle = hexA(C.dark, .35);
+      if (special === SH) g.fillRect(-w, o - sw / 2 + w * .02, w * 2, sw); else g.fillRect(o - sw / 2 + w * .02, -w, sw, w * 2);
+      g.fillStyle = 'rgba(255,255,255,.92)';
+      if (special === SH) g.fillRect(-w, o - sw / 2, w * 2, sw); else g.fillRect(o - sw / 2, -w, sw, w * 2);
+    }
+  }
+  // gloss: a soft cap and a sharp glint on every ball, a streak on every triangle
+  PIECES.forEach(p => {
+    const cx = p.ox * k, cy = p.oy * k;
+    if (p.circle) {
+      const R = p.r * k;
+      g.save(); g.translate(cx - R * .2, cy - R * .42); g.rotate(-.35); g.scale(1, .55);
+      const gl = g.createLinearGradient(0, -R * .5, 0, R * .5);
+      gl.addColorStop(0, 'rgba(255,255,255,.95)'); gl.addColorStop(1, 'rgba(255,255,255,0)');
+      g.fillStyle = gl; g.beginPath(); g.arc(0, 0, R * .55, 0, Math.PI * 2); g.fill(); g.restore();
+      g.fillStyle = 'rgba(255,255,255,.95)'; g.beginPath(); g.arc(cx - R * .42, cy - R * .32, R * .09, 0, Math.PI * 2); g.fill();
+      const bg2 = g.createRadialGradient(cx + R * .2, cy + R * .7, 0, cx + R * .2, cy + R * .7, R * .7);
+      bg2.addColorStop(0, rainbow ? 'rgba(255,255,255,.3)' : hexA(C.light, .5)); bg2.addColorStop(1, 'rgba(255,255,255,0)');
+      g.fillStyle = bg2; g.beginPath(); g.arc(cx, cy, R, 0, Math.PI * 2); g.fill();
+    } else {
+      // streak just inside the left edge (vertex 0 to vertex 2 on both triangles)
+      const v = p.v.map(([x, y]) => [cx + x * k, cy + y * k]), a = v[0], b = v[2], dy = w * .022;
+      g.strokeStyle = 'rgba(255,255,255,.55)'; g.lineWidth = w * .022; g.lineCap = 'round';
+      g.beginPath(); g.moveTo(lerp(a[0], b[0], .18) + dy, lerp(a[1], b[1], .18) + dy); g.lineTo(lerp(a[0], b[0], .62) + dy, lerp(a[1], b[1], .62)); g.stroke();
+    }
+  });
+  g.restore();
+  g.lineWidth = Math.max(1, w * .014); g.strokeStyle = rainbow ? 'rgba(255,255,255,.6)' : hexA(C.dark, .7); g.stroke(P);
 }
 function makeCandy(type, special, S) {
   const cv = document.createElement('canvas'); cv.width = cv.height = S;
-  const g = cv.getContext('2d'); g.translate(S / 2, S / 2);
-  const C = CANDY[type], r = S * .36;
-  const path = shapePath(C.shape, special === WRAP ? r * .82 : r);
+  const g = cv.getContext('2d'); g.translate(S / 2, S / 2 + S * .02);
+  const C = CANDY[type];
   if (special === WRAP) {
+    // cellophane wrapper with twisted ends
     for (const side of [-1, 1]) {
       g.save(); g.scale(side, 1);
-      const fp = new Path2D(); fp.moveTo(r * .5, 0); fp.lineTo(r * 1.3, -r * .64); fp.quadraticCurveTo(r * 1.1, 0, r * 1.3, r * .64); fp.closePath();
-      const fg = g.createLinearGradient(r * .5, 0, r * 1.3, 0); fg.addColorStop(0, C.base); fg.addColorStop(1, C.light);
-      g.fillStyle = fg; g.fill(fp); g.lineWidth = r * .06; g.strokeStyle = hexA(C.dark, .7); g.lineJoin = 'round'; g.stroke(fp);
+      const fp = new Path2D(); fp.moveTo(S * .3, 0); fp.lineTo(S * .49, -S * .19); fp.quadraticCurveTo(S * .43, 0, S * .49, S * .19); fp.closePath();
+      const fg = g.createLinearGradient(S * .3, 0, S * .49, 0); fg.addColorStop(0, C.base); fg.addColorStop(1, C.light);
+      g.fillStyle = fg; g.fill(fp); g.lineWidth = S * .02; g.strokeStyle = hexA(C.dark, .7); g.lineJoin = 'round'; g.stroke(fp);
       g.restore();
     }
-  }
-  g.save(); g.shadowColor = 'rgba(25,5,15,.55)'; g.shadowBlur = r * .22; g.shadowOffsetY = r * .14; g.fillStyle = C.dark; g.fill(path); g.restore();
-  const grd = g.createRadialGradient(-r * .32, -r * .42, r * .05, 0, 0, r * 1.25);
-  grd.addColorStop(0, C.light); grd.addColorStop(.45, C.base); grd.addColorStop(1, C.dark);
-  g.fillStyle = grd; g.fill(path);
-  if (C.shape === 'star') { g.lineJoin = 'round'; g.lineWidth = r * .1; g.strokeStyle = grd; g.stroke(path); }
-  g.save(); g.clip(path);
-  if (special === SH || special === SV) {
-    const w = r * .17, st = r * .44;
-    for (let k = -3; k <= 3; k++) {
-      const o = k * st;
-      g.fillStyle = hexA(C.dark, .35);
-      if (special === SH) g.fillRect(-r * 1.4, o - w / 2 + r * .05, r * 2.8, w); else g.fillRect(o - w / 2 + r * .05, -r * 1.4, w, r * 2.8);
-      g.fillStyle = 'rgba(255,255,255,.92)';
-      if (special === SH) g.fillRect(-r * 1.4, o - w / 2, r * 2.8, w); else g.fillRect(o - w / 2, -r * 1.4, w, r * 2.8);
-    }
-  }
-  const rg = g.createRadialGradient(r * .15, r * .75, 0, r * .15, r * .75, r * .8);
-  rg.addColorStop(0, hexA(C.light, .55)); rg.addColorStop(1, hexA(C.light, 0));
-  g.fillStyle = rg; g.fillRect(-r * 1.5, -r * 1.5, r * 3, r * 3);
-  gloss(g, r);
-  g.restore();
-  g.lineWidth = Math.max(1, r * .05); g.strokeStyle = hexA(C.dark, .6); g.stroke(path);
-  if (special === WRAP) { g.lineWidth = r * .07; g.strokeStyle = 'rgba(255,255,255,.55)'; g.beginPath(); g.arc(0, 0, r * 1.02, 0, Math.PI * 2); g.stroke(); }
+    rrPath(g, -S * .38, -S * .27, S * .76, S * .5, S * .2); g.fillStyle = hexA(C.light, .28); g.fill();
+    g.lineWidth = S * .025; g.strokeStyle = 'rgba(255,255,255,.6)'; g.stroke();
+    paintLogo(g, S * .66, C, NONE, false);
+    rrPath(g, -S * .31, -S * .24, S * .3, S * .07, S * .035); g.fillStyle = 'rgba(255,255,255,.4)'; g.fill();
+  } else paintLogo(g, S * .92, C, special, false);
   return cv;
-}
-function drawLogo(g, w, color) {
-  const s = w / LOGO_BOX.w;
-  g.save(); g.scale(s, s); g.translate(-(LOGO_BOX.x + LOGO_BOX.w / 2), -(LOGO_BOX.y + LOGO_BOX.h / 2));
-  g.fillStyle = color; g.fill(LOGO); g.restore();
 }
 function makeBomb(S) {
   const cv = document.createElement('canvas'); cv.width = cv.height = S;
-  const g = cv.getContext('2d'); g.translate(S / 2, S / 2);
-  const r = S * .37, rnd = mulberry(42);
-  g.save(); g.shadowColor = 'rgba(25,5,15,.6)'; g.shadowBlur = r * .25; g.shadowOffsetY = r * .14;
-  g.fillStyle = '#1c0a06'; g.beginPath(); g.arc(0, 0, r, 0, Math.PI * 2); g.fill(); g.restore();
-  const grd = g.createRadialGradient(-r * .3, -r * .4, r * .05, 0, 0, r * 1.1);
-  grd.addColorStop(0, '#8a5236'); grd.addColorStop(.5, '#4a2214'); grd.addColorStop(1, '#1c0a06');
-  g.fillStyle = grd; g.beginPath(); g.arc(0, 0, r, 0, Math.PI * 2); g.fill();
-  g.save(); g.beginPath(); g.arc(0, 0, r, 0, Math.PI * 2); g.clip();
-  for (let i = 0; i < 22; i++) {
-    const a = i / 22 * Math.PI * 2 + rnd() * .2, d = r * (.7 + rnd() * .2);
-    g.save(); g.translate(Math.cos(a) * d, Math.sin(a) * d); g.rotate(rnd() * Math.PI);
-    g.fillStyle = CANDY[i % 6].base; rrPath(g, -r * .12, -r * .045, r * .24, r * .09, r * .045); g.fill(); g.restore();
+  const g = cv.getContext('2d'); g.translate(S / 2, S / 2 + S * .02);
+  paintLogo(g, S * .94, CANDY[0], NONE, true);
+  // sugar sparkles
+  const rnd = mulberry(42); g.fillStyle = '#ffffff';
+  for (let i = 0; i < 7; i++) {
+    const x = (rnd() - .5) * S * .8, y = (rnd() - .5) * S * .45, s = S * (.02 + rnd() * .025);
+    g.beginPath(); g.moveTo(x, y - s * 2); g.quadraticCurveTo(x, y, x + s * 2, y); g.quadraticCurveTo(x, y, x, y + s * 2); g.quadraticCurveTo(x, y, x - s * 2, y); g.quadraticCurveTo(x, y, x, y - s * 2); g.fill();
   }
-  drawLogo(g, r * 1.08, '#fff3e3');
-  gloss(g, r);
-  g.restore();
-  g.lineWidth = Math.max(1, r * .05); g.strokeStyle = 'rgba(255,220,180,.35)'; g.beginPath(); g.arc(0, 0, r * .98, 0, Math.PI * 2); g.stroke();
   return cv;
 }
 function makeGlow(S, color) {
@@ -954,7 +964,7 @@ function onTilePop(t) {
   state.score += t.pts;
   SFX.pop(popSeq++);
   const px = sx(t.x), py = sy(t.y);
-  if (!t.mergeTo) burst(px, py, t.special === BOMB ? -1 : t.type, t.special ? 1.4 : 1);
+  if (!t.mergeTo) { shatter(px, py, t.special === BOMB ? -1 : t.type, t.special ? 1.25 : 1); burst(px, py, t.special === BOMB ? -1 : t.type, t.special ? .9 : .45); }
   const r = t.popR, c = t.popC;
   if (jelly[r] && jelly[r][c] > 0) {
     jelly[r][c]--; jwob[r][c] = 1; jellySplash(px, py);
@@ -973,6 +983,17 @@ function bumpEl(el) { el.classList.remove('bump'); void el.offsetWidth; el.class
 /* ---------- effects ---------- */
 function shake(a) { if (!REDUCED) shakeAmt = Math.max(shakeAmt, a); }
 function flash(a) { flashA = Math.max(flashA, REDUCED ? a * .3 : a); }
+// the candy breaks into the five pieces of the logo, which fly apart
+function shatter(x, y, type, power = 1) {
+  if (particles.length > 1500) return;
+  const cs = BR.cs, k = cs * .92 / LOGO_BOX.w;
+  PIECES.forEach((p, i) => {
+    const C = type >= 0 ? CANDY[type] : CANDY[(i * 2 + randi(6)) % 6];
+    const ox = p.ox * k, oy = p.oy * k, d = Math.hypot(ox, oy) || 1, sp = rand(3.5, 6.5) * cs * power;
+    particles.push({ k: 'piece', x: x + ox, y: y + oy, vx: ox / d * sp + rand(-1, 1) * cs, vy: oy / d * sp - cs * rand(3, 5.5), g: cs * 28, drag: 1.4, life: 0, max: rand(.55, .8),
+      rot: 0, vr: rand(-11, 11), col: C.base, col2: C.light, col3: C.dark, R: p.circle ? p.r * k : 0, v: p.circle ? null : p.v.map(([vx, vy]) => [vx * k, vy * k]) });
+  });
+}
 function burst(x, y, type, power = 1) {
   if (particles.length > 1500) return;
   const cs = BR.cs, col = type >= 0 ? CANDY[type] : null, n = Math.round((REDUCED ? 5 : 11) * power);
@@ -1147,7 +1168,8 @@ function drawTile(t, now, selT) {
   }
   const px = BR.x + (x + .5) * cs, py = BR.y + (y + .5) * cs;
   let s = t.scale * (1 + t.bs); if (t === selT) s *= 1 + .07 * Math.sin(now * 9);
-  const sq = clamp(t.sq, -.35, .35), scx = s * (1 + sq * .6), scy = s * (1 - sq);
+  const idle = REDUCED || t.falling || t.dying ? 0 : .022 * Math.sin(now * 2.6 + t.id * .9);
+  const sq = clamp(t.sq + idle, -.35, .35), scx = s * (1 + sq * .6), scy = s * (1 - sq);
   gx.save(); gx.translate(px, py + cs * .4 * (s - scy)); gx.globalAlpha = t.alpha;
   if (t.special > 0 || (hint && (t === hint.a || t === hint.b)) || t === selT) {
     const g = t.special === BOMB || t.special <= 0 ? GLOW_W : GLOW[t.type];
@@ -1157,6 +1179,7 @@ function drawTile(t, now, selT) {
     gx.globalCompositeOperation = 'source-over'; gx.globalAlpha = t.alpha;
   }
   if (t.special === BOMB) gx.rotate(Math.sin(now * 2 + t.id) * .12);
+  else if (t === selT) gx.rotate(Math.sin(now * 16) * .07);
   gx.scale(scx, scy);
   const spr = t.special === -1 ? SPR[t.type * 4] : spriteOf(t);
   gx.drawImage(spr, -cs / 2, -cs / 2, cs, cs);
@@ -1244,6 +1267,15 @@ function drawFx(now) {
     gx.save(); gx.translate(p.x, p.y); gx.rotate(p.rot); gx.globalAlpha = a; gx.fillStyle = p.col;
     if (p.k === 'dot') { gx.beginPath(); gx.arc(0, 0, p.sz * (1 - k * .5), 0, Math.PI * 2); gx.fill(); }
     else if (p.k === 'tri') { const s = p.sz * 1.3; gx.beginPath(); gx.moveTo(0, -s); gx.lineTo(s * .9, s * .6); gx.lineTo(-s * .9, s * .6); gx.closePath(); gx.fill(); }
+    else if (p.k === 'piece') {
+      const s = k < .55 ? 1 + .15 * Math.sin(k * 12) : 1 - (k - .55) / .45 * .8; gx.scale(s, s); gx.globalAlpha = k > .7 ? 1 - (k - .7) / .3 : 1;
+      gx.fillStyle = p.col3; gx.beginPath();
+      if (p.R) gx.arc(0, BR.cs * .015, p.R, 0, Math.PI * 2); else { gx.moveTo(p.v[0][0], p.v[0][1] + BR.cs * .015); gx.lineTo(p.v[1][0], p.v[1][1] + BR.cs * .015); gx.lineTo(p.v[2][0], p.v[2][1] + BR.cs * .015); gx.closePath(); }
+      gx.fill(); gx.fillStyle = p.col; gx.beginPath();
+      if (p.R) gx.arc(0, 0, p.R * .94, 0, Math.PI * 2); else { gx.moveTo(p.v[0][0], p.v[0][1]); gx.lineTo(p.v[1][0], p.v[1][1]); gx.lineTo(p.v[2][0], p.v[2][1]); gx.closePath(); }
+      gx.fill();
+      if (p.R) { gx.fillStyle = p.col2; gx.beginPath(); gx.arc(-p.R * .3, -p.R * .32, p.R * .38, 0, Math.PI * 2); gx.fill(); gx.fillStyle = 'rgba(255,255,255,.9)'; gx.beginPath(); gx.arc(-p.R * .42, -p.R * .4, p.R * .12, 0, Math.PI * 2); gx.fill(); }
+    }
     else if (p.k === 'conf') { gx.scale(1, Math.sin(p.life * 9 + p.ph)); gx.fillRect(-p.sz / 2, -p.sz * .3, p.sz, p.sz * .6); }
     gx.restore();
   }
@@ -1543,7 +1575,7 @@ function boot(data) {
 window.claude?.hot?.ready ? window.claude.hot.ready(boot) : boot(window.claude?.hot?.data ?? {});
 
 // lightweight hooks for automated play-testing
-window.__sugar = { moves: () => allMoves(), swap: (a, b) => attemptSwap(a, b), state: () => ({ ...state, goals: state.goals.map(g => ({ kind: g.kind, left: g.left, need: g.need })) }), canPlay: () => canPlay(), start: n => startLevel(n), begin: () => { closeModal(); beginLevel(); } };
+window.__sugar = { moves: () => allMoves(), swap: (a, b) => attemptSwap(a, b), state: () => ({ ...state, goals: state.goals.map(g => ({ kind: g.kind, left: g.left, need: g.need })) }), canPlay: () => canPlay(), start: n => startLevel(n), sprite: (t, s) => (s === BOMB ? makeBomb(160) : makeCandy(t, s, 160)).toDataURL(), begin: () => { closeModal(); beginLevel(); } };
 })();
 </script>
 </body>

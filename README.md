@@ -66,7 +66,7 @@ In Xcode, select the **SugarShapes** target. Under **Signing & Capabilities**, p
 | `src/levels.json` | The 60 levels (tuned). `src/levels-original.json` is the set before tuning |
 | `test/` | One automated test per rule (`npm test`) |
 | `sim/` | Bots, the level simulator, the tuner, and the economy and booster models. Results in `sim/results/` |
-| `tools/` | `build.js`, `parity.js` (game vs simulator replay), `timing.js` (timing harness), `cvd.js` (colour-blindness check) |
+| `tools/` | `build.js`, `parity.js` (game vs simulator replay), `tutorials.js` (tutorial check), `timing.js` (timing harness), `cvd.js` (colour-blindness check) |
 | `RULES.md`, `TIMING.md`, `TESTPLAN.md` | Rulebook, timing spec and measurements, and the device and playtest plan |
 | `fonts/` | Lilita One and Nunito, SIL Open Font License |
 | `icons/`, `manifest.webmanifest`, `sw.js` | Home-screen icon, app manifest and offline cache |
@@ -89,6 +89,7 @@ node sim/tune.js && node sim/refine.js   # retune moves, goals and stars to the 
 node sim/boosters.js              # what each booster is worth on hard levels
 node sim/economy.js current       # 20-minute session model of gold, boosters and revives
 node tools/parity.js              # replays simulator games in the real game and compares every move
+node tools/tutorials.js           # plays every first-time tutorial in the real game
 node tools/timing.js              # measures the turn timing in a browser
 node tools/cvd.js                 # colour-blindness check of the candy palette
 ```

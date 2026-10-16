@@ -3,7 +3,9 @@
 // and full colour blindness (luminance only), then measures how far apart every pair of candy colours
 // stays, as CIEDE2000 colour difference. Usage: node tools/cvd.js [hex hex ...]
 'use strict';
-const PALETTE = process.argv.slice(2).length ? process.argv.slice(2) : ['#ff3b5c', '#ff9419', '#ffd92e', '#35d05e', '#2f9bff', '#a752f5'];
+// Default is the shipped palette. The palette before the colour-blindness fix was
+// #ff3b5c #ff9419 #ffd92e #35d05e #2f9bff #a752f5 (pass it as arguments to compare).
+const PALETTE = process.argv.slice(2).length ? process.argv.slice(2) : ['#ff2a4b', '#ff9520', '#fff914', '#5cd986', '#5d94ff', '#892af3'];
 const NAMES = ['cherry', 'tangerine', 'lemon', 'lime', 'blueberry', 'grape'];
 const M = {
   protanopia: [[0.152286, 1.052583, -0.204868], [0.114503, 0.786281, 0.099216], [-0.003882, -0.048116, 1.051998]],

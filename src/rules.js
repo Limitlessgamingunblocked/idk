@@ -29,18 +29,20 @@ const TUNE = {
   keyChance: .04,                           // chance a new candy carries a key (0: no keys)
   chestRewards: 'one',                      // 'rainbow+2' or 'one' (a single random special)
   unicornSplash: 'plus',                    // 'plus': target and 4 neighbours; 'single': just the target
-  stampede: 8,                              // unicorns launched by Unicorn Stampede
-  party: 'board',                           // 'board': hits every candy; 'specials': fires partySpecials random specials
+  stampede: 6,                              // unicorns launched by Unicorn Stampede (8 before the economy study)
+  party: 'specials',                        // 'board': hits every candy (wins most levels outright); 'specials': fires partySpecials random specials
   partySpecials: 6,
+  // Economy, set from the session model in sim/economy.js (the original values are kept there as 'original').
   econ: {
-    startGold: 50,
-    startBoosters: { hammer: 3, swap: 3, rainbow: 2, swarm: 2, moves: 2, party: 1 },
-    winGold: [5, 5, 10],                    // base, per star, first-clear bonus
-    chestGold: [5, 10],                     // inclusive range
-    reviveBase: 10,                         // nth revive in one attempt costs reviveBase * n
+    startGold: 30,
+    startBoosters: { hammer: 1, swap: 1, rainbow: 1, swarm: 1, moves: 1, party: 0 },
+    winGold: [1, 1, 2],                     // base, per star, first-clear bonus
+    chestGold: [1, 3],                      // inclusive range
+    chestBoosterChance: .25,                // chance an opened chest also gives a booster
+    reviveBase: 30,                         // nth revive in one attempt costs reviveBase * n
     reviveMoves: 5,
-    price: { hammer: 15, swap: 15, rainbow: 25, swarm: 30, moves: 20, party: 60 },
-    boosterPool: ['hammer', 'hammer', 'swap', 'swap', 'rainbow', 'swarm', 'swarm', 'moves', 'party'],
+    price: { hammer: 35, swap: 35, rainbow: 50, swarm: 60, moves: 45, party: 140 },
+    boosterPool: ['hammer', 'hammer', 'swap', 'swap', 'moves', 'rainbow', 'swarm'],
   },
 };
 const winGold = (stars, firstClear) => TUNE.econ.winGold[0] + TUNE.econ.winGold[1] * stars + (firstClear ? TUNE.econ.winGold[2] : 0);
@@ -450,7 +452,9 @@ function openChest(w) {
   const rewards = TUNE.chestRewards === 'one' ? [[BOMB, SEEK, WRAP, SH, SV][randi(w, 5)]] : [BOMB, [SEEK, WRAP, SH][randi(w, 3)], [SEEK, WRAP, SV][randi(w, 3)]];
   const pool = shuffleInPlace(w, plainTiles(w)), placed = [];
   rewards.forEach((sp, i) => { if (pool[i]) { pool[i].special = sp; placed.push({ tile: pool[i], special: sp }); } });
-  const prize = TUNE.econ.boosterPool[randi(w, TUNE.econ.boosterPool.length)];
+  // always draw both numbers so the random stream does not depend on the economy settings
+  const roll = w.rng(), pick = TUNE.econ.boosterPool[randi(w, TUNE.econ.boosterPool.length)];
+  const prize = roll < (TUNE.econ.chestBoosterChance ?? 1) ? pick : null;
   const gold = TUNE.econ.chestGold[0] + randi(w, TUNE.econ.chestGold[1] - TUNE.econ.chestGold[0] + 1);
   return { placed, prize, gold };
 }

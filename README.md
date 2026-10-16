@@ -1,6 +1,6 @@
 # Sugar Shapes
 
-A match-3 candy game where every candy is the logo. Swap neighbouring candies to line up three or more. 30 levels.
+A match-3 candy game where every candy is the logo. Swap neighbouring candies to line up three or more. 30 candy levels, plus 30 Furniture Mode levels.
 
 | Match | Makes |
 | --- | --- |
@@ -9,11 +9,11 @@ A match-3 candy game where every candy is the logo. Swap neighbouring candies to
 | L or T | Wrapped candy: explodes around itself |
 | 5 in a row, or any match of 6+ | Rainbow: clears every candy of one colour |
 
-Swap two specials together for combos (for example unicorn + striped fires lasers wherever the unicorns land, rainbow + unicorn turns a whole colour into unicorns). The **rainbow meter** fills as you clear candies and drops a free rainbow when full. Candies with **gold keys** fill the **sugar chest**, which bursts into a rainbow, two more specials and a free booster.
+Swap two specials together for combos (for example unicorn + striped fires lasers wherever the unicorns land, rainbow + unicorn turns a whole colour into unicorns). The **rainbow meter** fills as you clear candies and drops a free rainbow when full. Candies with **gold keys** fill the **sugar chest**, which turns a candy into a special and pays out gold, sometimes with a booster too.
 
-**Boosters** (bottom bar, saved between levels): Hammer, Free Swap, Rainbow Drop, Unicorn Stampede, +5 Moves and Sugar Party, which hits every candy on the board at once. You earn more from chests and 3-star wins.
+**Boosters** (bottom bar, saved between levels): Hammer, Free Swap, Rainbow Drop, Unicorn Stampede, +5 Moves and Sugar Party, which turns six candies into specials and sets them all off. You earn more from chests or buy them with gold.
 
-**Gold bars** are the in-game currency (there are no real-money purchases). Win levels (more stars, more gold) and open chests to earn them. Spend them in the **Shop** on boosters, or to **revive** with +5 moves when you run out (10, then 20, then 30 gold within one level).
+**Gold bars** are the in-game currency (there are no real-money purchases). Win levels (more stars, more gold) and open chests to earn them. Spend them in the **Shop** on boosters, or to **revive** with +5 moves when you run out (30, then 60, then 90 gold within one attempt). The full rules and numbers are in [RULES.md](RULES.md).
 
 **Furniture Mode** (levels 101–130, from the title screen or the Furniture tab on the level map) swaps the candies for sofas, armchairs, lamps, plants, beds and wardrobes, set in a cosy room on a parquet floor. Jelly becomes dust to clean, the rainbow becomes a disco ball, and specials become striped, gift-wrapped and unicorn-horned furniture.
 
@@ -61,7 +61,13 @@ In Xcode, select the **SugarShapes** target. Under **Signing & Capabilities**, p
 
 | Path | What it is |
 | --- | --- |
-| `index.html` | The game: canvas rendering, logic, synthesised audio |
+| `index.html` | The game: canvas rendering, turn flow, tutorials, synthesised audio. Built from itself plus `src/` by `tools/build.js` |
+| `src/rules.js` | The rules engine, shared by the game and the simulator. `RULES.md` describes it |
+| `src/levels.json` | The 60 levels (tuned). `src/levels-original.json` is the set before tuning |
+| `test/` | One automated test per rule (`npm test`) |
+| `sim/` | Bots, the level simulator, the tuner, and the economy and booster models. Results in `sim/results/` |
+| `tools/` | `build.js`, `parity.js` (game vs simulator replay), `timing.js` (timing harness), `cvd.js` (colour-blindness check) |
+| `RULES.md`, `TIMING.md`, `TESTPLAN.md` | Rulebook, timing spec and measurements, and the device and playtest plan |
 | `fonts/` | Lilita One and Nunito, SIL Open Font License |
 | `icons/`, `manifest.webmanifest`, `sw.js` | Home-screen icon, app manifest and offline cache |
 | `ios/` | Native SwiftUI wrapper (XcodeGen spec, a web view hosting `index.html`, native haptics) |
@@ -69,3 +75,20 @@ In Xcode, select the **SugarShapes** target. Under **Signing & Capabilities**, p
 | `.github/workflows/pages.yml` | Publishes the web app to GitHub Pages |
 
 Home-screen copies check for a newer version whenever they open with a connection, and fall back to the cached copy offline. If you add files the game needs offline, list them in `FILES` in `sw.js` and bump its `VERSION`.
+
+## Balancing tools
+
+Everything runs on Node 18+ and needs no install, except the browser tools, which use Playwright.
+
+```sh
+npm test                          # rebuild check + rule tests
+node tools/build.js               # inline src/rules.js and src/levels.json into index.html (run after editing them)
+node sim/run.js --games 1000      # bot win rates for all 60 levels (random, greedy, lookahead); --kit adds boosters
+node sim/ablation.js              # how much each generous rule (meter, chests, boxes...) makes levels easier
+node sim/tune.js && node sim/refine.js   # retune moves, goals and stars to the difficulty curve
+node sim/boosters.js              # what each booster is worth on hard levels
+node sim/economy.js current       # 20-minute session model of gold, boosters and revives
+node tools/parity.js              # replays simulator games in the real game and compares every move
+node tools/timing.js              # measures the turn timing in a browser
+node tools/cvd.js                 # colour-blindness check of the candy palette
+```

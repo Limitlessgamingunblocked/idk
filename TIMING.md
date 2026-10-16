@@ -35,3 +35,22 @@ These targets come from published game-feel and perception research, not from me
 ## Measurements
 
 Filled in from `sim/results/timing.json`, measured in headless Chromium on a desktop CPU. These numbers describe the game's own timing logic. They do not describe iPhone frame rates; see `TESTPLAN.md`.
+
+| Moment | Target | First measurement | After fixes |
+| --- | --- | --- | --- |
+| Swap slide | 120–200 ms | 160 ms | 160 ms |
+| Illegal swap, there and back (median) | ≤ 350 ms | 405 ms ✗ | 341 ms ✓ (bounce 240 → 180 ms) |
+| Plain one-match turn, swap to ready (median / 90th pct) | ≤ 1.3 s | 678 / 786 ms | 642 / 755 ms ✓ |
+| Cascade step to next step (10th / median / 90th pct) | 350–600 ms | 500 / 550 / 633 ms ✗ | 467 / 517 / 600 ms ✓ (post-blast wait 260 → 220 ms) |
+| Longest stretch with nothing moving | ≤ 150 ms | 1,401 ms ✗ | 20 ms ✓ |
+| Frame time (median / 99th pct), headless Chromium | 16.7 / ≤ 20 ms | 16.7 / 16.8 ms | 16.7 / 16.8 ms |
+| Audio output latency (sound after its visual) | ≤ 20 ms | 42 ms (10 base + 32 output) | unchanged; device-specific, see below |
+
+What the longest-gap fix involved:
+
+1. The first harness counted only swaps, pops and falls as activity. Unicorn flights (about 1 s looping round the screen), key and goal-candy flights, chest sparks, gold bars and the dust-spread puff are all visible motion, so they are now marked as activity too.
+2. With those counted, the one real dead spot was a 200 ms pause after a chest finished paying out. It is gone.
+
+Audio: in this environment the sound starts 42 ms after its visual. That is inside the 125 ms "late" limit people tolerate, but above the 20 ms target. It comes from the audio device's output buffer, not the game, and differs per device. Check it on an iPhone (TESTPLAN.md, section 2). If it is noticeably late there, the fix is to start each pop sound `outputLatency` seconds before its pop, which the game can do because pop times are planned in advance.
+
+Hit-stop (50–120 ms freezes on wrapped, rainbow, hammer and combo impacts) is implemented as specified. It is not in the table because it is a deliberate pause, not dead time.

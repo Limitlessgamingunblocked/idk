@@ -70,7 +70,7 @@ A special caught in another special's blast goes off too (chain reaction).
 ## Keys, chests and the rainbow meter
 
 - Clearing a key candy adds a key to the chest. The first chest needs 3 keys and each later one needs one more (up to 6).
-- An opened chest turns one random plain candy into a random special (rainbow, unicorn, wrapped or striped), and gives one booster and some gold. (`TUNE.chestRewards = 'rainbow+2'` restores the original rainbow plus two specials.)
+- An opened chest turns one random plain candy into a random special (rainbow, unicorn, wrapped or striped) and gives 1–3 gold. One chest in four (`TUNE.econ.chestBoosterChance`) also gives a booster. (`TUNE.chestRewards = 'rainbow+2'` restores the original rainbow plus two specials.)
 - Every 150 candies cleared (`TUNE.meterMax`, before the level is won) fills the rainbow meter, which drops a free rainbow on a random candy.
 - Chests open and meter rainbows drop at the end of a turn, only while the level is still being played.
 
@@ -81,8 +81,22 @@ A special caught in another special's blast goes off too (chain reaction).
 | Hammer | Clears one candy (a special goes off) | No |
 | Free Swap | Swaps any two neighbours, even without a match | No |
 | Rainbow Drop | Turns one candy into a rainbow | No |
-| Unicorn Stampede | Launches unicorns (count in `TUNE.stampede`) | No |
+| Unicorn Stampede | Launches 6 unicorns (`TUNE.stampede`) | No |
 | +5 Moves | Adds 5 moves | — |
-| Sugar Party | `TUNE.party`: `board` hits every candy once; `specials` turns a few candies into specials and fires them | No |
+| Sugar Party | Turns 6 random candies into specials and fires them (`TUNE.party = 'specials'`; `'board'` hits every candy once instead) | No |
 
 Booster strength, prices, rewards and revive costs are all in `TUNE` in `src/rules.js`.
+
+## Gold, prices and revives
+
+Gold bars are earned in the game only; there are no real-money purchases.
+
+| | Value |
+| --- | --- |
+| New player | 30 gold and one each of Hammer, Free Swap, Rainbow Drop, Unicorn Stampede and +5 Moves |
+| Winning a level | 1 + 1 per star, +2 the first time it is cleared (2–6 gold) |
+| Chest | 1–3 gold, and a booster one time in four |
+| Shop | Hammer 35, Free Swap 35, Rainbow Drop 50, +5 Moves 45, Unicorn Stampede 60, Sugar Party 140 |
+| Revive (+5 moves) | 30 gold, then 60, then 90 within one attempt |
+
+`sim/economy.js` models 20-minute sessions under these values and `sim/boosters.js` measures how much each booster helps.

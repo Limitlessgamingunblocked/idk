@@ -1,145 +1,145 @@
 {
  "1": {
-  "moves": 20,
-  "colors": 5,
-  "goals": [
-   [
-    "score",
-    2000
-   ]
-  ],
-  "stars": [
-   2000,
-   3000,
-   4200
-  ]
- },
- "2": {
-  "moves": 20,
-  "colors": 5,
-  "goals": [
-   [
-    "collect",
-    0,
-    16
-   ],
-   [
-    "collect",
-    4,
-    16
-   ]
-  ],
-  "stars": [
-   1300,
-   2600,
-   4400
-  ]
- },
- "3": {
-  "moves": 22,
-  "colors": 5,
-  "jelly": "center",
-  "goals": [
-   [
-    "jelly"
-   ]
-  ],
-  "stars": [
-   1400,
-   2900,
-   4900
-  ]
- },
- "4": {
   "moves": 18,
   "colors": 5,
   "goals": [
    [
     "score",
-    3000
+    13900
    ]
   ],
   "stars": [
-   3000,
-   4500,
-   6300
+   13900,
+   20100,
+   26000
+  ]
+ },
+ "2": {
+  "moves": 18,
+  "colors": 5,
+  "goals": [
+   [
+    "collect",
+    0,
+    59
+   ],
+   [
+    "collect",
+    4,
+    59
+   ]
+  ],
+  "stars": [
+   13600,
+   19500,
+   25700
+  ]
+ },
+ "3": {
+  "moves": 10,
+  "colors": 5,
+  "goals": [
+   [
+    "jelly"
+   ]
+  ],
+  "jelly": "center",
+  "layers": 2,
+  "stars": [
+   5100,
+   9800,
+   15600
+  ]
+ },
+ "4": {
+  "moves": 18,
+  "colors": 6,
+  "goals": [
+   [
+    "score",
+    3600
+   ]
+  ],
+  "stars": [
+   3600,
+   7300,
+   9100
   ]
  },
  "5": {
-  "moves": 22,
+  "moves": 18,
   "colors": 6,
   "goals": [
    [
     "collect",
     1,
-    16
+    25
    ],
    [
     "collect",
     2,
-    16
+    25
    ],
    [
     "collect",
     3,
-    16
+    25
    ]
   ],
   "stars": [
-   1400,
-   2900,
-   4900
+   6000,
+   9000,
+   11700
   ]
  },
  "6": {
-  "moves": 24,
-  "colors": 5,
-  "jelly": "ring",
+  "moves": 22,
+  "colors": 6,
   "goals": [
    [
     "jelly"
    ]
   ],
+  "jelly": "ring",
   "stars": [
-   1600,
-   3100,
-   5300
+   5000,
+   8100,
+   10500
   ]
  },
  "7": {
-  "moves": 26,
-  "colors": 5,
-  "jelly": "logo",
+  "moves": 18,
+  "colors": 6,
   "goals": [
    [
     "jelly"
    ]
   ],
+  "jelly": "logo",
   "stars": [
-   1700,
-   3400,
-   5700
+   4800,
+   7700,
+   10200
   ]
  },
  "8": {
-  "moves": 20,
+  "moves": 19,
   "colors": 6,
   "goals": [
    [
     "score",
-    2800
+    5600
    ]
   ],
   "stars": [
-   2800,
-   4200,
-   5900
+   5600,
+   9000,
+   11000
   ]
  },
  "9": {
-  "moves": 24,
-  "colors": 5,
-  "jelly": "cross",
+  "moves": 18,
+  "colors": 6,
   "goals": [
    [
     "jelly"
@@ -147,192 +147,195 @@
    [
     "collect",
     3,
-    20
+    26
    ]
   ],
+  "jelly": "cross",
   "stars": [
-   1600,
-   3100,
-   5300
+   5300,
+   8200,
+   11000
   ]
  },
  "10": {
-  "moves": 24,
+  "moves": 18,
   "colors": 6,
   "goals": [
    [
     "collect",
     0,
-    24
+    38
    ],
    [
     "collect",
     5,
-    24
+    38
    ]
   ],
   "stars": [
-   1600,
-   3100,
-   5300
+   7500,
+   10600,
+   13300
   ]
  },
  "11": {
-  "moves": 28,
-  "colors": 5,
-  "jelly": "x",
-  "goals": [
-   [
-    "jelly"
-   ]
-  ],
-  "stars": [
-   1800,
-   3600,
-   6200
-  ]
- },
- "12": {
-  "moves": 32,
-  "colors": 5,
-  "jelly": "full",
-  "goals": [
-   [
-    "jelly"
-   ]
-  ],
-  "stars": [
-   2100,
-   4200,
-   7100
-  ]
- },
- "13": {
-  "moves": 20,
-  "colors": 5,
-  "goals": [
-   [
-    "score",
-    2550
-   ]
-  ],
-  "stars": [
-   2550,
-   3800,
-   5400
-  ]
- },
- "14": {
-  "moves": 22,
-  "colors": 5,
-  "goals": [
-   [
-    "collect",
-    3,
-    18
-   ],
-   [
-    "collect",
-    2,
-    18
-   ]
-  ],
-  "stars": [
-   1400,
-   2900,
-   4900
-  ]
- },
- "15": {
-  "moves": 30,
-  "colors": 5,
-  "jelly": "logo2",
-  "goals": [
-   [
-    "jelly"
-   ]
-  ],
-  "stars": [
-   2000,
-   3900,
-   6600
-  ]
- },
- "16": {
-  "moves": 26,
-  "colors": 5,
-  "jelly": "center",
-  "goals": [
-   [
-    "jelly"
-   ],
-   [
-    "collect",
-    2,
-    18
-   ]
-  ],
-  "stars": [
-   1700,
-   3400,
-   5700
-  ]
- },
- "17": {
   "moves": 22,
   "colors": 6,
   "goals": [
    [
+    "jelly"
+   ]
+  ],
+  "jelly": "x",
+  "stars": [
+   6600,
+   9900,
+   12800
+  ]
+ },
+ "12": {
+  "moves": 20,
+  "colors": 6,
+  "goals": [
+   [
+    "jelly"
+   ]
+  ],
+  "jelly": "full",
+  "stars": [
+   6000,
+   9000,
+   11600
+  ]
+ },
+ "13": {
+  "moves": 18,
+  "colors": 6,
+  "goals": [
+   [
     "score",
-    3150
+    6000
    ]
   ],
   "stars": [
-   3150,
-   4700,
-   6600
+   6000,
+   9100,
+   11200
+  ]
+ },
+ "14": {
+  "moves": 18,
+  "colors": 6,
+  "goals": [
+   [
+    "collect",
+    3,
+    27
+   ],
+   [
+    "collect",
+    2,
+    27
+   ]
+  ],
+  "stars": [
+   5900,
+   8900,
+   11500
+  ]
+ },
+ "15": {
+  "moves": 17,
+  "colors": 6,
+  "goals": [
+   [
+    "jelly"
+   ]
+  ],
+  "jelly": "logo2",
+  "layers": 2,
+  "stars": [
+   6800,
+   9800,
+   13000
+  ]
+ },
+ "16": {
+  "moves": 18,
+  "colors": 6,
+  "goals": [
+   [
+    "jelly"
+   ],
+   [
+    "collect",
+    2,
+    27
+   ]
+  ],
+  "jelly": "center",
+  "layers": 2,
+  "stars": [
+   5400,
+   8500,
+   11000
+  ]
+ },
+ "17": {
+  "moves": 19,
+  "colors": 6,
+  "goals": [
+   [
+    "score",
+    7000
+   ]
+  ],
+  "stars": [
+   7000,
+   10200,
+   12300
   ]
  },
  "18": {
-  "moves": 22,
+  "moves": 18,
   "colors": 6,
   "goals": [
    [
     "collect",
     1,
-    22
+    30
    ],
    [
     "collect",
     0,
-    22
+    30
    ]
   ],
   "stars": [
-   1400,
-   2900,
-   4900
+   6500,
+   9400,
+   12200
   ]
  },
  "19": {
-  "moves": 30,
+  "moves": 11,
   "colors": 6,
-  "jelly": "center",
   "goals": [
    [
     "jelly"
    ]
   ],
+  "jelly": "center",
+  "layers": 2,
   "stars": [
-   2000,
-   3900,
-   6600
+   3300,
+   5900,
+   8200
   ]
  },
  "20": {
-  "moves": 26,
+  "moves": 18,
   "colors": 6,
-  "jelly": "logo2",
   "goals": [
    [
     "jelly"
@@ -340,13 +343,15 @@
    [
     "collect",
     5,
-    22
+    33
    ]
   ],
+  "jelly": "logo2",
+  "layers": 2,
   "stars": [
-   1700,
-   3400,
-   5700
+   7500,
+   10700,
+   13600
   ]
  },
  "21": {
@@ -355,88 +360,89 @@
   "goals": [
    [
     "score",
-    3750
+    6900
    ]
   ],
   "stars": [
-   3750,
-   5600,
-   7900
+   6900,
+   10000,
+   11800
   ]
  },
  "22": {
-  "moves": 22,
+  "moves": 17,
   "colors": 6,
   "goals": [
    [
     "collect",
     3,
-    26
+    30
    ],
    [
     "collect",
     2,
-    26
+    30
    ]
   ],
   "stars": [
-   1400,
-   2900,
-   4900
+   6300,
+   9100,
+   11700
   ]
  },
  "23": {
-  "moves": 30,
-  "colors": 6,
-  "jelly": "logo2",
-  "goals": [
-   [
-    "jelly"
-   ]
-  ],
-  "stars": [
-   2000,
-   3900,
-   6600
-  ]
- },
- "24": {
-  "moves": 26,
-  "colors": 6,
-  "jelly": "center",
-  "goals": [
-   [
-    "jelly"
-   ],
-   [
-    "collect",
-    0,
-    26
-   ]
-  ],
-  "stars": [
-   1700,
-   3400,
-   5700
-  ]
- },
- "25": {
   "moves": 20,
   "colors": 6,
   "goals": [
    [
+    "jelly"
+   ]
+  ],
+  "jelly": "logo2",
+  "stars": [
+   7100,
+   10400,
+   13000
+  ]
+ },
+ "24": {
+  "moves": 18,
+  "colors": 6,
+  "goals": [
+   [
+    "jelly"
+   ],
+   [
+    "collect",
+    0,
+    38
+   ]
+  ],
+  "jelly": "center",
+  "layers": 2,
+  "stars": [
+   6800,
+   10200,
+   12800
+  ]
+ },
+ "25": {
+  "moves": 19,
+  "colors": 6,
+  "goals": [
+   [
     "score",
-    4350
+    10700
    ]
   ],
   "stars": [
-   4350,
-   6500,
-   9100
+   10700,
+   13500,
+   15200
   ]
  },
  "26": {
-  "moves": 22,
+  "moves": 18,
   "colors": 6,
   "goals": [
    [
@@ -451,30 +457,30 @@
    ]
   ],
   "stars": [
-   1400,
-   2900,
-   4900
+   6400,
+   9400,
+   11900
   ]
  },
  "27": {
-  "moves": 30,
+  "moves": 10,
   "colors": 6,
-  "jelly": "center",
   "goals": [
    [
     "jelly"
    ]
   ],
+  "jelly": "center",
+  "layers": 2,
   "stars": [
-   2000,
-   3900,
-   6600
+   3200,
+   5400,
+   7800
   ]
  },
  "28": {
-  "moves": 26,
+  "moves": 20,
   "colors": 6,
-  "jelly": "logo2",
   "goals": [
    [
     "jelly"
@@ -485,207 +491,201 @@
     30
    ]
   ],
+  "jelly": "logo2",
   "stars": [
-   1700,
-   3400,
-   5700
+   7500,
+   10700,
+   13600
   ]
  },
  "29": {
-  "moves": 22,
+  "moves": 18,
   "colors": 6,
   "goals": [
    [
     "score",
-    4950
+    8400
    ]
   ],
   "stars": [
-   4950,
-   7400,
-   10400
+   8400,
+   11200,
+   13300
   ]
  },
  "30": {
-  "moves": 22,
+  "moves": 20,
   "colors": 6,
   "goals": [
    [
     "collect",
     3,
-    34
+    50
    ],
    [
     "collect",
     0,
-    34
+    50
    ]
   ],
   "stars": [
-   1400,
-   2900,
-   4900
+   10100,
+   13700,
+   16400
   ]
  },
  "101": {
-  "moves": 20,
-  "colors": 5,
-  "goals": [
-   [
-    "score",
-    2000
-   ]
-  ],
-  "stars": [
-   2000,
-   3000,
-   4200
-  ]
- },
- "102": {
-  "moves": 20,
-  "colors": 5,
-  "goals": [
-   [
-    "collect",
-    0,
-    16
-   ],
-   [
-    "collect",
-    4,
-    16
-   ]
-  ],
-  "stars": [
-   1300,
-   2600,
-   4400
-  ]
- },
- "103": {
-  "moves": 22,
-  "colors": 5,
-  "jelly": "center",
-  "goals": [
-   [
-    "jelly"
-   ]
-  ],
-  "stars": [
-   1400,
-   2900,
-   4900
-  ]
- },
- "104": {
   "moves": 18,
   "colors": 5,
   "goals": [
    [
-    "score",
-    3000
+    "jelly"
+   ]
+  ],
+  "jelly": "attic",
+  "spread": true,
+  "layers": 2,
+  "stars": [
+   8200,
+   13600,
+   19900
+  ]
+ },
+ "102": {
+  "moves": 18,
+  "colors": 5,
+  "goals": [
+   [
+    "collect",
+    0,
+    64
+   ],
+   [
+    "collect",
+    4,
+    64
    ]
   ],
   "stars": [
-   3000,
-   4500,
-   6300
+   14500,
+   20700,
+   26800
   ]
  },
- "105": {
-  "moves": 22,
+ "103": {
+  "moves": 20,
+  "colors": 6,
+  "goals": [
+   [
+    "jelly"
+   ]
+  ],
+  "jelly": "twoCorners",
+  "spread": true,
+  "stars": [
+   4500,
+   6600,
+   8900
+  ]
+ },
+ "104": {
+  "moves": 18,
   "colors": 6,
   "goals": [
    [
     "collect",
-    1,
-    16
+    2,
+    18
+   ],
+   [
+    "collect",
+    5,
+    18
+   ],
+   [
+    "collect",
+    5,
+    18
+   ]
+  ],
+  "stars": [
+   4700,
+   7300,
+   9500
+  ]
+ },
+ "105": {
+  "moves": 18,
+  "colors": 6,
+  "goals": [
+   [
+    "jelly"
+   ]
+  ],
+  "jelly": "fourCorners",
+  "spread": true,
+  "stars": [
+   4300,
+   6900,
+   9300
+  ]
+ },
+ "106": {
+  "moves": 21,
+  "colors": 6,
+  "goals": [
+   [
+    "jelly"
+   ]
+  ],
+  "jelly": "fourCorners",
+  "spread": true,
+  "stars": [
+   4900,
+   7400,
+   9600
+  ]
+ },
+ "107": {
+  "moves": 21,
+  "colors": 6,
+  "goals": [
+   [
+    "jelly"
    ],
    [
     "collect",
     2,
     16
-   ],
-   [
-    "collect",
-    3,
-    16
    ]
   ],
+  "jelly": "fourCorners",
+  "spread": true,
   "stars": [
-   1400,
-   2900,
-   4900
-  ]
- },
- "106": {
-  "moves": 24,
-  "colors": 5,
-  "jelly": "ring",
-  "goals": [
-   [
-    "jelly"
-   ]
-  ],
-  "stars": [
-   1600,
-   3100,
-   5300
-  ]
- },
- "107": {
-  "moves": 26,
-  "colors": 5,
-  "jelly": "logo",
-  "goals": [
-   [
-    "jelly"
-   ]
-  ],
-  "stars": [
-   1700,
-   3400,
-   5700
+   5200,
+   8000,
+   10300
   ]
  },
  "108": {
-  "moves": 20,
+  "moves": 21,
   "colors": 6,
   "goals": [
    [
-    "score",
-    2800
+    "jelly"
    ]
   ],
+  "jelly": "twoCorners",
+  "spread": true,
+  "layers": 2,
   "stars": [
-   2800,
-   4200,
-   5900
+   5100,
+   7700,
+   10200
   ]
  },
  "109": {
-  "moves": 24,
-  "colors": 5,
-  "jelly": "cross",
-  "goals": [
-   [
-    "jelly"
-   ],
-   [
-    "collect",
-    3,
-    20
-   ]
-  ],
-  "stars": [
-   1600,
-   3100,
-   5300
-  ]
- },
- "110": {
-  "moves": 24,
+  "moves": 18,
   "colors": 6,
   "goals": [
    [
@@ -695,130 +695,170 @@
    ],
    [
     "collect",
-    5,
+    3,
+    24
+   ],
+   [
+    "collect",
+    4,
     24
    ]
   ],
   "stars": [
-   1600,
-   3100,
-   5300
+   5800,
+   8600,
+   11300
   ]
  },
- "111": {
-  "moves": 28,
-  "colors": 5,
-  "jelly": "x",
-  "goals": [
-   [
-    "jelly"
-   ]
-  ],
-  "stars": [
-   1800,
-   3600,
-   6200
-  ]
- },
- "112": {
-  "moves": 32,
-  "colors": 5,
-  "jelly": "full",
-  "goals": [
-   [
-    "jelly"
-   ]
-  ],
-  "stars": [
-   2100,
-   4200,
-   7100
-  ]
- },
- "113": {
-  "moves": 20,
-  "colors": 5,
-  "goals": [
-   [
-    "score",
-    2550
-   ]
-  ],
-  "stars": [
-   2550,
-   3800,
-   5400
-  ]
- },
- "114": {
-  "moves": 22,
-  "colors": 5,
-  "goals": [
-   [
-    "collect",
-    3,
-    18
-   ],
-   [
-    "collect",
-    2,
-    18
-   ]
-  ],
-  "stars": [
-   1400,
-   2900,
-   4900
-  ]
- },
- "115": {
-  "moves": 30,
-  "colors": 5,
-  "jelly": "logo2",
-  "goals": [
-   [
-    "jelly"
-   ]
-  ],
-  "stars": [
-   2000,
-   3900,
-   6600
-  ]
- },
- "116": {
-  "moves": 26,
-  "colors": 5,
-  "jelly": "center",
-  "goals": [
-   [
-    "jelly"
-   ],
-   [
-    "collect",
-    2,
-    18
-   ]
-  ],
-  "stars": [
-   1700,
-   3400,
-   5700
-  ]
- },
- "117": {
-  "moves": 22,
+ "110": {
+  "moves": 18,
   "colors": 6,
   "goals": [
    [
-    "score",
-    3150
+    "jelly"
+   ]
+  ],
+  "jelly": "attic",
+  "spread": true,
+  "layers": 2,
+  "stars": [
+   5000,
+   8200,
+   11100
+  ]
+ },
+ "111": {
+  "moves": 21,
+  "colors": 6,
+  "goals": [
+   [
+    "jelly"
+   ]
+  ],
+  "jelly": "fourCorners",
+  "spread": true,
+  "stars": [
+   4900,
+   7400,
+   10000
+  ]
+ },
+ "112": {
+  "moves": 20,
+  "colors": 6,
+  "goals": [
+   [
+    "jelly"
+   ],
+   [
+    "collect",
+    0,
+    22
+   ]
+  ],
+  "jelly": "fourCorners",
+  "spread": true,
+  "stars": [
+   5200,
+   8100,
+   10400
+  ]
+ },
+ "113": {
+  "moves": 23,
+  "colors": 6,
+  "goals": [
+   [
+    "jelly"
+   ]
+  ],
+  "jelly": "stripes2",
+  "spread": true,
+  "layers": 2,
+  "stars": [
+   6700,
+   10100,
+   12900
+  ]
+ },
+ "114": {
+  "moves": 19,
+  "colors": 6,
+  "goals": [
+   [
+    "collect",
+    4,
+    29
+   ],
+   [
+    "collect",
+    1,
+    29
+   ],
+   [
+    "collect",
+    3,
+    29
    ]
   ],
   "stars": [
-   3150,
-   4700,
-   6600
+   7000,
+   9900,
+   12500
+  ]
+ },
+ "115": {
+  "moves": 18,
+  "colors": 6,
+  "goals": [
+   [
+    "jelly"
+   ]
+  ],
+  "jelly": "attic",
+  "spread": true,
+  "layers": 2,
+  "stars": [
+   4900,
+   8100,
+   10800
+  ]
+ },
+ "116": {
+  "moves": 18,
+  "colors": 6,
+  "goals": [
+   [
+    "jelly"
+   ]
+  ],
+  "jelly": "stripes2",
+  "spread": true,
+  "stars": [
+   4500,
+   7300,
+   9800
+  ]
+ },
+ "117": {
+  "moves": 20,
+  "colors": 6,
+  "goals": [
+   [
+    "jelly"
+   ],
+   [
+    "collect",
+    4,
+    28
+   ]
+  ],
+  "jelly": "fourCorners",
+  "spread": true,
+  "stars": [
+   5700,
+   8600,
+   11200
   ]
  },
  "118": {
@@ -826,141 +866,157 @@
   "colors": 6,
   "goals": [
    [
-    "collect",
-    1,
-    22
-   ],
-   [
-    "collect",
-    0,
-    22
+    "jelly"
    ]
   ],
+  "jelly": "attic",
+  "spread": true,
+  "layers": 2,
   "stars": [
-   1400,
-   2900,
-   4900
+   5300,
+   8700,
+   11600
   ]
  },
  "119": {
-  "moves": 30,
+  "moves": 19,
   "colors": 6,
-  "jelly": "center",
   "goals": [
    [
-    "jelly"
-   ]
-  ],
-  "stars": [
-   2000,
-   3900,
-   6600
-  ]
- },
- "120": {
-  "moves": 26,
-  "colors": 6,
-  "jelly": "logo2",
-  "goals": [
-   [
-    "jelly"
+    "collect",
+    2,
+    32
    ],
    [
     "collect",
     5,
-    22
-   ]
-  ],
-  "stars": [
-   1700,
-   3400,
-   5700
-  ]
- },
- "121": {
-  "moves": 18,
-  "colors": 6,
-  "goals": [
-   [
-    "score",
-    3750
-   ]
-  ],
-  "stars": [
-   3750,
-   5600,
-   7900
-  ]
- },
- "122": {
-  "moves": 22,
-  "colors": 6,
-  "goals": [
-   [
-    "collect",
-    3,
-    26
+    32
    ],
    [
     "collect",
     2,
-    26
+    32
    ]
   ],
   "stars": [
-   1400,
-   2900,
-   4900
+   6700,
+   9800,
+   12300
   ]
  },
- "123": {
-  "moves": 30,
+ "120": {
+  "moves": 16,
   "colors": 6,
-  "jelly": "logo2",
   "goals": [
    [
     "jelly"
    ]
   ],
+  "jelly": "attic",
+  "spread": true,
+  "layers": 2,
   "stars": [
-   2000,
-   3900,
-   6600
+   4600,
+   7700,
+   10300
   ]
  },
- "124": {
-  "moves": 26,
+ "121": {
+  "moves": 22,
   "colors": 6,
-  "jelly": "center",
+  "goals": [
+   [
+    "jelly"
+   ]
+  ],
+  "jelly": "attic",
+  "spread": true,
+  "layers": 2,
+  "stars": [
+   5300,
+   8700,
+   11500
+  ]
+ },
+ "122": {
+  "moves": 21,
+  "colors": 6,
   "goals": [
    [
     "jelly"
    ],
    [
     "collect",
-    0,
-    26
+    2,
+    37
    ]
   ],
+  "jelly": "fourCorners",
+  "spread": true,
   "stars": [
-   1700,
-   3400,
-   5700
+   6700,
+   10000,
+   12600
   ]
  },
- "125": {
-  "moves": 20,
+ "123": {
+  "moves": 22,
   "colors": 6,
   "goals": [
    [
-    "score",
-    4350
+    "jelly"
+   ]
+  ],
+  "jelly": "fourCorners",
+  "spread": true,
+  "layers": 2,
+  "stars": [
+   5600,
+   8900,
+   12100
+  ]
+ },
+ "124": {
+  "moves": 19,
+  "colors": 6,
+  "goals": [
+   [
+    "collect",
+    0,
+    33
+   ],
+   [
+    "collect",
+    3,
+    33
+   ],
+   [
+    "collect",
+    1,
+    33
    ]
   ],
   "stars": [
-   4350,
-   6500,
-   9100
+   7300,
+   10400,
+   13100
+  ]
+ },
+ "125": {
+  "moves": 16,
+  "colors": 6,
+  "goals": [
+   [
+    "jelly"
+   ]
+  ],
+  "jelly": "attic",
+  "spread": true,
+  "layers": 2,
+  "stars": [
+   4600,
+   7900,
+   10700
   ]
  },
  "126": {
@@ -968,79 +1024,68 @@
   "colors": 6,
   "goals": [
    [
-    "collect",
-    0,
-    30
-   ],
-   [
-    "collect",
-    1,
-    30
+    "jelly"
    ]
   ],
+  "jelly": "attic",
+  "spread": true,
+  "layers": 2,
   "stars": [
-   1400,
-   2900,
-   4900
+   5700,
+   8700,
+   11400
   ]
  },
  "127": {
-  "moves": 30,
+  "moves": 18,
   "colors": 6,
-  "jelly": "center",
-  "goals": [
-   [
-    "jelly"
-   ]
-  ],
-  "stars": [
-   2000,
-   3900,
-   6600
-  ]
- },
- "128": {
-  "moves": 26,
-  "colors": 6,
-  "jelly": "logo2",
   "goals": [
    [
     "jelly"
    ],
    [
     "collect",
-    1,
-    30
+    0,
+    34
    ]
   ],
+  "jelly": "hall",
+  "spread": true,
   "stars": [
-   1700,
-   3400,
-   5700
+   6100,
+   9200,
+   11900
   ]
  },
- "129": {
-  "moves": 22,
+ "128": {
+  "moves": 21,
   "colors": 6,
   "goals": [
    [
-    "score",
-    4950
+    "jelly"
    ]
   ],
+  "jelly": "fourCorners",
+  "spread": true,
+  "layers": 2,
   "stars": [
-   4950,
-   7400,
-   10400
+   5500,
+   8700,
+   11300
   ]
  },
- "130": {
-  "moves": 22,
+ "129": {
+  "moves": 18,
   "colors": 6,
   "goals": [
    [
     "collect",
-    3,
+    4,
+    34
+   ],
+   [
+    "collect",
+    1,
     34
    ],
    [
@@ -1050,9 +1095,26 @@
    ]
   ],
   "stars": [
-   1400,
-   2900,
-   4900
+   7700,
+   10600,
+   13400
+  ]
+ },
+ "130": {
+  "moves": 15,
+  "colors": 6,
+  "goals": [
+   [
+    "jelly"
+   ]
+  ],
+  "jelly": "attic",
+  "spread": true,
+  "layers": 2,
+  "stars": [
+   4800,
+   7800,
+   10300
   ]
  }
 }

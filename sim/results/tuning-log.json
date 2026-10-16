@@ -3,29 +3,50 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 6,
-   "winAtMoves": 0.95,
+   "moves": 7,
+   "winAtMoves": 0.96,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.6,
    "moves": 9,
-   "winAtMoves": 0.933,
+   "winAtMoves": 0.96,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 2.56,
-   "moves": 9,
-   "winAtMoves": 0.9,
+   "moves": 11,
+   "winAtMoves": 0.953,
    "wonEver": 1
   },
   {
    "round": 3,
    "scale": 4.096,
    "moves": 14,
+   "winAtMoves": 0.945,
+   "wonEver": 1
+  },
+  {
+   "round": 4,
+   "scale": 5.266,
+   "moves": 16,
    "winAtMoves": 0.95,
+   "wonEver": 1
+  },
+  {
+   "round": 5,
+   "scale": 6.056,
+   "moves": 16,
+   "winAtMoves": 0.95,
+   "wonEver": 1
+  },
+  {
+   "round": 6,
+   "scale": 6.965,
+   "moves": 18,
+   "winAtMoves": 0.943,
    "wonEver": 1
   }
  ],
@@ -34,28 +55,35 @@
    "round": 0,
    "scale": 1,
    "moves": 9,
-   "winAtMoves": 0.967,
+   "winAtMoves": 0.958,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.6,
    "moves": 12,
-   "winAtMoves": 0.95,
+   "winAtMoves": 0.948,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 2.4,
-   "moves": 13,
-   "winAtMoves": 0.933,
+   "moves": 14,
+   "winAtMoves": 0.963,
    "wonEver": 1
   },
   {
    "round": 3,
-   "scale": 3.323,
+   "scale": 3.086,
+   "moves": 15,
+   "winAtMoves": 0.96,
+   "wonEver": 1
+  },
+  {
+   "round": 4,
+   "scale": 3.703,
    "moves": 18,
-   "winAtMoves": 0.967,
+   "winAtMoves": 0.955,
    "wonEver": 1
   }
  ],
@@ -64,28 +92,42 @@
    "round": 0,
    "scale": 1,
    "moves": 7,
-   "winAtMoves": 0.967,
+   "winAtMoves": 0.953,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.6,
-   "moves": 9,
-   "winAtMoves": 0.95,
+   "moves": 10,
+   "winAtMoves": 0.965,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 2.56,
    "moves": 10,
-   "winAtMoves": 0.95,
+   "winAtMoves": 0.96,
    "wonEver": 1
   },
   {
    "round": 3,
    "scale": 4.096,
    "moves": 9,
-   "winAtMoves": 0.983,
+   "winAtMoves": 0.943,
+   "wonEver": 1
+  },
+  {
+   "round": 4,
+   "scale": 6.554,
+   "moves": 10,
+   "winAtMoves": 0.958,
+   "wonEver": 1
+  },
+  {
+   "round": 5,
+   "scale": 10.486,
+   "moves": 10,
+   "winAtMoves": 0.97,
    "wonEver": 1
   }
  ],
@@ -93,15 +135,15 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 13,
-   "winAtMoves": 0.95,
+   "moves": 15,
+   "winAtMoves": 0.94,
    "wonEver": 1
   },
   {
    "round": 1,
-   "scale": 1.385,
-   "moves": 20,
-   "winAtMoves": 0.95,
+   "scale": 1.2,
+   "moves": 18,
+   "winAtMoves": 0.953,
    "wonEver": 1
   }
  ],
@@ -110,21 +152,21 @@
    "round": 0,
    "scale": 1,
    "moves": 13,
-   "winAtMoves": 0.8,
+   "winAtMoves": 0.785,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.385,
    "moves": 16,
-   "winAtMoves": 0.8,
+   "winAtMoves": 0.772,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 1.592,
    "moves": 18,
-   "winAtMoves": 0.833,
+   "winAtMoves": 0.8,
    "wonEver": 1
   }
  ],
@@ -133,7 +175,7 @@
    "round": 0,
    "scale": 1,
    "moves": 22,
-   "winAtMoves": 0.867,
+   "winAtMoves": 0.865,
    "wonEver": 1
   }
  ],
@@ -142,7 +184,7 @@
    "round": 0,
    "scale": 1,
    "moves": 18,
-   "winAtMoves": 0.833,
+   "winAtMoves": 0.855,
    "wonEver": 1
   }
  ],
@@ -151,28 +193,28 @@
    "round": 0,
    "scale": 1,
    "moves": 12,
-   "winAtMoves": 0.833,
+   "winAtMoves": 0.875,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.5,
    "moves": 16,
-   "winAtMoves": 0.833,
+   "winAtMoves": 0.865,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 1.725,
-   "moves": 16,
-   "winAtMoves": 0.85,
+   "moves": 17,
+   "winAtMoves": 0.843,
    "wonEver": 1
   },
   {
    "round": 3,
    "scale": 1.984,
-   "moves": 18,
-   "winAtMoves": 0.85,
+   "moves": 19,
+   "winAtMoves": 0.863,
    "wonEver": 1
   }
  ],
@@ -181,21 +223,21 @@
    "round": 0,
    "scale": 1,
    "moves": 16,
-   "winAtMoves": 0.833,
+   "winAtMoves": 0.823,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.15,
-   "moves": 15,
-   "winAtMoves": 0.8,
+   "moves": 17,
+   "winAtMoves": 0.833,
    "wonEver": 1
   },
   {
    "round": 2,
-   "scale": 1.38,
+   "scale": 1.322,
    "moves": 18,
-   "winAtMoves": 0.817,
+   "winAtMoves": 0.815,
    "wonEver": 1
   }
  ],
@@ -204,21 +246,21 @@
    "round": 0,
    "scale": 1,
    "moves": 13,
-   "winAtMoves": 0.483,
+   "winAtMoves": 0.573,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.385,
    "moves": 16,
-   "winAtMoves": 0.55,
+   "winAtMoves": 0.512,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 1.592,
    "moves": 18,
-   "winAtMoves": 0.5,
+   "winAtMoves": 0.575,
    "wonEver": 1
   }
  ],
@@ -226,8 +268,8 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 23,
-   "winAtMoves": 0.883,
+   "moves": 22,
+   "winAtMoves": 0.868,
    "wonEver": 1
   }
  ],
@@ -236,7 +278,7 @@
    "round": 0,
    "scale": 1,
    "moves": 20,
-   "winAtMoves": 0.8,
+   "winAtMoves": 0.805,
    "wonEver": 1
   }
  ],
@@ -245,35 +287,28 @@
    "round": 0,
    "scale": 1,
    "moves": 10,
-   "winAtMoves": 0.833,
+   "winAtMoves": 0.787,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.6,
    "moves": 14,
-   "winAtMoves": 0.817,
+   "winAtMoves": 0.81,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 2.057,
-   "moves": 16,
-   "winAtMoves": 0.8,
+   "moves": 17,
+   "winAtMoves": 0.815,
    "wonEver": 1
   },
   {
    "round": 3,
    "scale": 2.366,
-   "moves": 17,
-   "winAtMoves": 0.8,
-   "wonEver": 1
-  },
-  {
-   "round": 4,
-   "scale": 2.721,
-   "moves": 19,
-   "winAtMoves": 0.783,
+   "moves": 18,
+   "winAtMoves": 0.818,
    "wonEver": 1
   }
  ],
@@ -282,21 +317,21 @@
    "round": 0,
    "scale": 1,
    "moves": 14,
-   "winAtMoves": 0.8,
+   "winAtMoves": 0.792,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.286,
-   "moves": 15,
-   "winAtMoves": 0.767,
+   "moves": 16,
+   "winAtMoves": 0.765,
    "wonEver": 1
   },
   {
    "round": 2,
-   "scale": 1.543,
-   "moves": 19,
-   "winAtMoves": 0.8,
+   "scale": 1.479,
+   "moves": 18,
+   "winAtMoves": 0.797,
    "wonEver": 1
   }
  ],
@@ -305,56 +340,77 @@
    "round": 0,
    "scale": 1,
    "moves": 17,
-   "winAtMoves": 0.5,
+   "winAtMoves": 0.497,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.15,
-   "moves": 16,
-   "winAtMoves": 0.517,
+   "moves": 17,
+   "winAtMoves": 0.502,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 1.322,
-   "moves": 16,
-   "winAtMoves": 0.533,
+   "moves": 17,
+   "winAtMoves": 0.505,
    "wonEver": 1
   },
   {
    "round": 3,
    "scale": 1.521,
-   "moves": 16,
-   "winAtMoves": 0.533,
+   "moves": 17,
+   "winAtMoves": 0.487,
    "wonEver": 1
   },
   {
    "round": 4,
    "scale": 1.749,
    "moves": 17,
-   "winAtMoves": 0.467,
+   "winAtMoves": 0.477,
    "wonEver": 1
   },
   {
    "round": 5,
    "scale": 2.011,
    "moves": 17,
-   "winAtMoves": 0.467,
+   "winAtMoves": 0.47,
    "wonEver": 1
   },
   {
    "round": 6,
    "scale": 2.313,
    "moves": 17,
-   "winAtMoves": 0.533,
+   "winAtMoves": 0.472,
    "wonEver": 1
   },
   {
    "round": 7,
    "scale": 2.66,
+   "moves": 17,
+   "winAtMoves": 0.517,
+   "wonEver": 1
+  },
+  {
+   "round": 8,
+   "scale": 3.059,
+   "moves": 17,
+   "winAtMoves": 0.51,
+   "wonEver": 1
+  },
+  {
+   "round": 9,
+   "scale": 3.518,
+   "moves": 17,
+   "winAtMoves": 0.487,
+   "wonEver": 1
+  },
+  {
+   "round": 10,
+   "scale": 4.046,
    "moves": 18,
-   "winAtMoves": 0.5,
+   "winAtMoves": 0.52,
    "wonEver": 1
   }
  ],
@@ -362,15 +418,15 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 11,
-   "winAtMoves": 0.833,
+   "moves": 12,
+   "winAtMoves": 0.84,
    "wonEver": 1
   },
   {
    "round": 1,
-   "scale": 1.6,
-   "moves": 19,
-   "winAtMoves": 0.817,
+   "scale": 1.5,
+   "moves": 18,
+   "winAtMoves": 0.85,
    "wonEver": 1
   }
  ],
@@ -378,29 +434,29 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 10,
+   "moves": 11,
    "winAtMoves": 0.767,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.6,
-   "moves": 14,
-   "winAtMoves": 0.75,
+   "moves": 15,
+   "winAtMoves": 0.73,
    "wonEver": 1
   },
   {
    "round": 2,
-   "scale": 2.057,
+   "scale": 1.92,
    "moves": 17,
-   "winAtMoves": 0.8,
+   "winAtMoves": 0.782,
    "wonEver": 1
   },
   {
    "round": 3,
-   "scale": 2.366,
-   "moves": 21,
-   "winAtMoves": 0.8,
+   "scale": 2.208,
+   "moves": 19,
+   "winAtMoves": 0.765,
    "wonEver": 1
   }
  ],
@@ -408,22 +464,22 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 16,
-   "winAtMoves": 0.767,
+   "moves": 15,
+   "winAtMoves": 0.77,
    "wonEver": 1
   },
   {
    "round": 1,
-   "scale": 1.15,
-   "moves": 16,
-   "winAtMoves": 0.767,
+   "scale": 1.2,
+   "moves": 17,
+   "winAtMoves": 0.77,
    "wonEver": 1
   },
   {
    "round": 2,
-   "scale": 1.322,
+   "scale": 1.38,
    "moves": 18,
-   "winAtMoves": 0.783,
+   "winAtMoves": 0.728,
    "wonEver": 1
   }
  ],
@@ -431,36 +487,43 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 8,
-   "winAtMoves": 0.717,
+   "moves": 7,
+   "winAtMoves": 0.698,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.6,
    "moves": 11,
-   "winAtMoves": 0.683,
+   "winAtMoves": 0.715,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 2.56,
    "moves": 12,
-   "winAtMoves": 0.7,
+   "winAtMoves": 0.757,
    "wonEver": 1
   },
   {
    "round": 3,
    "scale": 3.84,
    "moves": 11,
-   "winAtMoves": 0.733,
+   "winAtMoves": 0.74,
    "wonEver": 1
   },
   {
    "round": 4,
    "scale": 6.144,
-   "moves": 13,
-   "winAtMoves": 0.75,
+   "moves": 11,
+   "winAtMoves": 0.73,
+   "wonEver": 1
+  },
+  {
+   "round": 5,
+   "scale": 9.83,
+   "moves": 11,
+   "winAtMoves": 0.698,
    "wonEver": 1
   }
  ],
@@ -469,21 +532,28 @@
    "round": 0,
    "scale": 1,
    "moves": 17,
-   "winAtMoves": 0.433,
+   "winAtMoves": 0.475,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.15,
-   "moves": 16,
-   "winAtMoves": 0.417,
+   "moves": 17,
+   "winAtMoves": 0.47,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 1.322,
+   "moves": 17,
+   "winAtMoves": 0.47,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 1.521,
    "moves": 18,
-   "winAtMoves": 0.467,
+   "winAtMoves": 0.44,
    "wonEver": 1
   }
  ],
@@ -491,29 +561,29 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 14,
-   "winAtMoves": 0.783,
+   "moves": 13,
+   "winAtMoves": 0.777,
    "wonEver": 1
   },
   {
    "round": 1,
-   "scale": 1.286,
-   "moves": 15,
-   "winAtMoves": 0.783,
+   "scale": 1.385,
+   "moves": 16,
+   "winAtMoves": 0.748,
    "wonEver": 1
   },
   {
    "round": 2,
-   "scale": 1.543,
+   "scale": 1.592,
    "moves": 17,
-   "winAtMoves": 0.767,
+   "winAtMoves": 0.757,
    "wonEver": 1
   },
   {
    "round": 3,
-   "scale": 1.774,
+   "scale": 1.831,
    "moves": 18,
-   "winAtMoves": 0.767,
+   "winAtMoves": 0.775,
    "wonEver": 1
   }
  ],
@@ -522,14 +592,14 @@
    "round": 0,
    "scale": 1,
    "moves": 17,
-   "winAtMoves": 0.717,
+   "winAtMoves": 0.733,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.15,
    "moves": 18,
-   "winAtMoves": 0.7,
+   "winAtMoves": 0.705,
    "wonEver": 1
   }
  ],
@@ -537,8 +607,8 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 19,
-   "winAtMoves": 0.683,
+   "moves": 20,
+   "winAtMoves": 0.705,
    "wonEver": 1
   }
  ],
@@ -546,15 +616,22 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 13,
-   "winAtMoves": 0.667,
+   "moves": 14,
+   "winAtMoves": 0.672,
    "wonEver": 1
   },
   {
    "round": 1,
-   "scale": 1.385,
+   "scale": 1.286,
+   "moves": 17,
+   "winAtMoves": 0.693,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.479,
    "moves": 18,
-   "winAtMoves": 0.683,
+   "winAtMoves": 0.652,
    "wonEver": 1
   }
  ],
@@ -563,28 +640,28 @@
    "round": 0,
    "scale": 1,
    "moves": 9,
-   "winAtMoves": 0.433,
+   "winAtMoves": 0.407,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.6,
    "moves": 14,
-   "winAtMoves": 0.367,
+   "winAtMoves": 0.412,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 2.057,
    "moves": 15,
-   "winAtMoves": 0.4,
+   "winAtMoves": 0.405,
    "wonEver": 1
   },
   {
    "round": 3,
    "scale": 2.469,
-   "moves": 18,
-   "winAtMoves": 0.383,
+   "moves": 19,
+   "winAtMoves": 0.4,
    "wonEver": 1
   }
  ],
@@ -593,7 +670,7 @@
    "round": 0,
    "scale": 1,
    "moves": 18,
-   "winAtMoves": 0.717,
+   "winAtMoves": 0.718,
    "wonEver": 1
   }
  ],
@@ -602,28 +679,42 @@
    "round": 0,
    "scale": 1,
    "moves": 6,
-   "winAtMoves": 0.617,
+   "winAtMoves": 0.61,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.6,
    "moves": 10,
-   "winAtMoves": 0.667,
+   "winAtMoves": 0.625,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 2.56,
    "moves": 11,
-   "winAtMoves": 0.683,
+   "winAtMoves": 0.662,
    "wonEver": 1
   },
   {
    "round": 3,
    "scale": 4.096,
    "moves": 10,
-   "winAtMoves": 0.683,
+   "winAtMoves": 0.645,
+   "wonEver": 1
+  },
+  {
+   "round": 4,
+   "scale": 6.554,
+   "moves": 11,
+   "winAtMoves": 0.693,
+   "wonEver": 1
+  },
+  {
+   "round": 5,
+   "scale": 10.486,
+   "moves": 10,
+   "winAtMoves": 0.605,
    "wonEver": 1
   }
  ],
@@ -631,8 +722,8 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 20,
-   "winAtMoves": 0.633,
+   "moves": 21,
+   "winAtMoves": 0.642,
    "wonEver": 1
   }
  ],
@@ -641,28 +732,28 @@
    "round": 0,
    "scale": 1,
    "moves": 14,
-   "winAtMoves": 0.633,
+   "winAtMoves": 0.65,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.286,
-   "moves": 17,
-   "winAtMoves": 0.667,
+   "moves": 16,
+   "winAtMoves": 0.652,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 1.479,
-   "moves": 17,
-   "winAtMoves": 0.633,
+   "moves": 16,
+   "winAtMoves": 0.608,
    "wonEver": 1
   },
   {
    "round": 3,
    "scale": 1.7,
-   "moves": 18,
-   "winAtMoves": 0.6,
+   "moves": 19,
+   "winAtMoves": 0.652,
    "wonEver": 1
   }
  ],
@@ -671,7 +762,7 @@
    "round": 0,
    "scale": 1,
    "moves": 14,
-   "winAtMoves": 0.35,
+   "winAtMoves": 0.38,
    "wonEver": 1
   },
   {
@@ -684,8 +775,8 @@
   {
    "round": 2,
    "scale": 1.479,
-   "moves": 21,
-   "winAtMoves": 0.35,
+   "moves": 20,
+   "winAtMoves": 0.367,
    "wonEver": 1
   }
  ],
@@ -694,28 +785,56 @@
    "round": 0,
    "scale": 1,
    "moves": 5,
-   "winAtMoves": 0.933,
+   "winAtMoves": 0.973,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.6,
-   "moves": 7,
-   "winAtMoves": 0.95,
+   "moves": 8,
+   "winAtMoves": 0.955,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 2.56,
-   "moves": 8,
-   "winAtMoves": 0.95,
+   "moves": 11,
+   "winAtMoves": 0.948,
    "wonEver": 1
   },
   {
    "round": 3,
    "scale": 4.096,
-   "moves": 6,
-   "winAtMoves": 0.95,
+   "moves": 15,
+   "winAtMoves": 0.948,
+   "wonEver": 1
+  },
+  {
+   "round": 4,
+   "scale": 4.915,
+   "moves": 14,
+   "winAtMoves": 0.953,
+   "wonEver": 1
+  },
+  {
+   "round": 5,
+   "scale": 6.32,
+   "moves": 15,
+   "winAtMoves": 0.953,
+   "wonEver": 1
+  },
+  {
+   "round": 6,
+   "scale": 7.583,
+   "moves": 13,
+   "winAtMoves": 0.953,
+   "wonEver": 1
+  },
+  {
+   "round": 7,
+   "scale": 10.5,
+   "moves": 18,
+   "winAtMoves": 0.958,
    "wonEver": 1
   }
  ],
@@ -724,35 +843,42 @@
    "round": 0,
    "scale": 1,
    "moves": 9,
-   "winAtMoves": 0.967,
+   "winAtMoves": 0.955,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.6,
-   "moves": 10,
-   "winAtMoves": 0.95,
+   "moves": 11,
+   "winAtMoves": 0.965,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 2.56,
-   "moves": 13,
-   "winAtMoves": 0.933,
+   "moves": 14,
+   "winAtMoves": 0.958,
    "wonEver": 1
   },
   {
    "round": 3,
-   "scale": 3.545,
-   "moves": 17,
-   "winAtMoves": 0.967,
+   "scale": 3.291,
+   "moves": 15,
+   "winAtMoves": 0.948,
    "wonEver": 1
   },
   {
    "round": 4,
-   "scale": 4.076,
+   "scale": 3.95,
    "moves": 17,
-   "winAtMoves": 0.967,
+   "winAtMoves": 0.958,
+   "wonEver": 1
+  },
+  {
+   "round": 5,
+   "scale": 4.542,
+   "moves": 18,
+   "winAtMoves": 0.963,
    "wonEver": 1
   }
  ],
@@ -760,8 +886,8 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 18,
-   "winAtMoves": 0.95,
+   "moves": 20,
+   "winAtMoves": 0.955,
    "wonEver": 1
   }
  ],
@@ -769,15 +895,15 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 15,
-   "winAtMoves": 0.95,
+   "moves": 16,
+   "winAtMoves": 0.943,
    "wonEver": 1
   },
   {
    "round": 1,
-   "scale": 1.2,
+   "scale": 1.15,
    "moves": 18,
-   "winAtMoves": 0.95,
+   "winAtMoves": 0.96,
    "wonEver": 1
   }
  ],
@@ -785,43 +911,15 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 11,
-   "winAtMoves": 0.8,
+   "moves": 10,
+   "winAtMoves": 0.787,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.6,
-   "moves": 14,
-   "winAtMoves": 0.817,
-   "wonEver": 1
-  },
-  {
-   "round": 2,
-   "scale": 2.057,
-   "moves": 13,
-   "winAtMoves": 0.833,
-   "wonEver": 1
-  },
-  {
-   "round": 3,
-   "scale": 2.848,
-   "moves": 14,
-   "winAtMoves": 0.833,
-   "wonEver": 1
-  },
-  {
-   "round": 4,
-   "scale": 3.662,
-   "moves": 13,
-   "winAtMoves": 0.783,
-   "wonEver": 1
-  },
-  {
-   "round": 5,
-   "scale": 5.071,
-   "moves": 13,
-   "winAtMoves": 0.817,
+   "moves": 18,
+   "winAtMoves": 0.782,
    "wonEver": 1
   }
  ],
@@ -829,22 +927,36 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 17,
-   "winAtMoves": 0.883,
+   "moves": 16,
+   "winAtMoves": 0.863,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.15,
-   "moves": 16,
-   "winAtMoves": 0.85,
+   "moves": 15,
+   "winAtMoves": 0.863,
    "wonEver": 1
   },
   {
    "round": 2,
-   "scale": 1.322,
-   "moves": 18,
-   "winAtMoves": 0.883,
+   "scale": 1.38,
+   "moves": 14,
+   "winAtMoves": 0.873,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 1.774,
+   "moves": 12,
+   "winAtMoves": 0.88,
+   "wonEver": 1
+  },
+  {
+   "round": 4,
+   "scale": 2.661,
+   "moves": 21,
+   "winAtMoves": 0.873,
    "wonEver": 1
   }
  ],
@@ -852,8 +964,8 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 20,
-   "winAtMoves": 0.85,
+   "moves": 21,
+   "winAtMoves": 0.87,
    "wonEver": 1
   }
  ],
@@ -862,7 +974,21 @@
    "round": 0,
    "scale": 1,
    "moves": 8,
-   "winAtMoves": 0.883,
+   "winAtMoves": 0.845,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 14,
+   "winAtMoves": 0.84,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 2.057,
+   "moves": 21,
+   "winAtMoves": 0.86,
    "wonEver": 1
   }
  ],
@@ -870,22 +996,22 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 16,
-   "winAtMoves": 0.867,
+   "moves": 14,
+   "winAtMoves": 0.835,
    "wonEver": 1
   },
   {
    "round": 1,
-   "scale": 1.15,
-   "moves": 13,
-   "winAtMoves": 0.833,
+   "scale": 1.286,
+   "moves": 17,
+   "winAtMoves": 0.853,
    "wonEver": 1
   },
   {
    "round": 2,
-   "scale": 1.592,
+   "scale": 1.479,
    "moves": 18,
-   "winAtMoves": 0.85,
+   "winAtMoves": 0.838,
    "wonEver": 1
   }
  ],
@@ -894,28 +1020,21 @@
    "round": 0,
    "scale": 1,
    "moves": 12,
-   "winAtMoves": 0.55,
+   "winAtMoves": 0.532,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.5,
-   "moves": 17,
-   "winAtMoves": 0.55,
+   "moves": 12,
+   "winAtMoves": 0.542,
    "wonEver": 1
   },
   {
    "round": 2,
-   "scale": 1.725,
-   "moves": 17,
-   "winAtMoves": 0.517,
-   "wonEver": 1
-  },
-  {
-   "round": 3,
-   "scale": 1.984,
+   "scale": 2.25,
    "moves": 18,
-   "winAtMoves": 0.55,
+   "winAtMoves": 0.542,
    "wonEver": 1
   }
  ],
@@ -924,14 +1043,35 @@
    "round": 0,
    "scale": 1,
    "moves": 12,
-   "winAtMoves": 0.883,
+   "winAtMoves": 0.885,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.5,
-   "moves": 18,
-   "winAtMoves": 0.867,
+   "moves": 16,
+   "winAtMoves": 0.877,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 1.725,
+   "moves": 14,
+   "winAtMoves": 0.873,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 2.218,
+   "moves": 12,
+   "winAtMoves": 0.875,
+   "wonEver": 1
+  },
+  {
+   "round": 4,
+   "scale": 3.327,
+   "moves": 21,
+   "winAtMoves": 0.885,
    "wonEver": 1
   }
  ],
@@ -939,22 +1079,15 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 12,
-   "winAtMoves": 0.817,
+   "moves": 13,
+   "winAtMoves": 0.792,
    "wonEver": 1
   },
   {
    "round": 1,
-   "scale": 1.5,
-   "moves": 16,
-   "winAtMoves": 0.817,
-   "wonEver": 1
-  },
-  {
-   "round": 2,
-   "scale": 1.725,
+   "scale": 1.385,
    "moves": 20,
-   "winAtMoves": 0.817,
+   "winAtMoves": 0.79,
    "wonEver": 1
   }
  ],
@@ -962,8 +1095,8 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 22,
-   "winAtMoves": 0.8,
+   "moves": 23,
+   "winAtMoves": 0.81,
    "wonEver": 1
   }
  ],
@@ -971,29 +1104,29 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 14,
-   "winAtMoves": 0.783,
+   "moves": 13,
+   "winAtMoves": 0.792,
    "wonEver": 1
   },
   {
    "round": 1,
-   "scale": 1.286,
+   "scale": 1.385,
    "moves": 16,
-   "winAtMoves": 0.783,
+   "winAtMoves": 0.757,
    "wonEver": 1
   },
   {
    "round": 2,
-   "scale": 1.479,
+   "scale": 1.592,
    "moves": 17,
-   "winAtMoves": 0.817,
+   "winAtMoves": 0.785,
    "wonEver": 1
   },
   {
    "round": 3,
-   "scale": 1.7,
-   "moves": 18,
-   "winAtMoves": 0.8,
+   "scale": 1.831,
+   "moves": 19,
+   "winAtMoves": 0.78,
    "wonEver": 1
   }
  ],
@@ -1001,15 +1134,29 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 11,
-   "winAtMoves": 0.533,
+   "moves": 12,
+   "winAtMoves": 0.537,
    "wonEver": 1
   },
   {
    "round": 1,
-   "scale": 1.6,
+   "scale": 1.5,
+   "moves": 12,
+   "winAtMoves": 0.502,
+   "wonEver": 1
+  },
+  {
+   "round": 2,
+   "scale": 2.25,
+   "moves": 17,
+   "winAtMoves": 0.505,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 2.587,
    "moves": 18,
-   "winAtMoves": 0.483,
+   "winAtMoves": 0.537,
    "wonEver": 1
   }
  ],
@@ -1018,28 +1165,35 @@
    "round": 0,
    "scale": 1,
    "moves": 6,
-   "winAtMoves": 0.817,
+   "winAtMoves": 0.825,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.6,
-   "moves": 7,
-   "winAtMoves": 0.817,
+   "moves": 9,
+   "winAtMoves": 0.84,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 2.56,
-   "moves": 9,
-   "winAtMoves": 0.833,
+   "moves": 13,
+   "winAtMoves": 0.815,
    "wonEver": 1
   },
   {
    "round": 3,
-   "scale": 4.096,
-   "moves": 8,
-   "winAtMoves": 0.833,
+   "scale": 3.545,
+   "moves": 11,
+   "winAtMoves": 0.85,
+   "wonEver": 1
+  },
+  {
+   "round": 4,
+   "scale": 5.671,
+   "moves": 18,
+   "winAtMoves": 0.825,
    "wonEver": 1
   }
  ],
@@ -1047,22 +1201,29 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 17,
-   "winAtMoves": 0.75,
+   "moves": 15,
+   "winAtMoves": 0.772,
    "wonEver": 1
   },
   {
    "round": 1,
-   "scale": 1.15,
-   "moves": 14,
-   "winAtMoves": 0.733,
+   "scale": 1.2,
+   "moves": 15,
+   "winAtMoves": 0.74,
    "wonEver": 1
   },
   {
    "round": 2,
-   "scale": 1.479,
-   "moves": 19,
-   "winAtMoves": 0.733,
+   "scale": 1.44,
+   "moves": 15,
+   "winAtMoves": 0.743,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 1.728,
+   "moves": 20,
+   "winAtMoves": 0.75,
    "wonEver": 1
   }
  ],
@@ -1070,8 +1231,8 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 21,
-   "winAtMoves": 0.783,
+   "moves": 22,
+   "winAtMoves": 0.757,
    "wonEver": 1
   }
  ],
@@ -1079,29 +1240,29 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 13,
-   "winAtMoves": 0.75,
+   "moves": 12,
+   "winAtMoves": 0.723,
    "wonEver": 1
   },
   {
    "round": 1,
-   "scale": 1.385,
-   "moves": 15,
-   "winAtMoves": 0.7,
+   "scale": 1.5,
+   "moves": 16,
+   "winAtMoves": 0.723,
    "wonEver": 1
   },
   {
    "round": 2,
-   "scale": 1.662,
-   "moves": 16,
-   "winAtMoves": 0.717,
+   "scale": 1.725,
+   "moves": 17,
+   "winAtMoves": 0.745,
    "wonEver": 1
   },
   {
    "round": 3,
-   "scale": 1.911,
+   "scale": 1.984,
    "moves": 18,
-   "winAtMoves": 0.683,
+   "winAtMoves": 0.705,
    "wonEver": 1
   }
  ],
@@ -1110,20 +1271,97 @@
    "round": 0,
    "scale": 1,
    "moves": 11,
-   "winAtMoves": 0.45,
+   "winAtMoves": 0.435,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.6,
    "moves": 17,
-   "winAtMoves": 0.45,
+   "winAtMoves": 0.482,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 1.84,
-   "moves": 18,
+   "moves": 17,
+   "winAtMoves": 0.458,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 2.116,
+   "moves": 17,
+   "winAtMoves": 0.417,
+   "wonEver": 1
+  },
+  {
+   "round": 4,
+   "scale": 2.433,
+   "moves": 17,
+   "winAtMoves": 0.47,
+   "wonEver": 1
+  },
+  {
+   "round": 5,
+   "scale": 2.798,
+   "moves": 16,
+   "winAtMoves": 0.448,
+   "wonEver": 1
+  },
+  {
+   "round": 6,
+   "scale": 3.218,
+   "moves": 17,
+   "winAtMoves": 0.43,
+   "wonEver": 1
+  },
+  {
+   "round": 7,
+   "scale": 3.701,
+   "moves": 17,
+   "winAtMoves": 0.475,
+   "wonEver": 1
+  },
+  {
+   "round": 8,
+   "scale": 4.256,
+   "moves": 16,
+   "winAtMoves": 0.427,
+   "wonEver": 1
+  },
+  {
+   "round": 9,
+   "scale": 4.894,
+   "moves": 17,
+   "winAtMoves": 0.472,
+   "wonEver": 1
+  },
+  {
+   "round": 10,
+   "scale": 5.629,
+   "moves": 16,
+   "winAtMoves": 0.425,
+   "wonEver": 1
+  },
+  {
+   "round": 11,
+   "scale": 6.473,
+   "moves": 16,
+   "winAtMoves": 0.44,
+   "wonEver": 1
+  },
+  {
+   "round": 12,
+   "scale": 7.444,
+   "moves": 17,
+   "winAtMoves": 0.47,
+   "wonEver": 1
+  },
+  {
+   "round": 13,
+   "scale": 8.56,
+   "moves": 16,
    "winAtMoves": 0.45,
    "wonEver": 1
   }
@@ -1133,21 +1371,35 @@
    "round": 0,
    "scale": 1,
    "moves": 16,
-   "winAtMoves": 0.767,
+   "winAtMoves": 0.752,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.15,
    "moves": 17,
-   "winAtMoves": 0.783,
+   "winAtMoves": 0.777,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 1.322,
-   "moves": 18,
-   "winAtMoves": 0.767,
+   "moves": 16,
+   "winAtMoves": 0.782,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 1.521,
+   "moves": 16,
+   "winAtMoves": 0.76,
+   "wonEver": 1
+  },
+  {
+   "round": 4,
+   "scale": 1.749,
+   "moves": 22,
+   "winAtMoves": 0.792,
    "wonEver": 1
   }
  ],
@@ -1156,21 +1408,42 @@
    "round": 0,
    "scale": 1,
    "moves": 15,
-   "winAtMoves": 0.733,
+   "winAtMoves": 0.708,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.2,
    "moves": 15,
-   "winAtMoves": 0.717,
+   "winAtMoves": 0.695,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 1.44,
-   "moves": 18,
-   "winAtMoves": 0.7,
+   "moves": 15,
+   "winAtMoves": 0.725,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 1.728,
+   "moves": 16,
+   "winAtMoves": 0.715,
+   "wonEver": 1
+  },
+  {
+   "round": 4,
+   "scale": 1.987,
+   "moves": 17,
+   "winAtMoves": 0.682,
+   "wonEver": 1
+  },
+  {
+   "round": 5,
+   "scale": 2.285,
+   "moves": 21,
+   "winAtMoves": 0.703,
    "wonEver": 1
   }
  ],
@@ -1179,7 +1452,7 @@
    "round": 0,
    "scale": 1,
    "moves": 22,
-   "winAtMoves": 0.7,
+   "winAtMoves": 0.71,
    "wonEver": 1
   }
  ],
@@ -1187,22 +1460,29 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 11,
-   "winAtMoves": 0.667,
+   "moves": 12,
+   "winAtMoves": 0.708,
    "wonEver": 1
   },
   {
    "round": 1,
-   "scale": 1.6,
-   "moves": 16,
-   "winAtMoves": 0.667,
+   "scale": 1.5,
+   "moves": 15,
+   "winAtMoves": 0.66,
    "wonEver": 1
   },
   {
    "round": 2,
-   "scale": 1.84,
-   "moves": 18,
-   "winAtMoves": 0.7,
+   "scale": 1.8,
+   "moves": 17,
+   "winAtMoves": 0.665,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 2.07,
+   "moves": 19,
+   "winAtMoves": 0.688,
    "wonEver": 1
   }
  ],
@@ -1210,29 +1490,71 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 6,
-   "winAtMoves": 0.433,
+   "moves": 5,
+   "winAtMoves": 0.37,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.6,
-   "moves": 8,
-   "winAtMoves": 0.367,
+   "moves": 11,
+   "winAtMoves": 0.42,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 2.56,
-   "moves": 9,
-   "winAtMoves": 0.45,
+   "moves": 10,
+   "winAtMoves": 0.432,
    "wonEver": 1
   },
   {
    "round": 3,
    "scale": 4.096,
-   "moves": 10,
-   "winAtMoves": 0.45,
+   "moves": 17,
+   "winAtMoves": 0.425,
+   "wonEver": 1
+  },
+  {
+   "round": 4,
+   "scale": 4.71,
+   "moves": 15,
+   "winAtMoves": 0.395,
+   "wonEver": 1
+  },
+  {
+   "round": 5,
+   "scale": 5.652,
+   "moves": 16,
+   "winAtMoves": 0.415,
+   "wonEver": 1
+  },
+  {
+   "round": 6,
+   "scale": 6.5,
+   "moves": 16,
+   "winAtMoves": 0.405,
+   "wonEver": 1
+  },
+  {
+   "round": 7,
+   "scale": 7.475,
+   "moves": 16,
+   "winAtMoves": 0.388,
+   "wonEver": 1
+  },
+  {
+   "round": 8,
+   "scale": 8.597,
+   "moves": 15,
+   "winAtMoves": 0.388,
+   "wonEver": 1
+  },
+  {
+   "round": 9,
+   "scale": 10.316,
+   "moves": 16,
+   "winAtMoves": 0.375,
    "wonEver": 1
   }
  ],
@@ -1240,22 +1562,22 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 17,
-   "winAtMoves": 0.717,
+   "moves": 15,
+   "winAtMoves": 0.718,
    "wonEver": 1
   },
   {
    "round": 1,
-   "scale": 1.15,
-   "moves": 14,
-   "winAtMoves": 0.717,
+   "scale": 1.2,
+   "moves": 16,
+   "winAtMoves": 0.74,
    "wonEver": 1
   },
   {
    "round": 2,
-   "scale": 1.479,
+   "scale": 1.38,
    "moves": 22,
-   "winAtMoves": 0.733,
+   "winAtMoves": 0.715,
    "wonEver": 1
   }
  ],
@@ -1264,21 +1586,28 @@
    "round": 0,
    "scale": 1,
    "moves": 11,
-   "winAtMoves": 0.617,
+   "winAtMoves": 0.672,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.6,
    "moves": 16,
-   "winAtMoves": 0.633,
+   "winAtMoves": 0.65,
    "wonEver": 1
   },
   {
    "round": 2,
    "scale": 1.84,
-   "moves": 18,
-   "winAtMoves": 0.65,
+   "moves": 16,
+   "winAtMoves": 0.63,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 2.116,
+   "moves": 19,
+   "winAtMoves": 0.66,
    "wonEver": 1
   }
  ],
@@ -1286,8 +1615,15 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 10,
-   "winAtMoves": 0.65,
+   "moves": 11,
+   "winAtMoves": 0.613,
+   "wonEver": 1
+  },
+  {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 21,
+   "winAtMoves": 0.667,
    "wonEver": 1
   }
  ],
@@ -1295,22 +1631,29 @@
   {
    "round": 0,
    "scale": 1,
-   "moves": 12,
-   "winAtMoves": 0.633,
-   "wonEver": 1
-  },
-  {
-   "round": 1,
-   "scale": 1.5,
-   "moves": 14,
+   "moves": 11,
    "winAtMoves": 0.6,
    "wonEver": 1
   },
   {
+   "round": 1,
+   "scale": 1.6,
+   "moves": 16,
+   "winAtMoves": 0.667,
+   "wonEver": 1
+  },
+  {
    "round": 2,
-   "scale": 1.929,
-   "moves": 19,
-   "winAtMoves": 0.65,
+   "scale": 1.84,
+   "moves": 17,
+   "winAtMoves": 0.645,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 2.116,
+   "moves": 18,
+   "winAtMoves": 0.632,
    "wonEver": 1
   }
  ],
@@ -1319,49 +1662,77 @@
    "round": 0,
    "scale": 1,
    "moves": 10,
-   "winAtMoves": 0.383,
+   "winAtMoves": 0.335,
    "wonEver": 1
   },
   {
    "round": 1,
    "scale": 1.6,
-   "moves": 16,
-   "winAtMoves": 0.35,
-   "wonEver": 1
-  },
-  {
-   "round": 2,
-   "scale": 1.84,
-   "moves": 13,
-   "winAtMoves": 0.317,
-   "wonEver": 1
-  },
-  {
-   "round": 3,
-   "scale": 2.548,
-   "moves": 15,
-   "winAtMoves": 0.367,
-   "wonEver": 1
-  },
-  {
-   "round": 4,
-   "scale": 3.057,
-   "moves": 15,
+   "moves": 9,
    "winAtMoves": 0.333,
    "wonEver": 1
   },
   {
+   "round": 2,
+   "scale": 2.56,
+   "moves": 15,
+   "winAtMoves": 0.352,
+   "wonEver": 1
+  },
+  {
+   "round": 3,
+   "scale": 3.072,
+   "moves": 16,
+   "winAtMoves": 0.38,
+   "wonEver": 1
+  },
+  {
+   "round": 4,
+   "scale": 3.533,
+   "moves": 15,
+   "winAtMoves": 0.372,
+   "wonEver": 1
+  },
+  {
    "round": 5,
-   "scale": 3.669,
-   "moves": 14,
-   "winAtMoves": 0.35,
+   "scale": 4.239,
+   "moves": 16,
+   "winAtMoves": 0.372,
    "wonEver": 1
   },
   {
    "round": 6,
-   "scale": 4.717,
+   "scale": 4.875,
    "moves": 15,
-   "winAtMoves": 0.35,
+   "winAtMoves": 0.355,
+   "wonEver": 1
+  },
+  {
+   "round": 7,
+   "scale": 5.85,
+   "moves": 15,
+   "winAtMoves": 0.33,
+   "wonEver": 1
+  },
+  {
+   "round": 8,
+   "scale": 7.02,
+   "moves": 15,
+   "winAtMoves": 0.352,
+   "wonEver": 1
+  },
+  {
+   "round": 9,
+   "scale": 8.424,
+   "moves": 15,
+   "winAtMoves": 0.338,
+   "wonEver": 1
+  },
+  {
+   "round": 10,
+   "scale": 10.109,
+   "moves": 15,
+   "winAtMoves": 0.375,
    "wonEver": 1
   }
  ]

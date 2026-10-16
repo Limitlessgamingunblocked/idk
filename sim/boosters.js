@@ -11,6 +11,7 @@ const SETUPS = {
   'Sugar Party (hits every candy)': { kit: { party: 1 }, tune: { party: 'board' } },
   'Sugar Party (6 specials)': { kit: { party: 1 }, tune: { party: 'specials' } },
   'Unicorn Stampede x8': { kit: { swarm: 1 }, tune: { stampede: 8 }, swarmTurn: 0 },
+  'Unicorn Stampede x6': { kit: { swarm: 1 }, tune: { stampede: 6 }, swarmTurn: 0 },
   'Unicorn Stampede x5': { kit: { swarm: 1 }, tune: { stampede: 5 }, swarmTurn: 0 },
   'Rainbow Drop': { kit: { rainbow: 1 } },
   '+5 Moves': { kit: { moves: 1 } },

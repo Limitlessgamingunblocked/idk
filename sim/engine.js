@@ -31,7 +31,7 @@ function endTurn(w) {
   ev.spread = R.spreadDust(w);
   if (!R.goalsMet(w) && w.moves > 0 && !R.allMoves(w).length) { R.shuffleBoard(w); ev.shuffled = true; }
   w.earned = w.earned || { gold: 0, boosters: [] };
-  for (const c of ev.chests) { w.earned.gold += c.gold; w.earned.boosters.push(c.prize); }
+  for (const c of ev.chests) { w.earned.gold += c.gold; if (c.prize) w.earned.boosters.push(c.prize); }
   return ev;
 }
 

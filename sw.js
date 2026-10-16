@@ -1,5 +1,5 @@
 // Sugar Shapes offline cache. Bump VERSION whenever any file below changes.
-const VERSION = 'sugar-shapes-v2';
+const VERSION = 'sugar-shapes-v3';
 const FILES = [
   './', 'index.html', 'manifest.webmanifest',
   'fonts/LilitaOne-latin.woff2', 'fonts/Nunito-latin.woff2',

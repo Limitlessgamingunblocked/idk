@@ -62,14 +62,14 @@ function runJobs(jobs, { threads = os.cpus().length, chunk = 50, keepGames = fal
     workers.forEach(w => {
       w.on('message', msg => { byJob[tasks[msg.id].ji].push(...msg.games); done++; onProgress && onProgress(done, tasks.length); feed(w); });
       w.on('error', reject);
-      w.on('exit', () => { if (done === tasks.length && workers.every(x => x.threadId === -1 || true)) {} });
       feed(w);
     });
     const check = setInterval(() => {
       if (done === tasks.length) {
         clearInterval(check);
         const out = {};
-        jobs.forEach((j, ji) => { out[j.key || `${j.n}:${j.bot}`] = keepGames ? { summary: summarise(byJob[ji]), games: byJob[ji] } : summarise(byJob[ji]); });
+        // session jobs return whole play sessions, which the economy model summarises itself
+        jobs.forEach((j, ji) => { const sum = j.bot === 'session' ? null : summarise(byJob[ji]); out[j.key || `${j.n}:${j.bot}`] = keepGames ? { summary: sum, games: byJob[ji] } : sum; });
         resolve(out);
       }
     }, 50);

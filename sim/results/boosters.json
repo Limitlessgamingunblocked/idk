@@ -1,0 +1,336 @@
+{
+ "levels": [
+  10,
+  15,
+  20,
+  25,
+  28,
+  30,
+  110,
+  120,
+  130
+ ],
+ "games": 400,
+ "out": {
+  "no booster": {
+   "10": {
+    "win": 0.52,
+    "outright": 0
+   },
+   "15": {
+    "win": 0.485,
+    "outright": 0
+   },
+   "20": {
+    "win": 0.4925,
+    "outright": 0
+   },
+   "25": {
+    "win": 0.4125,
+    "outright": 0
+   },
+   "28": {
+    "win": 0.625,
+    "outright": 0
+   },
+   "30": {
+    "win": 0.355,
+    "outright": 0
+   },
+   "110": {
+    "win": 0.5325,
+    "outright": 0
+   },
+   "120": {
+    "win": 0.4175,
+    "outright": 0
+   },
+   "130": {
+    "win": 0.38,
+    "outright": 0
+   },
+   "avgWin": 0.46888888888888886,
+   "avgOutright": 0
+  },
+  "Sugar Party (hits every candy)": {
+   "10": {
+    "win": 0.9425,
+    "outright": 0
+   },
+   "15": {
+    "win": 0.945,
+    "outright": 0
+   },
+   "20": {
+    "win": 0.95,
+    "outright": 0
+   },
+   "25": {
+    "win": 0.825,
+    "outright": 0
+   },
+   "28": {
+    "win": 0.975,
+    "outright": 0
+   },
+   "30": {
+    "win": 0.815,
+    "outright": 0
+   },
+   "110": {
+    "win": 0.9675,
+    "outright": 0
+   },
+   "120": {
+    "win": 0.9275,
+    "outright": 0
+   },
+   "130": {
+    "win": 0.875,
+    "outright": 0
+   },
+   "avgWin": 0.9136111111111112,
+   "avgOutright": 0
+  },
+  "Sugar Party (6 specials)": {
+   "10": {
+    "win": 0.8525,
+    "outright": 0
+   },
+   "15": {
+    "win": 0.86,
+    "outright": 0
+   },
+   "20": {
+    "win": 0.8275,
+    "outright": 0
+   },
+   "25": {
+    "win": 0.6875,
+    "outright": 0
+   },
+   "28": {
+    "win": 0.905,
+    "outright": 0
+   },
+   "30": {
+    "win": 0.7025,
+    "outright": 0
+   },
+   "110": {
+    "win": 0.8675,
+    "outright": 0
+   },
+   "120": {
+    "win": 0.7975,
+    "outright": 0
+   },
+   "130": {
+    "win": 0.74,
+    "outright": 0
+   },
+   "avgWin": 0.8044444444444445,
+   "avgOutright": 0
+  },
+  "Unicorn Stampede x8": {
+   "10": {
+    "win": 0.8025,
+    "outright": 0
+   },
+   "15": {
+    "win": 0.83,
+    "outright": 0
+   },
+   "20": {
+    "win": 0.76,
+    "outright": 0
+   },
+   "25": {
+    "win": 0.6375,
+    "outright": 0
+   },
+   "28": {
+    "win": 0.9125,
+    "outright": 0
+   },
+   "30": {
+    "win": 0.6425,
+    "outright": 0
+   },
+   "110": {
+    "win": 0.8325,
+    "outright": 0
+   },
+   "120": {
+    "win": 0.715,
+    "outright": 0
+   },
+   "130": {
+    "win": 0.67,
+    "outright": 0
+   },
+   "avgWin": 0.7558333333333334,
+   "avgOutright": 0
+  },
+  "Unicorn Stampede x6": {
+   "10": {
+    "win": 0.7775,
+    "outright": 0
+   },
+   "15": {
+    "win": 0.715,
+    "outright": 0
+   },
+   "20": {
+    "win": 0.695,
+    "outright": 0
+   },
+   "25": {
+    "win": 0.595,
+    "outright": 0
+   },
+   "28": {
+    "win": 0.8625,
+    "outright": 0
+   },
+   "30": {
+    "win": 0.58,
+    "outright": 0
+   },
+   "110": {
+    "win": 0.74,
+    "outright": 0
+   },
+   "120": {
+    "win": 0.7125,
+    "outright": 0
+   },
+   "130": {
+    "win": 0.565,
+    "outright": 0
+   },
+   "avgWin": 0.6936111111111111,
+   "avgOutright": 0
+  },
+  "Unicorn Stampede x5": {
+   "10": {
+    "win": 0.76,
+    "outright": 0
+   },
+   "15": {
+    "win": 0.71,
+    "outright": 0
+   },
+   "20": {
+    "win": 0.655,
+    "outright": 0
+   },
+   "25": {
+    "win": 0.575,
+    "outright": 0
+   },
+   "28": {
+    "win": 0.82,
+    "outright": 0
+   },
+   "30": {
+    "win": 0.555,
+    "outright": 0
+   },
+   "110": {
+    "win": 0.7625,
+    "outright": 0
+   },
+   "120": {
+    "win": 0.635,
+    "outright": 0
+   },
+   "130": {
+    "win": 0.62,
+    "outright": 0
+   },
+   "avgWin": 0.6769444444444445,
+   "avgOutright": 0
+  },
+  "Rainbow Drop": {
+   "10": {
+    "win": 0.71,
+    "outright": 0
+   },
+   "15": {
+    "win": 0.72,
+    "outright": 0
+   },
+   "20": {
+    "win": 0.6675,
+    "outright": 0
+   },
+   "25": {
+    "win": 0.55,
+    "outright": 0
+   },
+   "28": {
+    "win": 0.7725,
+    "outright": 0
+   },
+   "30": {
+    "win": 0.5375,
+    "outright": 0
+   },
+   "110": {
+    "win": 0.7175,
+    "outright": 0
+   },
+   "120": {
+    "win": 0.64,
+    "outright": 0
+   },
+   "130": {
+    "win": 0.5325,
+    "outright": 0
+   },
+   "avgWin": 0.6497222222222221,
+   "avgOutright": 0
+  },
+  "+5 Moves": {
+   "10": {
+    "win": 0.825,
+    "outright": 0
+   },
+   "15": {
+    "win": 0.795,
+    "outright": 0
+   },
+   "20": {
+    "win": 0.7675,
+    "outright": 0
+   },
+   "25": {
+    "win": 0.68,
+    "outright": 0
+   },
+   "28": {
+    "win": 0.8625,
+    "outright": 0
+   },
+   "30": {
+    "win": 0.65,
+    "outright": 0
+   },
+   "110": {
+    "win": 0.7825,
+    "outright": 0
+   },
+   "120": {
+    "win": 0.7125,
+    "outright": 0
+   },
+   "130": {
+    "win": 0.67,
+    "outright": 0
+   },
+   "avgWin": 0.7494444444444446,
+   "avgOutright": 0
+  }
+ }
+}

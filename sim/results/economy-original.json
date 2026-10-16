@@ -1,0 +1,230 @@
+{
+ "variant": "original",
+ "econ": {
+  "startGold": 50,
+  "startBoosters": {
+   "hammer": 3,
+   "swap": 3,
+   "rainbow": 2,
+   "swarm": 2,
+   "moves": 2,
+   "party": 1
+  },
+  "winGold": [
+   5,
+   5,
+   10
+  ],
+  "chestGold": [
+   5,
+   10
+  ],
+  "chestBoosterChance": 1,
+  "reviveBase": 10,
+  "reviveMoves": 5,
+  "price": {
+   "hammer": 15,
+   "swap": 15,
+   "rainbow": 25,
+   "swarm": 30,
+   "moves": 20,
+   "party": 60
+  },
+  "boosterPool": [
+   "hammer",
+   "hammer",
+   "swap",
+   "swap",
+   "rainbow",
+   "swarm",
+   "swarm",
+   "moves",
+   "party"
+  ]
+ },
+ "party": "board",
+ "stampede": 8,
+ "pace": {
+  "think": 3,
+  "anim": 0.88,
+  "overhead": 12
+ },
+ "profiles": {
+  "new player, saves boosters": {
+   "sessions": 300,
+   "levelsCleared": {
+    "p50": 19,
+    "p10": 17,
+    "p90": 20
+   },
+   "attemptsPerClear": 1.0079274001998462,
+   "revivesPerSession": 0.7033333333333334,
+   "goldNet": {
+    "p10": 536,
+    "p50": 602,
+    "p90": 673
+   },
+   "goldIn": {
+    "wins": 430.8833333333333,
+    "chests": 180.70333333333335
+   },
+   "goldOut": {
+    "revives": 8.033333333333333
+   },
+   "boostersNet": {
+    "p10": 19,
+    "p50": 23,
+    "p90": 27
+   },
+   "boostersEarned": 26.586666666666666,
+   "boostersUsed": {
+    "hammer": 0,
+    "swap": 0,
+    "rainbow": 0,
+    "swarm": 0,
+    "moves": 3.6066666666666665,
+    "party": 0
+   },
+   "winsHelped": 0.17908422978672997,
+   "goldTimeline": [
+    50,
+    216,
+    353,
+    487,
+    623
+   ]
+  },
+  "new player, uses boosters": {
+   "sessions": 300,
+   "levelsCleared": {
+    "p50": 21,
+    "p10": 19,
+    "p90": 23
+   },
+   "attemptsPerClear": 1.0044220116542097,
+   "revivesPerSession": 0.3466666666666667,
+   "goldNet": {
+    "p10": 606,
+    "p50": 683,
+    "p90": 768
+   },
+   "goldIn": {
+    "wins": 488.1,
+    "chests": 201.06666666666666
+   },
+   "goldOut": {
+    "revives": 3.7333333333333334
+   },
+   "boostersNet": {
+    "p10": 9,
+    "p50": 13,
+    "p90": 18
+   },
+   "boostersEarned": 29.99,
+   "boostersUsed": {
+    "hammer": 0,
+    "swap": 0,
+    "rainbow": 5.073333333333333,
+    "swarm": 8.323333333333334,
+    "moves": 3.0533333333333332,
+    "party": 0
+   },
+   "winsHelped": 0.6634665469960253,
+   "goldTimeline": [
+    50,
+    245,
+    397,
+    553,
+    703
+   ]
+  },
+  "mid-game player (from level 12)": {
+   "sessions": 300,
+   "levelsCleared": {
+    "p50": 17,
+    "p10": 14,
+    "p90": 18
+   },
+   "attemptsPerClear": 1.0370674218855334,
+   "revivesPerSession": 2.31,
+   "goldNet": {
+    "p10": 439,
+    "p50": 526,
+    "p90": 611
+   },
+   "goldIn": {
+    "wins": 380.1333333333333,
+    "chests": 173.69
+   },
+   "goldOut": {
+    "revives": 27.233333333333334
+   },
+   "boostersNet": {
+    "p10": 17,
+    "p50": 21,
+    "p90": 25
+   },
+   "boostersEarned": 25.346666666666668,
+   "boostersUsed": {
+    "hammer": 0,
+    "swap": 0,
+    "rainbow": 0,
+    "swarm": 0,
+    "moves": 4.23,
+    "party": 0
+   },
+   "winsHelped": 0.29313871972540717,
+   "goldTimeline": [
+    150,
+    271,
+    406,
+    530,
+    653
+   ]
+  },
+  "Furniture Mode (from level 101)": {
+   "sessions": 300,
+   "levelsCleared": {
+    "p50": 18,
+    "p10": 16,
+    "p90": 20
+   },
+   "attemptsPerClear": 1.0140472984188154,
+   "revivesPerSession": 1.2433333333333334,
+   "goldNet": {
+    "p10": 468,
+    "p50": 546,
+    "p90": 614
+   },
+   "goldIn": {
+    "wins": 415.73333333333335,
+    "chests": 141.96333333333334
+   },
+   "goldOut": {
+    "revives": 15.133333333333333
+   },
+   "boostersNet": {
+    "p10": 14,
+    "p50": 18,
+    "p90": 23
+   },
+   "boostersEarned": 21.716666666666665,
+   "boostersUsed": {
+    "hammer": 0,
+    "swap": 0,
+    "rainbow": 0,
+    "swarm": 0,
+    "moves": 3.3066666666666666,
+    "party": 0
+   },
+   "winsHelped": 0.18255440481717577,
+   "goldTimeline": [
+    50,
+    197,
+    326,
+    445,
+    568
+   ]
+  }
+ }
+}

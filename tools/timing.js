@@ -38,14 +38,14 @@ const ms = v => Number.isFinite(v) ? Math.round(v) + ' ms' : 'n/a';
       const sw = m.find(x => x[0] === 'swap'), rd = m.filter(x => x[0] === 'ready').pop();
       if (!sw || !rd) continue;
       const t0 = sw[1], matches = m.filter(x => x[0] === 'match').map(x => x[1]), pops = m.filter(x => x[0] === 'pop').map(x => x[1]);
-      // anything visibly happening: the swap slide, each pop (200 ms), each fall
-      const busy = [[t0, t0 + 160]].concat(pops.map(p => [p, p + 200]));
+      // anything visibly happening: the swap slide, each pop (200 ms), each fall, unicorn flights and sparks
+      const busy = [[t0, t0 + 160]].concat(pops.map(p => [p, p + 200]), m.filter(x => x[0] === 'flight').map(x => [x[1], x[1] + x[2]]));
       let fallStart = null; for (const [k2, t] of m) { if (k2 === 'fall') fallStart = t; if (k2 === 'land' && fallStart !== null) { busy.push([fallStart, t]); fallStart = null; } }
       busy.sort((a, b) => a[0] - b[0]);
       const gaps = []; let end = t0;
       for (const [a, b] of busy) { if (a > end) gaps.push(a - end); end = Math.max(end, b); }
       if (rd[1] > end) gaps.push(rd[1] - end);
-      turns.push({ level: n, dur: rd[1] - t0, toMatch: matches.length ? matches[0] - t0 : NaN, cascade: matches.slice(1).map((t, i) => t - matches[i]), steps: matches.length, maxGap: Math.max(0, ...gaps), gaps });
+      turns.push({ marks: m.map(x => [x[0], Math.round(x[1] - t0), x[2]]), level: n, dur: rd[1] - t0, toMatch: matches.length ? matches[0] - t0 : NaN, cascade: matches.slice(1).map((t, i) => t - matches[i]), steps: matches.length, maxGap: Math.max(0, ...gaps), gaps });
       if (s.o) break;
     }
   }

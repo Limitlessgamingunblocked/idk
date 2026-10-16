@@ -5,28 +5,20 @@ const fs = require('fs');
 const { runJobs } = require('./run.js');
 const R = require('../src/rules.js');
 
-const SHIPPED = JSON.parse(JSON.stringify(R.TUNE.econ));
+// 'original' is the economy as first shipped; 'current' is whatever src/rules.js holds now.
 const VARIANTS = {
-  shipped: { econ: SHIPPED, party: 'board', stampede: 8 },
-  proposed: {
-    econ: {
-      startGold: 30,
-      startBoosters: { hammer: 1, swap: 1, rainbow: 1, swarm: 1, moves: 1, party: 0 },
-      winGold: [2, 1, 3],                  // base, per star, first clear
-      chestGold: [2, 4],
-      reviveBase: 25,                      // 25, then 50, then 75 within one attempt
-      reviveMoves: 5,
-      price: { hammer: 30, swap: 30, rainbow: 45, swarm: 50, moves: 40, party: 120 },
-      boosterPool: ['hammer', 'hammer', 'swap', 'swap', 'moves', 'rainbow'],
-    },
-    party: 'specials', stampede: 5,
+  original: {
+    econ: { startGold: 50, startBoosters: { hammer: 3, swap: 3, rainbow: 2, swarm: 2, moves: 2, party: 1 }, winGold: [5, 5, 10], chestGold: [5, 10], chestBoosterChance: 1,
+      reviveBase: 10, reviveMoves: 5, price: { hammer: 15, swap: 15, rainbow: 25, swarm: 30, moves: 20, party: 60 }, boosterPool: ['hammer', 'hammer', 'swap', 'swap', 'rainbow', 'swarm', 'swarm', 'moves', 'party'] },
+    party: 'board', stampede: 8,
   },
+  current: { econ: JSON.parse(JSON.stringify(R.TUNE.econ)), party: R.TUNE.party, stampede: R.TUNE.stampede },
 };
 // Assumed human pace: thinking time per move (an assumption until playtests measure it) plus the game's
 // own animation time per turn (measured by tools/timing.js), plus intro/win screens per attempt.
 const PACE = { think: 3, anim: +(process.env.ANIM || 1.3), overhead: 12 };
 
-const variant = process.argv[2] || 'shipped', sessions = +(process.argv[3] || 300), v = VARIANTS[variant];
+const variant = process.argv[2] || 'current', sessions = +(process.argv[3] || 300), v = VARIANTS[variant];
 const tune = { econ: v.econ, party: v.party, stampede: v.stampede };
 const PROFILES = {
   'new player, saves boosters': { start: 1, policy: 'hoard' },
